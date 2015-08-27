@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ServiceDirectoryModelStoreContainer" CdmEntityContainer="ServiceDirectoryEntities">
+    <EntitySetMapping Name="tblAddresses">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblAddress">
+        <MappingFragment StoreEntitySet="tblAddress">
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="TownID" ColumnName="TownID" />
+          <ScalarProperty Name="AddressDescription" ColumnName="AddressDescription" />
+          <ScalarProperty Name="AddressName" ColumnName="AddressName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblBusinessTypes">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblBusinessType">
+        <MappingFragment StoreEntitySet="tblBusinessType">
+          <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+          <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+          <ScalarProperty Name="SICCode" ColumnName="SICCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblContacts">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblContact">
+        <MappingFragment StoreEntitySet="tblContact">
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="KnownAs" ColumnName="KnownAs" />
+          <ScalarProperty Name="OfficePhone" ColumnName="OfficePhone" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="StHomePhone" ColumnName="StHomePhone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+          <ScalarProperty Name="JobRole" ColumnName="JobRole" />
+          <ScalarProperty Name="Workbase" ColumnName="Workbase" />
+          <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblCountries">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblCountry">
+        <MappingFragment StoreEntitySet="tblCountry">
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="CountryDescription" ColumnName="CountryDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblCounties">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblCounty">
+        <MappingFragment StoreEntitySet="tblCounty">
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="CountyDescription" ColumnName="CountyDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblDepartments">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblDepartment">
+        <MappingFragment StoreEntitySet="tblDepartment">
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="DirectorateID" ColumnName="DirectorateID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="WebAddress" ColumnName="WebAddress" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblDirectorates">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblDirectorate">
+        <MappingFragment StoreEntitySet="tblDirectorate">
+          <ScalarProperty Name="DirectorateID" ColumnName="DirectorateID" />
+          <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+          <ScalarProperty Name="DirectorateName" ColumnName="DirectorateName" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="WebAddress" ColumnName="WebAddress" />
+          <ScalarProperty Name="CharityNumber" ColumnName="CharityNumber" />
+          <ScalarProperty Name="CompanyNumber" ColumnName="CompanyNumber" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblFacilities">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblFacility">
+        <MappingFragment StoreEntitySet="tblFacility">
+          <ScalarProperty Name="FacilityID" ColumnName="FacilityID" />
+          <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+          <ScalarProperty Name="FacilityType" ColumnName="FacilityType" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="RoomCapacity" ColumnName="RoomCapacity" />
+          <ScalarProperty Name="RoomSize" ColumnName="RoomSize" />
+          <ScalarProperty Name="ConnectivityType" ColumnName="ConnectivityType" />
+          <ScalarProperty Name="WireLess" ColumnName="WireLess" />
+          <ScalarProperty Name="LeadContactID" ColumnName="LeadContactID" />
+          <ScalarProperty Name="RoomHostID" ColumnName="RoomHostID" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblFundings">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblFunding">
+        <MappingFragment StoreEntitySet="tblFunding">
+          <ScalarProperty Name="FundingID" ColumnName="FundingID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="FundingSource" ColumnName="FundingSource" />
+          <ScalarProperty Name="FundingAmount" ColumnName="FundingAmount" />
+          <ScalarProperty Name="FundingStart" ColumnName="FundingStart" />
+          <ScalarProperty Name="FundingEnd" ColumnName="FundingEnd" />
+          <ScalarProperty Name="FundingNeeds" ColumnName="FundingNeeds" />
+          <ScalarProperty Name="ContinuationAmount" ColumnName="ContinuationAmount" />
+          <ScalarProperty Name="ContinuationDetails" ColumnName="ContinuationDetails" />
+          <ScalarProperty Name="FundraisingText" ColumnName="FundraisingText" />
+          <ScalarProperty Name="FundraisingWhy" ColumnName="FundraisingWhy" />
+          <ScalarProperty Name="FundraisingNeeds" ColumnName="FundraisingNeeds" />
+          <ScalarProperty Name="FundraisingRequired" ColumnName="FundraisingRequired" />
+          <ScalarProperty Name="FundraisingComplete" ColumnName="FundraisingComplete" />
+          <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+          <ScalarProperty Name="DonorAnonymous" ColumnName="DonorAnonymous" />
+          <ScalarProperty Name="DonorAmount" ColumnName="DonorAmount" />
+          <ScalarProperty Name="DonationDate" ColumnName="DonationDate" />
+          <ScalarProperty Name="DonationIncremental" ColumnName="DonationIncremental" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblGovOfficeRegions">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblGovOfficeRegion">
+        <MappingFragment StoreEntitySet="tblGovOfficeRegion">
+          <ScalarProperty Name="GovOfficeRegionID" ColumnName="GovOfficeRegionID" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+          <ScalarProperty Name="GovOfficeRegionName" ColumnName="GovOfficeRegionName" />
+          <ScalarProperty Name="GovOfficeRegionDescription" ColumnName="GovOfficeRegionDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblMinorWorks">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblMinorWork">
+        <MappingFragment StoreEntitySet="tblMinorWork">
+          <ScalarProperty Name="MinorWorkID" ColumnName="MinorWorkID" />
+          <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+          <ScalarProperty Name="ShortDecription" ColumnName="ShortDecription" />
+          <ScalarProperty Name="NoteAction" ColumnName="NoteAction" />
+          <ScalarProperty Name="EstimatesCost" ColumnName="EstimatesCost" />
+          <ScalarProperty Name="ActualCost" ColumnName="ActualCost" />
+          <ScalarProperty Name="DirectorateID" ColumnName="DirectorateID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="AuthorisedID" ColumnName="AuthorisedID" />
+          <ScalarProperty Name="Statu" ColumnName="Statu" />
+          <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
+          <ScalarProperty Name="AuthorisedDate" ColumnName="AuthorisedDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="AnticipatedCompletion" ColumnName="AnticipatedCompletion" />
+          <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsProject" ColumnName="IsProject" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblOrganisations">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblOrganisation">
+        <MappingFragment StoreEntitySet="tblOrganisation">
+          <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+          <ScalarProperty Name="OrgName" ColumnName="OrgName" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="WebAddress" ColumnName="WebAddress" />
+          <ScalarProperty Name="CharityNumber" ColumnName="CharityNumber" />
+          <ScalarProperty Name="CompanyNumber" ColumnName="CompanyNumber" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+          <ScalarProperty Name="Preferred" ColumnName="Preferred" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblOrganisationServices">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblOrganisationService">
+        <MappingFragment StoreEntitySet="tblOrganisationService">
+          <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="Roles" ColumnName="Roles" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblPremises">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblPremis">
+        <MappingFragment StoreEntitySet="tblPremises">
+          <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+          <ScalarProperty Name="PremisesName" ColumnName="PremisesName" />
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="KnowAs" ColumnName="KnowAs" />
+          <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+          <ScalarProperty Name="LocationStatus" ColumnName="LocationStatus" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+          <ScalarProperty Name="PrimaryLocation" ColumnName="PrimaryLocation" />
+          <ScalarProperty Name="LocationManaged" ColumnName="LocationManaged" />
+          <ScalarProperty Name="LocationDescription" ColumnName="LocationDescription" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="MinicomNumber" ColumnName="MinicomNumber" />
+          <ScalarProperty Name="FlagDate" ColumnName="FlagDate" />
+          <ScalarProperty Name="IsSpecialist" ColumnName="IsSpecialist" />
+          <ScalarProperty Name="MediaContactID" ColumnName="MediaContactID" />
+          <ScalarProperty Name="CateringContactID" ColumnName="CateringContactID" />
+          <ScalarProperty Name="CateringType" ColumnName="CateringType" />
+          <ScalarProperty Name="Network" ColumnName="Network" />
+          <ScalarProperty Name="ClientITFacilities" ColumnName="ClientITFacilities" />
+          <ScalarProperty Name="LocalDemographicNotes" ColumnName="LocalDemographicNotes" />
+          <ScalarProperty Name="RoomAvailability" ColumnName="RoomAvailability" />
+          <ScalarProperty Name="TravelDetails" ColumnName="TravelDetails" />
+          <ScalarProperty Name="Bus" ColumnName="Bus" />
+          <ScalarProperty Name="Rail" ColumnName="Rail" />
+          <ScalarProperty Name="Airport" ColumnName="Airport" />
+          <ScalarProperty Name="HostingContactID" ColumnName="HostingContactID" />
+          <ScalarProperty Name="ParkingSpaces" ColumnName="ParkingSpaces" />
+          <ScalarProperty Name="ParkingAlternative" ColumnName="ParkingAlternative" />
+          <ScalarProperty Name="RoomRate" ColumnName="RoomRate" />
+          <ScalarProperty Name="BBRate" ColumnName="BBRate" />
+          <ScalarProperty Name="DBBRate" ColumnName="DBBRate" />
+          <ScalarProperty Name="DDRate" ColumnName="DDRate" />
+          <ScalarProperty Name="TwentyfourhourRate" ColumnName="TwentyfourhourRate" />
+          <ScalarProperty Name="TeaAndCoffee" ColumnName="TeaAndCoffee" />
+          <ScalarProperty Name="NoMeetingRoom" ColumnName="NoMeetingRoom" />
+          <ScalarProperty Name="MeetingRoomRate" ColumnName="MeetingRoomRate" />
+          <ScalarProperty Name="NegRoomRate" ColumnName="NegRoomRate" />
+          <ScalarProperty Name="BBNegRate" ColumnName="BBNegRate" />
+          <ScalarProperty Name="DBBNegRate" ColumnName="DBBNegRate" />
+          <ScalarProperty Name="DDNegRate" ColumnName="DDNegRate" />
+          <ScalarProperty Name="TwentyfourhourNegRate" ColumnName="TwentyfourhourNegRate" />
+          <ScalarProperty Name="LastDate" ColumnName="LastDate" />
+          <ScalarProperty Name="ReDate" ColumnName="ReDate" />
+          <ScalarProperty Name="PreferredStatus" ColumnName="PreferredStatus" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="Coding" ColumnName="Coding" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblPremisesOpeningTimes">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblPremisesOpeningTime">
+        <MappingFragment StoreEntitySet="tblPremisesOpeningTime">
+          <ScalarProperty Name="PremisesOpeningTimeID" ColumnName="PremisesOpeningTimeID" />
+          <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+          <ScalarProperty Name="WeekendDay" ColumnName="WeekendDay" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblProgrammes">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblProgramme">
+        <MappingFragment StoreEntitySet="tblProgramme">
+          <ScalarProperty Name="ProgrammeID" ColumnName="ProgrammeID" />
+          <ScalarProperty Name="ProgrammeName" ColumnName="ProgrammeName" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="ProgrammeDescription" ColumnName="ProgrammeDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblReferenceDatas">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblReferenceData">
+        <MappingFragment StoreEntitySet="tblReferenceData">
+          <ScalarProperty Name="RefID" ColumnName="RefID" />
+          <ScalarProperty Name="RefCode" ColumnName="RefCode" />
+          <ScalarProperty Name="RefValue" ColumnName="RefValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblRoles">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblRole">
+        <MappingFragment StoreEntitySet="tblRole">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblServices">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblService">
+        <MappingFragment StoreEntitySet="tblService">
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="ProgrammeID" ColumnName="ProgrammeID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="ClientDescription" ColumnName="ClientDescription" />
+          <ScalarProperty Name="StartExpected" ColumnName="StartExpected" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="ExtendableYears" ColumnName="ExtendableYears" />
+          <ScalarProperty Name="ExtendableMonths" ColumnName="ExtendableMonths" />
+          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+          <ScalarProperty Name="DeptCode" ColumnName="DeptCode" />
+          <ScalarProperty Name="DescriptionDelivery" ColumnName="DescriptionDelivery" />
+          <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
+          <ScalarProperty Name="ContractValue" ColumnName="ContractValue" />
+          <ScalarProperty Name="ContractPayment" ColumnName="ContractPayment" />
+          <ScalarProperty Name="TimeLimitedYears" ColumnName="TimeLimitedYears" />
+          <ScalarProperty Name="TimeLimitedMonths" ColumnName="TimeLimitedMonths" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Participation" ColumnName="Participation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblServicePremises">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblServicePremise">
+        <MappingFragment StoreEntitySet="tblServicePremise">
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+          <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblSupportingMaterials">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblSupportingMaterial">
+        <MappingFragment StoreEntitySet="tblSupportingMaterial">
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="TypeFile" ColumnName="TypeFile" />
+          <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTeams">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblTeam">
+        <MappingFragment StoreEntitySet="tblTeam">
+          <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="BusinessID" ColumnName="BusinessID" />
+          <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="WebAddress" ColumnName="WebAddress" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTowns">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblTown">
+        <MappingFragment StoreEntitySet="tblTown">
+          <ScalarProperty Name="TownID" ColumnName="TownID" />
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="TownName" ColumnName="TownName" />
+          <ScalarProperty Name="TownDescription" ColumnName="TownDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTrustDistricts">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblTrustDistrict">
+        <MappingFragment StoreEntitySet="tblTrustDistrict">
+          <ScalarProperty Name="TrustDistrictID" ColumnName="TrustDistrictID" />
+          <ScalarProperty Name="TrustRegionID" ColumnName="TrustRegionID" />
+          <ScalarProperty Name="TrustDistrictName" ColumnName="TrustDistrictName" />
+          <ScalarProperty Name="TrustDistrictDescription" ColumnName="TrustDistrictDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTrustRegions">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblTrustRegion">
+        <MappingFragment StoreEntitySet="tblTrustRegion">
+          <ScalarProperty Name="TrustRegionID" ColumnName="TrustRegionID" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="TrustRegionName" ColumnName="TrustRegionName" />
+          <ScalarProperty Name="TrustRegionDescription" ColumnName="TrustRegionDescription" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblUsers">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblUser">
+        <MappingFragment StoreEntitySet="tblUser">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblVolunteerings">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblVolunteering">
+        <MappingFragment StoreEntitySet="tblVolunteering">
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+          <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="VolunteerNos" ColumnName="VolunteerNos" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="tblContactReference" TypeName="ServiceDirectoryModel.tblContactReference" StoreEntitySet="tblContactReference">
+      <EndProperty Name="tblContact">
+        <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+      </EndProperty>
+      <EndProperty Name="tblReferenceData">
+        <ScalarProperty Name="RefID" ColumnName="RefID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="tblDetailPremises" TypeName="ServiceDirectoryModel.tblDetailPremises" StoreEntitySet="tblDetailPremises">
+      <EndProperty Name="tblPremises">
+        <ScalarProperty Name="PremisesID" ColumnName="PreID" />
+      </EndProperty>
+      <EndProperty Name="tblPremises1">
+        <ScalarProperty Name="PremisesID" ColumnName="PreIDRelationShip" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="tblOrganisationProgramme" TypeName="ServiceDirectoryModel.tblOrganisationProgramme" StoreEntitySet="tblOrganisationProgramme">
+      <EndProperty Name="tblOrganisation">
+        <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+      </EndProperty>
+      <EndProperty Name="tblProgramme">
+        <ScalarProperty Name="ProgrammeID" ColumnName="ProgrammeID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="tblOrganisationReference" TypeName="ServiceDirectoryModel.tblOrganisationReference" StoreEntitySet="tblOrganisationReference">
+      <EndProperty Name="tblOrganisation">
+        <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+      </EndProperty>
+      <EndProperty Name="tblReferenceData">
+        <ScalarProperty Name="RefID" ColumnName="RefID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="tblPremisesReference" TypeName="ServiceDirectoryModel.tblPremisesReference" StoreEntitySet="tblPremisesReference">
+      <EndProperty Name="tblPremises">
+        <ScalarProperty Name="PremisesID" ColumnName="PremisesID" />
+      </EndProperty>
+      <EndProperty Name="tblReferenceData">
+        <ScalarProperty Name="RefID" ColumnName="RefID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="tblServiceContract" TypeName="ServiceDirectoryModel.tblServiceContract" StoreEntitySet="tblServiceContract">
+      <EndProperty Name="tblReferenceData">
+        <ScalarProperty Name="RefID" ColumnName="RefID" />
+      </EndProperty>
+      <EndProperty Name="tblService">
+        <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="tblServiceReference" TypeName="ServiceDirectoryModel.tblServiceReference" StoreEntitySet="tblServiceReference">
+      <EndProperty Name="tblReferenceData">
+        <ScalarProperty Name="RefID" ColumnName="RefID" />
+      </EndProperty>
+      <EndProperty Name="tblService">
+        <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
