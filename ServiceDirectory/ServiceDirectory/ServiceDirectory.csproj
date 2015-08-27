@@ -130,6 +130,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\NormalUser\NormalUserAreaRegistration.cs" />
     <Compile Include="Areas\SuperUser\SuperUserAreaRegistration.cs" />
+    <Compile Include="Controllers\AddContactController.cs" />
+    <Compile Include="Controllers\EditContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListContactController.cs" />
     <Compile Include="Global.asax.cs">
@@ -357,6 +359,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\ListContact\ListContact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\AddContact\AddContact.cshtml" />
+    <Content Include="Views\EditContact\EditContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\NormalUser\Controllers\" />
