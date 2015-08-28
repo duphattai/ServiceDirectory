@@ -1,39 +1,50 @@
-﻿@model IEnumerable<ServiceDirectory.Models.tblSupportingMaterial>
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblSupportingMaterial>
+@using PagedList.Mvc;
 
-@foreach(var item in @Model)
-{
-    <tr>
-        <td>
-            @item.URL
-        </td>
-        <td>
-            @item.ShortDescription
-        </td>
-        <td>
-            @item.TypeFile
-        </td>
-        <td>
-            @*@item.tblUser.Account*@
-        </td>
-        <td>
-            @item.AddedDate.Value.ToString("dd-MM-yyyy")
-        </td>
-        <td>
-            @Ajax.ActionLink("Edit", "Add_ActionLink", new { URL = @item.URL },
-                                                  new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_edit_supportingmaterial_popup()" },
-                                                  new { @id = "edit_supportingmaterial_link" }) | 
-            <!-- After delete will update list item -->
-            @Ajax.ActionLink("Delete", "Delete_ActionLink", new { URL = @item.URL },
-                                            new AjaxOptions { UpdateTargetId = "supporting_material_list_item", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
-            
-        </td>
+<table class="table table-bordered table-striped">
+    <tr class="label-info">
+        <th class="col-md-2">URL</th>
+        <th class="col-md-3">Description</th>
+        <th class="col-md-1">Type</th>
+        <th class="col-md-2">Added By</th>
+        <th class="col-md-2">Added Date</th>
+        <th class="col-md-2">Action</th>
     </tr>
-}
+    <tbody id="supporting_material_list_item">
+        @foreach (var item in @Model)
+        {
+            <tr>
+                <td>
+                    @item.URL
+                </td>
+                <td>
+                    @item.ShortDescription
+                </td>
+                <td>
+                    @item.TypeFile
+                </td>
+                <td>
+                    @*@item.tblUser.FullName*@
+                </td>
+                <td>
+                    @item.AddedDate.Value.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @Ajax.ActionLink("Edit", "Add_ActionLink", new { URL = @item.URL },
+                                                  new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_edit_supportingmaterial_popup()" },
+                                                  new { @id = "edit_supportingmaterial_link" }) |
+                    <!-- After delete will update list item -->
+                    @Ajax.ActionLink("Delete", "Delete_ActionLink", new { URL = @item.URL },
+                                            new AjaxOptions { UpdateTargetId = "supporting_material_list_item", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
 
-<script>
-    function set_attr_edit_supportingmaterial_popup() {
-        $("#edit_supportingmaterial_link").attr('data-toggle', 'modal');
-        $("#edit_supportingmaterial_link").attr('data-target', '#supportingmaterial_popup');
-        $('#supportingmaterial_popup').modal('show');
-    }
-</script>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("List", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "supporting_material_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+</div>
+

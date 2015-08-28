@@ -1,5 +1,5 @@
-﻿@model ServiceDirectory.Models.tblSupportingMaterial
-
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblSupportingMaterial>
+@using PagedList.Mvc;
 
 <div class="modal fade" id="supportingmaterial_popup" role="dialog">
 <!-- content of pop up here -->
@@ -13,36 +13,8 @@
                                                   new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_supportingmaterial_popup()" },
                                                   new { @id = "add_supportingmaterial_link" })
         </div>
-        <div>
-            <table class="table table-bordered">
-                <tr class="label-info">
-                    <th class="col-md-2">URL</th>
-                    <th class="col-md-3">Description</th>
-                    <th class="col-md-1">Type</th>
-                    <th class="col-md-2">Added By</th>
-                    <th class="col-md-2">Added Date</th>
-                    <th class="col-md-2">Action</th>
-                </tr>
-                <tbody id="supporting_material_list_item">
-                    @Html.Action("GetListItem", "MaintainSupportingMaterial", new {CurrentIndex = @ViewBag.CurrentIndex })
-                </tbody>
-            </table>
-        </div>
-        <div style="float:right">
-            <ul class="pagination">
-                <li>
-                    @Ajax.ActionLink("<", "", "", new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "supporting_material_list_item", OnBegin = "return checkIndexPage()" })
-                </li>
-                    @for (int i = 1; i <= @ViewBag.PageNumber; i++)
-                    {
-                        <li>
-                            @Ajax.ActionLink(i.ToString(), "GetListItem", "MaintainSupportingMaterial", new { CurrentIndex = i}, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "supporting_material_list_item" })
-                        </li>
-                    }
-                <li>
-                    @Ajax.ActionLink(">", "", "", new AjaxOptions { })
-                </li>
-            </ul>
+        <div id="supporting_material_table">
+            @Html.Action("List", "MaintainSupportingMaterial", new { page = 1 })
         </div>
     </div>
 </div>
@@ -53,4 +25,11 @@
         $("#add_supportingmaterial_link").attr('data-target', '#supportingmaterial_popup');
         $('#supportingmaterial_popup').modal('show');
     }
+
+    function set_attr_edit_supportingmaterial_popup() {
+        $("#edit_supportingmaterial_link").attr('data-toggle', 'modal');
+        $("#edit_supportingmaterial_link").attr('data-target', '#supportingmaterial_popup');
+        $('#supportingmaterial_popup').modal('show');
+    }
 </script>
+

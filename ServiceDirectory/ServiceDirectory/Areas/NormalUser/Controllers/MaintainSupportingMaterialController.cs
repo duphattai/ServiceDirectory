@@ -4,44 +4,34 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ServiceDirectory.Models;
+using PagedList;
+
 namespace ServiceDirectory.Areas.NormalUser.Controllers
 {
     public class MaintainSupportingMaterialController : Controller
     {
         ServiceDirectoryEntities db = MaintainOrganisationController.database;
-
-        int pageNumber = 5;
-        int recordsPerList = 15;
-        static string OrgID;
+        static string OrgID = null;
         //
         // GET: /NormalUser/MaintainSupportingMaterial/
 
-        public ActionResult List(string orgID = "")
-        {
-            Guid guid = new Guid(orgID);
-            int paging = db.tblSupportingMaterials.Where(t => t.OrgID == guid).ToList().Count / recordsPerList + 1;
 
-            ViewBag.PageNumber = pageNumber < paging ? pageNumber : paging;
-            ViewBag.CurrentIndex = 1;
+        public ActionResult Index(string orgID)
+        {
             OrgID = orgID;
-            
             return PartialView("List");
         }
 
-
-        public ActionResult GetListItem(string CurrentIndex)
+        public ActionResult List(int? page)
         {
             Guid guid = new Guid(OrgID);
-            List<tblSupportingMaterial> model = db.tblSupportingMaterials.Where(t => t.OrgID == guid).OrderByDescending(order => order.URL).Skip((int.Parse(CurrentIndex) - 1) * recordsPerList).Take(recordsPerList).ToList();
-            
-            // create user account into model
-            foreach(var item in model)
-            {
-                item.tblUser = db.tblUsers.Where(t => t.UserID == item.UserID).SingleOrDefault();
-            }
 
-            return PartialView("Elements/ListItem", model);
+            var list = db.tblSupportingMaterials.Where(t => t.OrgID == guid).OrderBy(g => g.URL).ToList();
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            return PartialView("Elements/ListItem", list.ToPagedList(pageNumber, pageSize));
         }
+
 
         // if URL == "" add mode, otherwise edit mode
         public ActionResult Add_ActionLink(string URL = "")
