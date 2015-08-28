@@ -35,6 +35,7 @@ namespace ServiceDirectory.Models
         public DbSet<tblFacility> tblFacilities { get; set; }
         public DbSet<tblFunding> tblFundings { get; set; }
         public DbSet<tblGovOfficeRegion> tblGovOfficeRegions { get; set; }
+        public DbSet<tblGroupReference> tblGroupReferences { get; set; }
         public DbSet<tblMinorWork> tblMinorWorks { get; set; }
         public DbSet<tblOrganisation> tblOrganisations { get; set; }
         public DbSet<tblOrganisationService> tblOrganisationServices { get; set; }

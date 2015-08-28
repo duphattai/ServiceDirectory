@@ -30,6 +30,7 @@ namespace ServiceDirectory.Models
         public string RefValue { get; set; }
     
         public virtual ICollection<tblFacility> tblFacilities { get; set; }
+        public virtual tblGroupReference tblGroupReference { get; set; }
         public virtual ICollection<tblPremis> tblPremises { get; set; }
         public virtual ICollection<tblContact> tblContacts { get; set; }
         public virtual ICollection<tblOrganisation> tblOrganisations { get; set; }

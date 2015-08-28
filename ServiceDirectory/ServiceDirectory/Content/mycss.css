@@ -1,0 +1,16 @@
+﻿.row {
+    margin:5px;
+    padding:5px;
+}
+.nav-tabs{
+    border-bottom:none;
+}
+.modal-header {
+    border-bottom: none;
+}
+.pagination{
+    margin:auto;
+}
+.modal-header{
+    padding-bottom: 0px;
+}

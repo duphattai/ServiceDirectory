@@ -1,0 +1,56 @@
+﻿@model ServiceDirectory.Models.tblSupportingMaterial
+
+
+<div class="modal fade" id="supportingmaterial_popup" role="dialog">
+<!-- content of pop up here -->
+</div>
+
+<div class="row" style="border: 1px ridge silver; ">
+    <div><strong>Current List of Supporting Materials</strong></div>
+    <div style="margin-top:10px;">
+        <div style="padding-top: 10px; padding-bottom:10px;">
+            @Ajax.ActionLink("Add", "Add_ActionLink", new { URL = ""},
+                                                  new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_supportingmaterial_popup()" },
+                                                  new { @id = "add_supportingmaterial_link" })
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <tr class="label-info">
+                    <th class="col-md-2">URL</th>
+                    <th class="col-md-3">Description</th>
+                    <th class="col-md-1">Type</th>
+                    <th class="col-md-2">Added By</th>
+                    <th class="col-md-2">Added Date</th>
+                    <th class="col-md-2">Action</th>
+                </tr>
+                <tbody id="supporting_material_list_item">
+                    @Html.Action("GetListItem", "MaintainSupportingMaterial", new {CurrentIndex = @ViewBag.CurrentIndex })
+                </tbody>
+            </table>
+        </div>
+        <div style="float:right">
+            <ul class="pagination">
+                <li>
+                    @Ajax.ActionLink("<", "", "", new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "supporting_material_list_item", OnBegin = "return checkIndexPage()" })
+                </li>
+                    @for (int i = 1; i <= @ViewBag.PageNumber; i++)
+                    {
+                        <li>
+                            @Ajax.ActionLink(i.ToString(), "GetListItem", "MaintainSupportingMaterial", new { CurrentIndex = i}, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "supporting_material_list_item" })
+                        </li>
+                    }
+                <li>
+                    @Ajax.ActionLink(">", "", "", new AjaxOptions { })
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function set_attr_add_supportingmaterial_popup() {
+        $("#add_supportingmaterial_link").attr('data-toggle', 'modal');
+        $("#add_supportingmaterial_link").attr('data-target', '#supportingmaterial_popup');
+        $('#supportingmaterial_popup').modal('show');
+    }
+</script>

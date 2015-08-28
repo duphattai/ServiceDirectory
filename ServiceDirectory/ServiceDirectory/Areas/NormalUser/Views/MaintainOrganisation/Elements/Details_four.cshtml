@@ -1,0 +1,100 @@
+﻿@model IEnumerable<ServiceDirectory.Models.tblPremis>
+
+<div style="padding:10px;">
+    <div class="row">
+        <fieldset>
+            <legend>Premise</legend>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="label-info">
+                        <th class="col-md-3">
+                            <label class="label-info"><strong>Premise Name</strong></label>
+                        </th>
+                        <th class="col-md-4">
+                            <label class="label-info"><strong>Address</strong></label>
+                        </th>
+                        <th class="col-md-3">
+                            <label class="label-info"><strong>Primary Location</strong></label>
+                        </th>
+                        <th class="col-md-2">
+                            <label class="label-info"><strong>Phone Number</strong></label>
+                        </th>
+                    </tr>
+
+                    @foreach (var item in @Model)
+                    {
+                        <tr>
+                            <td>@item.PremisesName</td>
+                            <td>@item.AddressLine1</td>
+                            <td>@item.PrimaryLocation</td>
+                            <td>@item.PhoneNumber</td>
+                        </tr>
+                    }
+
+                </thead>
+            </table>
+        </fieldset>
+    </div>
+</div>
+<div style="padding:10px;">
+    <div class="row">
+        <fieldset>
+            <legend>Located In</legend>
+            <div class="col-md-2">
+                Ward:
+            </div>
+            <div class="col-md-4">
+                <input type="text" disabled="disabled" class="btn-block" />
+            </div>
+            <div class="col-md-2">
+                NHS Authority:
+            </div>
+            <div class="col-md-4">
+                <input type="text" disabled="disabled" class="btn-block" />
+            </div>
+        </fieldset>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Borough:
+        </div>
+        <div class="col-md-4">
+            <input type="text" disabled="disabled" class="btn-block" />
+        </div>
+        <div class="col-md-2">
+            Gov't Office Region:
+        </div>
+        <div class="col-md-4">
+            <input type="text" disabled="disabled" class="btn-block" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            Local Authority:
+        </div>
+        <div class="col-md-4">
+            
+        </div>
+        <div class="col-md-2">
+           Trust Region:
+        </div>
+        <div class="col-md-4">
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Unitary Authority:
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-2">
+            Trust District:
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+</div>

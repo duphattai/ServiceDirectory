@@ -1,0 +1,26 @@
+﻿
+
+<div class="row">
+    <div class="col-md-3">
+        EOI Programmes
+    </div>
+    <div class="form-control container col-md-4">
+        @foreach (var item in @ViewBag.listProg)
+        {
+            <input type="checkbox" />@item.RefValue<br />
+        }
+    </div>
+</div>
+           
+<div class="row"> 
+    <div class="col-md-3">
+        EOI Services
+    </div>
+    <div class="form-control container col-md-3">
+        @foreach (var item in @ViewBag.listSer)
+        {
+            <input type="checkbox" />@item.RefValue<br />
+        }
+    </div>     
+</div>
+

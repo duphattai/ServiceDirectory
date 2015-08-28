@@ -1,0 +1,48 @@
+﻿@model ServiceDirectory.Models.tblOrganisation
+
+@using (Ajax.BeginForm("Add_Organisation", "MaintainOrganisation", new AjaxOptions() 
+    { 
+        InsertionMode = InsertionMode.Replace, 
+        HttpMethod = "POST"
+    }))
+{
+    <div class="modal-dialog modal-lg" style="width:950px;">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title"><font color="blue">Organisation Details</font></h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="nav">
+                <ul class="nav nav-tabs col-sm-4" id="organisation_tabs">
+                    <li class="active"><a href="#details_one" data-toggle="tab">Details 1</a></li>
+                    <li><a href="#details_two" data-toggle="tab">Details 2</a></li>
+                </ul>
+
+                <div class="col-sm-1 col-sm-offset-6">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+            <div class="tab-content table-bordered">
+                <div class="tab-pane active" id="details_one">
+                    @Html.Action("Details_One", "MaintainOrganisation")
+                </div>
+
+                <div class="tab-pane" id="details_two">
+                   @Html.Action("Details_two", "MaintainOrganisation")
+                </div>
+
+                <div class="tab-pane" id="details_three">
+                    @Html.Action("Details_three", "MaintainOrganisation")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}

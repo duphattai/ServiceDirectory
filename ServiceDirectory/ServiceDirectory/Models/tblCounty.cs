@@ -17,6 +17,7 @@ namespace ServiceDirectory.Models
         public tblCounty()
         {
             this.tblGovOfficeRegions = new HashSet<tblGovOfficeRegion>();
+            this.tblTowns = new HashSet<tblTown>();
         }
     
         public System.Guid CountyID { get; set; }
@@ -26,5 +27,6 @@ namespace ServiceDirectory.Models
     
         public virtual tblCountry tblCountry { get; set; }
         public virtual ICollection<tblGovOfficeRegion> tblGovOfficeRegions { get; set; }
+        public virtual ICollection<tblTown> tblTowns { get; set; }
     }
 }

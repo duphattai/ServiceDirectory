@@ -1,11 +1,11 @@
-CREATE DATABASE ServiceDirectory
+﻿CREATE DATABASE ServiceDirectory
 GO
 USE ServiceDirectory
 GO
 
 SET DATEFORMAT DMY
 
-----------T�i
+----------Tài
 --Organisation
 --OrganisationReference
 --OrganisationService
@@ -66,11 +66,29 @@ CREATE TABLE tblContact
 	IsActive bit NOT NULL,
 )
 
+------------------------Country
+CREATE TABLE tblCountry
+(
+	CountryID uniqueidentifier primary key,
+	CountryName nvarchar(50) NOT NULL,
+	CountryDescription nvarchar(150) NULL,
+)
+
+
+------------------------County
+CREATE TABLE tblCounty
+(
+	CountyID uniqueidentifier primary key,
+	CountryID uniqueidentifier foreign key references tblCountry(CountryID),
+	CountyName nvarchar(50) NOT NULL,
+	CountyDescription nvarchar(150) NULL,
+)
+
 ------------------------Town
 CREATE TABLE tblTown
 (
 	TownID uniqueidentifier primary key,
-	ContactID uniqueidentifier foreign key references tblContact(ContactID),
+	CountyID uniqueidentifier foreign key references tblCounty(CountyID),
 	TownName nvarchar(50) NOT NULL,
 	TownDescription nvarchar(150) NULL,
 )
@@ -89,7 +107,7 @@ CREATE TABLE tblAddress
 CREATE TABLE tblBusinessType
 (
 	BusinessID uniqueidentifier primary key,
-	BusinessName nvarchar(50) not null,
+	BusinessName nvarchar(200) not null,
 	SICCode int not null,
 )
 
@@ -102,8 +120,8 @@ CREATE TABLE tblOrganisation
 	OrgName		nvarchar(200),
 	ShortDescription nvarchar(1000),
 	FullDescription	nvarchar(2000),
-	PhoneNumber	int,
-	Fax	int,
+	PhoneNumber	varchar(20),
+	Fax	varchar(20),
 	Email varchar(200),
 	WebAddress	varchar(200),
 	CharityNumber	int,
@@ -116,10 +134,16 @@ CREATE TABLE tblOrganisation
 )
 
 ----------------------ReferenceData
+CREATE TABLE tblGroupReference
+(
+	GroupReferenceID int primary key,
+	GroupValue nvarchar(100)
+)
+
 CREATE TABLE tblReferenceData
 (
 	RefID uniqueidentifier primary key,
-	RefCode int not null,
+	RefCode int not null foreign key references tblGroupReference(GroupReferenceID),
 	RefValue nvarchar(50) not null,
 )
 
@@ -213,20 +237,20 @@ CREATE TABLE tblUser
 	UserPassword nvarchar(50) NOT NULL,
 	RoleID uniqueidentifier foreign key references tblRole(RoleID),
 	Email nvarchar(50) NOT NULL,
+	FullName nvarchar(50) NOT NULL
 )
 
 ------------------------------------SupportingMaterial
 CREATE TABLE tblSupportingMaterial
 (
+	SupportID uniqueidentifier primary key,
 	URL	varchar(200),
 	OrgID	uniqueidentifier foreign key references tblOrganisation(OrgID),
 	UserID	uniqueidentifier foreign key references tblUser(UserID),
 	ShortDescription nvarchar(1000),
 	TypeFile	varchar(100)	CHECK (TypeFile IN ('Doc', 'PDF', 'Excel')),
 	AddedDate smalldatetime,
-	IsActive bit,
-
-	PRIMARY KEY (URL, OrgID)
+	IsActive bit
 )
 
 
@@ -244,8 +268,8 @@ CREATE TABLE tblDirectorate
 	AddressLine1	nvarchar(500),
 	AddressLine2	nvarchar(500),
 	AddressLine3	nvarchar(500),
-	PhoneNumber	int,
-	Fax	int,
+	PhoneNumber	varchar(20),
+	Fax	varchar(20),
 	Email varchar(200),
 	WebAddress	varchar(200),
 	CharityNumber	int,
@@ -268,8 +292,8 @@ CREATE TABLE tblDepartment
 	AddressLine1	nvarchar(500),
 	AddressLine2	nvarchar(500),
 	AddressLine3	nvarchar(500),
-	PhoneNumber	int,
-	Fax	int,
+	PhoneNumber	varchar(20),
+	Fax	varchar(20),
 	Email varchar(200),
 	WebAddress	varchar(200),
 	IsActive bit,
@@ -289,8 +313,8 @@ CREATE TABLE tblTeam
 	AddressLine1	nvarchar(500),
 	AddressLine2	nvarchar(500),
 	AddressLine3	nvarchar(500),
-	PhoneNumber	int,
-	Fax	int,
+	PhoneNumber	varchar(20),
+	Fax	varchar(20),
 	Email varchar(200),
 	WebAddress	varchar(200),
 	IsActive bit,
@@ -314,8 +338,8 @@ CREATE TABLE tblPremises
 	PrimaryLocation bit,
 	LocationManaged bit,
 	LocationDescription nvarchar(1000),
-	PhoneNumber	int,
-	Fax	int,
+	PhoneNumber	varchar(20),
+	Fax	varchar(20),
 	MinicomNumber int,
 	FlagDate smalldatetime,
 	IsSpecialist bit,
@@ -488,24 +512,6 @@ CREATE TABLE tblServiceReference
 	primary key (ServiceID, RefID)
 )
 
-------------------------Country
-CREATE TABLE tblCountry
-(
-	CountryID uniqueidentifier primary key,
-	CountryName nvarchar(50) NOT NULL,
-	CountryDescription nvarchar(150) NULL,
-)
-
-
-------------------------County
-CREATE TABLE tblCounty
-(
-	CountyID uniqueidentifier primary key,
-	CountryID uniqueidentifier foreign key references tblCountry(CountryID),
-	CountyName nvarchar(50) NOT NULL,
-	CountyDescription nvarchar(150) NULL,
-)
-
 
 ------------------------TrustRegion
 CREATE TABLE tblTrustRegion
@@ -538,3 +544,83 @@ CREATE TABLE tblGovOfficeRegion
 )
 
 
+
+INSERT INTO tblRole (RoleID,RoleName,RoleDescription) values(Convert(uniqueidentifier, '18ad571d-2c89-4b2d-b2a3-088d9518b2f2'),'NormalUser','Normal user')
+INSERT INTO tblRole (RoleID,RoleName,RoleDescription) values(Convert(uniqueidentifier, '80d2e54c-638f-4b6c-989f-392002f1b211'),'SuperUser','Super user')
+INSERT INTO tblUser (UserID,RoleID,Account,UserPassword,Email, FullName) VALUES(NEWID(),'18ad571d-2c89-4b2d-b2a3-088d9518b2f2','quoc','123456','quockhin@gmail.com', 'Quoc')
+INSERT INTO tblUser (UserID,RoleID,Account,UserPassword,Email, FullName) VALUES(NEWID(),'80d2e54c-638f-4b6c-989f-392002f1b211','tai','123456','uitdptai@gmail.com', 'Tai')
+
+
+INSERT INTO tblGroupReference(GroupReferenceID, GroupValue) values
+								(1, 'organisation specicalism'),
+								(2, 'service personal circumstances capabilities'),
+								(3, 'service disabilities capabilities'),
+								(4, 'service ethnicity capabilities'),
+								(5, 'service barriers capabilities'),
+								(6, 'accreditation'),
+								(7, 'service benefits capabilities');
+
+								
+INSERT INTO tblReferenceData (RefID, RefCode, RefValue) values
+							(NEWID(), 1, 'Blind/Partially Sighted'),
+							(NEWID(), 1, 'Deaf/Hard of Hearing'),
+							(NEWID(), 1, 'Dyslexia'),
+							(NEWID(), 1, 'Learning Disability'),
+							(NEWID(), 1, 'Mental Health'),
+
+							(NEWID(), 2, 'Carer Responsibilities'),
+							(NEWID(), 2, 'Lone Parent'),
+
+							(NEWID(), 3, 'Chest, Breathing problems'),
+							(NEWID(), 3, 'Condition restricting mobility'),
+							(NEWID(), 3, 'Diabetes'),
+							(NEWID(), 3, 'Difficulty in hearing'),
+
+							(NEWID(), 4, 'White British'),
+							(NEWID(), 4, 'White Irish'),
+							(NEWID(), 4, 'Other White'),
+							(NEWID(), 4, 'White & Black Caribbean'),
+							(NEWID(), 4, 'White & Black African'),
+
+							(NEWID(), 5, 'Lone Parent'),
+							(NEWID(), 5, 'ESOL'),
+							(NEWID(), 5, 'Refugee'),
+							(NEWID(), 5, 'Basic Skills'),
+
+							(NEWID(), 6, 'Two Ticks'),
+							(NEWID(), 6, 'Investors In People'),
+							(NEWID(), 6, 'ISO 9001'),
+							(NEWID(), 6, 'ISO 14001'),
+							(NEWID(), 6, 'ISO 27001'),
+
+							(NEWID(), 7, 'Disability Living Allowance'),
+							(NEWID(), 7, 'Employment'),
+							(NEWID(), 7, 'Incapacity'),
+							(NEWID(), 7, 'Income Support');
+
+
+
+INSERT INTO tblCountry(CountryID, CountryName) values (CONVERT(uniqueidentifier, '9cf02af4-7c47-4225-afa8-d3af64a8dd02'), N'Việt Nam')
+INSERT INTO tblCounty(CountyID, CountryID, CountyName) values(CONVERT(uniqueidentifier, '86a752c0-e2e7-4829-9127-00bd118ce194'),'9cf02af4-7c47-4225-afa8-d3af64a8dd02', N'Miền Tây' )
+INSERT INTO tblTown(TownID, CountyID, TownName) values (CONVERT(uniqueidentifier, '7af60496-f170-40c3-88ab-e090aa8d4af5'), '86a752c0-e2e7-4829-9127-00bd118ce194', N'Sóc Trăng')
+INSERT INTO tblTown(TownID, CountyID, TownName) values (CONVERT(uniqueidentifier, '4db27d47-2de5-4202-a48b-71c1ab2cc9d8'), '86a752c0-e2e7-4829-9127-00bd118ce194', N'Cà Mau')
+INSERT INTO tblAddress(AddressID, TownID, PostCode) values(CONVERT(uniqueidentifier, '5d109451-6738-4def-96d2-5a9e96783564'), '4db27d47-2de5-4202-a48b-71c1ab2cc9d8', '970000')
+INSERT INTO tblAddress(AddressID, TownID, PostCode) values(CONVERT(uniqueidentifier, '692377b4-9291-4b85-ad3f-6e24dd663c4d'), '7af60496-f170-40c3-88ab-e090aa8d4af5', '950000')
+
+INSERT INTO tblBusinessType(BusinessID, SICCode, BusinessName) values
+							(CONVERT(uniqueidentifier, '6da12942-7dd3-4416-8c75-2d96043790c3'), 01160, 'abaca and other vegetable textile fibre growing'),
+							(CONVERT(uniqueidentifier, 'fb077524-0ab3-4a10-abf6-467005e9c637'), 10110, 'abattoir (manufacture)'),
+							(convert(uniqueidentifier, '2da6aa37-5da4-49c3-aeaf-a7bec749fbeb'), 17120, 'abrasive base paper (manufacture)'),
+							(CONVERT(uniqueidentifier, '29e20707-b0b3-47ca-b183-b4d1a5e9bfe8'), 23910, 'abrasive bonded disc, wheel and segment (manufacture)'),
+							(convert(uniqueidentifier, '61fe44a1-752f-497d-aade-66027ff912ac'), 23910, 'abrasive cloth (manufacture)'),
+							(CONVERT(uniqueidentifier, 'f5929bae-8e75-4ab1-9fde-8580c744b224'), 23910, 'abrasive grain (manufacture)'),
+							(CONVERT(uniqueidentifier, '31dcc354-cd1c-4766-a14b-7db008e1e16e'), 23910, 'abrasive grain of aluminium oxide (manufacture)'),
+							(CONVERT(uniqueidentifier, 'ac3d7148-f1ab-420c-b03c-939e0f92cb43'), 23910, 'abrasive grain of artificial corundum (manufacture)');
+
+INSERT INTO tblOrganisation(OrgID, OrgName, ShortDescription, BusinessID, AddressLine1, AddressID, PhoneNumber) values
+							(NEWID(), 'Organisation name one', 'Short Description', '6da12942-7dd3-4416-8c75-2d96043790c3', 'Address line one', '5d109451-6738-4def-96d2-5a9e96783564', '1111111111'),
+							(NEWID(), 'Organisation name two', 'Short Description', 'fb077524-0ab3-4a10-abf6-467005e9c637', 'Address line two', '5d109451-6738-4def-96d2-5a9e96783564', '2222222222'),
+							(NEWID(), 'Organisation name three', 'Short Description', '2da6aa37-5da4-49c3-aeaf-a7bec749fbeb', 'Address line three', '5d109451-6738-4def-96d2-5a9e96783564', '3333333333'),
+							(NEWID(), 'Organisation name four', 'Short Description', '29e20707-b0b3-47ca-b183-b4d1a5e9bfe8', 'Address line four', '692377b4-9291-4b85-ad3f-6e24dd663c4d', '5555555555'),
+							(NEWID(), 'Organisation name five', 'Short Description', '61fe44a1-752f-497d-aade-66027ff912ac', 'Address line five', '692377b4-9291-4b85-ad3f-6e24dd663c4d', '4444444444'),
+							(NEWID(), 'Organisation name six', 'Short Description', 'f5929bae-8e75-4ab1-9fde-8580c744b224', 'Address line six', '692377b4-9291-4b85-ad3f-6e24dd663c4d', '4444444444');

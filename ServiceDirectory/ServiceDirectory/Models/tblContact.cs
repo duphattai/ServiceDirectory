@@ -31,7 +31,6 @@ namespace ServiceDirectory.Models
             this.tblProgrammes = new HashSet<tblProgramme>();
             this.tblServices = new HashSet<tblService>();
             this.tblTeams = new HashSet<tblTeam>();
-            this.tblTowns = new HashSet<tblTown>();
             this.tblVolunteerings = new HashSet<tblVolunteering>();
             this.tblReferenceDatas = new HashSet<tblReferenceData>();
         }
@@ -66,7 +65,6 @@ namespace ServiceDirectory.Models
         public virtual ICollection<tblProgramme> tblProgrammes { get; set; }
         public virtual ICollection<tblService> tblServices { get; set; }
         public virtual ICollection<tblTeam> tblTeams { get; set; }
-        public virtual ICollection<tblTown> tblTowns { get; set; }
         public virtual ICollection<tblVolunteering> tblVolunteerings { get; set; }
         public virtual ICollection<tblReferenceData> tblReferenceDatas { get; set; }
     }

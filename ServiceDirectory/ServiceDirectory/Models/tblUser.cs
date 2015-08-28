@@ -24,6 +24,7 @@ namespace ServiceDirectory.Models
         public string UserPassword { get; set; }
         public Nullable<System.Guid> RoleID { get; set; }
         public string Email { get; set; }
+        public string FullName { get; set; }
     
         public virtual tblRole tblRole { get; set; }
         public virtual ICollection<tblSupportingMaterial> tblSupportingMaterials { get; set; }

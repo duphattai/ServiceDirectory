@@ -1,0 +1,53 @@
+﻿@model ServiceDirectory.Models.tblOrganisation
+
+@using (Ajax.BeginForm("Edit_Organisation", "MaintainOrganisation", new AjaxOptions()
+    {
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "POST"
+    }))
+{
+    <div class="modal-dialog modal-lg" style="width:950px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><font color="blue">Organisation Details</font></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="nav">
+                    <ul class="nav nav-tabs col-sm-10" id="organisation_tabs">
+                        <li class="active"><a href="#details_one" data-toggle="tab">Details 1</a></li>
+                        <li><a href="#details_two" data-toggle="tab">Details 2</a></li>
+                        <li><a href="#details_four" data-toggle="tab">Details 4</a></li>
+                    </ul>
+
+                    <div class="col-sm-1">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+                <div class="tab-content table-bordered">
+                    <div class="tab-pane active" id="details_one">
+                       @Html.Action("Details_One", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                    </div>
+
+                    <div class="tab-pane" id="details_two">
+                        @Html.Action("Details_two", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                    </div>
+
+                    <div class="tab-pane" id="details_three">
+                        @Html.Action("Details_three", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                    </div>
+
+                    <div class="tab-pane" id="details_four">
+                        @Html.Action("Details_four", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

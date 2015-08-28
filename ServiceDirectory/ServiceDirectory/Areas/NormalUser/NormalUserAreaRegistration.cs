@@ -17,7 +17,7 @@ namespace ServiceDirectory.Areas.NormalUser
             context.MapRoute(
                 "NormalUser_default",
                 "NormalUser/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Home", id = UrlParameter.Optional }
             );
         }
     }

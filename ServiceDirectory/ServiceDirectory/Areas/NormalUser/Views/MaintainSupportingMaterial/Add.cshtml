@@ -1,0 +1,45 @@
+﻿@model ServiceDirectory.Models.tblSupportingMaterial
+
+@using (Ajax.BeginForm("InsertUpdate_SupportMaterial", "MaintainSupportingMaterial", 
+    new { OldURL = @ViewBag.URL},
+    new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_supporting_message", InsertionMode = InsertionMode.Replace }))
+{ 
+    <div class="modal-dialog modal-lg" style="width:950px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <font color="blue">Organisation</font> >
+                </div>
+                <h4 class="modal-title"><font color="blue">Supporting Materials Details</font></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="nav">
+                    <ul class="nav nav-tabs col-sm-1">
+                        <li class="active"><a href="#support_material_details_one" data-toggle="tab">Details</a></li>
+                    </ul>
+
+                    <div class="col-sm-1 col-sm-offset-9">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+                <div class="tab-content table-bordered">
+                    <div class="tab-pane active" id="support_material_details_one">
+                        @Html.Action("Details_One", "MaintainSupportingMaterial", new { URL = @ViewBag.URL })
+                    </div>
+                </div>
+                <div id="id_supporting_message">
+                    <!-- Message after call action here -->
+                </div>
+                <div>
+                    @Html.ValidationMessageFor(model => model.URL)
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ServiceDirectory.Models.tblOrganisation>
+
+<div class="row">
+    <div style="width:100px;">
+        @Ajax.ActionLink("Add", "Add_ActionLink", null,
+                            new AjaxOptions { UpdateTargetId = "organisation_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_organisation_popup()"},
+                    new { @id = "add_organisation_link" })
+    </div>
+    <div>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr class="label-info">
+                    <th>
+                        <button type="button" class="btn btn-block label-info"><strong>Organisation Name</strong></button>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-block label-info"><strong>Head Office Address Line 1</strong></button>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-block label-info"><strong>Postcode</strong></button>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-block label-info"><strong>Contact</strong></button>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-block label-info"><strong>Is Active?</strong></button>
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-block label-info"><strong>Action</strong></button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrgName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddressLine1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tblAddress.PostCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tblContact.FirstName)
+                        @Html.DisplayFor(modelItem => item.tblContact.Surname)
+                        </td>
+
+                        <td>
+                            @Html.Raw(item.IsActive.ToString())
+                        </td>
+
+                        <td>
+                            @Ajax.ActionLink("Edit", "Edit_ActionLink", new { id = item.OrgID.ToString() },
+                                                    new AjaxOptions { UpdateTargetId = "organisation_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_edit_organisation_popup()"},
+                                                                new { @id = "edit_organisation_link"}) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.OrgID.ToString() })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="organisation_popup" role="dialog">
+        <!-- Content of popup here -->
+    </div>
+
+    <div style="float:right">
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+            <li><a style="pointer-events:none">Page</a></li>
+            <li><a><input type="text" style="height:20px; width:40px;" /></a></li>
+            <li><a style="pointer-events:none">of 2</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>  
+
+<script>
+
+    function set_attr_edit_organisation_popup() {
+        $("#edit_organisation_link").attr('data-toggle', 'modal');
+        $("#edit_organisation_link").attr('data-target', '#organisation_popup');
+
+        $('#organisation_popup').modal('show');
+    }
+
+    function set_attr_add_organisation_popup() {
+        $("#add_organisation_link").attr('data-toggle', 'modal');
+        $("#add_organisation_link").attr('data-target', '#organisation_popup');
+
+        $('#organisation_popup').modal('show');
+    }
+</script>

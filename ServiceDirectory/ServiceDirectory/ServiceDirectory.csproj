@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -128,8 +129,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\NormalUser\Controllers\HomeController.cs" />
+    <Compile Include="Areas\NormalUser\Controllers\MaintainOrganisationController.cs" />
+    <Compile Include="Areas\NormalUser\Controllers\MaintainSupportingMaterialController.cs" />
     <Compile Include="Areas\NormalUser\NormalUserAreaRegistration.cs" />
     <Compile Include="Areas\SuperUser\SuperUserAreaRegistration.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,6 +181,9 @@
       <DependentUpon>ABSD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblGovOfficeRegion.cs">
+      <DependentUpon>ABSD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblGroupReference.cs">
       <DependentUpon>ABSD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMinorWork.cs">
@@ -236,6 +244,11 @@
     <Content Include="App_Data\ServiceDirectory_log.ldf">
       <DependentUpon>ServiceDirectory.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\mycss.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -294,6 +307,28 @@
     <Content Include="Content\Site.css" />
     <Content Include="Areas\NormalUser\Views\Web.config" />
     <Content Include="Areas\SuperUser\Views\Web.config" />
+    <Content Include="Areas\NormalUser\Views\Home\Home.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\List.cshtml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Add.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Elements\Details_one.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Elements\Details_two.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Elements\Details_three.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Elements\Details_four.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Edit.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\List.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Add.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Elements\Details_One.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Elements\ListItem.cshtml" />
     <EntityDeploy Include="Models\ABSD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ABSD.Designer.cs</LastGenOutput>
@@ -311,9 +346,10 @@
       <DependentUpon>ABSD.edmx</DependentUpon>
       <LastGenOutput>ABSD.cs</LastGenOutput>
     </Content>
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
@@ -338,15 +374,14 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\NormalUser\Controllers\" />
     <Folder Include="Areas\NormalUser\Models\" />
     <Folder Include="Areas\NormalUser\Views\Shared\" />
     <Folder Include="Areas\SuperUser\Controllers\" />
     <Folder Include="Areas\SuperUser\Models\" />
     <Folder Include="Areas\SuperUser\Views\Shared\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

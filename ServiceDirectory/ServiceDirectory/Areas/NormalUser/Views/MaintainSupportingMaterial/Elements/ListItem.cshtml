@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ServiceDirectory.Models.tblSupportingMaterial>
+
+@foreach(var item in @Model)
+{
+    <tr>
+        <td>
+            @item.URL
+        </td>
+        <td>
+            @item.ShortDescription
+        </td>
+        <td>
+            @item.TypeFile
+        </td>
+        <td>
+            @*@item.tblUser.Account*@
+        </td>
+        <td>
+            @item.AddedDate.Value.ToString("dd-MM-yyyy")
+        </td>
+        <td>
+            @Ajax.ActionLink("Edit", "Add_ActionLink", new { URL = @item.URL },
+                                                  new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_edit_supportingmaterial_popup()" },
+                                                  new { @id = "edit_supportingmaterial_link" }) | 
+            <!-- After delete will update list item -->
+            @Ajax.ActionLink("Delete", "Delete_ActionLink", new { URL = @item.URL },
+                                            new AjaxOptions { UpdateTargetId = "supporting_material_list_item", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
+            
+        </td>
+    </tr>
+}
+
+<script>
+    function set_attr_edit_supportingmaterial_popup() {
+        $("#edit_supportingmaterial_link").attr('data-toggle', 'modal');
+        $("#edit_supportingmaterial_link").attr('data-target', '#supportingmaterial_popup');
+        $('#supportingmaterial_popup').modal('show');
+    }
+</script>
