@@ -335,8 +335,10 @@
     <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Edit.cshtml" />
     <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\List.cshtml" />
     <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Add.cshtml" />
-    <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Elements\Details_One.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Elements\Details.cshtml" />
     <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Elements\ListItem.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainTeam\List.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainTeam\Add.cshtml" />
     <EntityDeploy Include="Models\ABSD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ABSD.Designer.cs</LastGenOutput>
@@ -354,6 +356,8 @@
       <DependentUpon>ABSD.edmx</DependentUpon>
       <LastGenOutput>ABSD.cs</LastGenOutput>
     </Content>
+    <Content Include="Areas\NormalUser\Views\MaintainTeam\Elements\ListItem.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainTeam\Elements\Details.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

@@ -37,7 +37,6 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         public ActionResult Add_ActionLink(string URL = "")
         {
             @ViewBag.URL = URL;
-
             return PartialView("Add");
         }
 
@@ -87,7 +86,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         }
 
         // if Id == "" add mode, otherwise edit mode
-        public ActionResult Details_One(string URL = "")
+        public ActionResult Details(string URL = "")
         {
             tblSupportingMaterial model = new tblSupportingMaterial();
             if(!string.IsNullOrEmpty(URL))
@@ -96,7 +95,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 model = db.tblSupportingMaterials.Where(t => t.URL == URL && t.OrgID == guid).SingleOrDefault();
             }
             model.AddedDate = DateTime.Today;
-            return PartialView("Elements/Details_One", model);
+            return PartialView("Elements/Details", model);
         }
 
         // delete item from list

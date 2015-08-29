@@ -1,0 +1,53 @@
+﻿@model ServiceDirectory.Models.tblTeam
+
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+@using (Ajax.BeginForm("InsertUpdate_Team", "MaintainTeam",
+    new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_team_message", InsertionMode = InsertionMode.Replace }))
+{
+   @Html.AntiForgeryToken()
+    <div class="modal-dialog modal-lg" style="width:950px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <font color="blue">Organisation</font> > <font color="blue">Directorate</font> > <font color="blue">Department</font>
+                </div>
+                <h4><font color="green" size="5">Team Details</font></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="nav">
+                    <ul class="nav nav-tabs col-sm-1">
+                        <li class="active"><a href="#team_details" data-toggle="tab">Details</a></li>
+                    </ul>
+
+                    <div class="col-sm-1 col-sm-offset-9">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+                <div class="tab-content table-bordered">
+                    <div class="tab-pane active" id="team_details">
+                        @Html.Action("Details", "MaintainTeam", new { TeamID = @ViewBag.TeamID })
+                    </div>
+                </div>
+                <div id="id_team_message">
+                    <!-- Message after call action here -->
+                </div>
+                <div>
+                    @Html.ValidationMessageFor(model => model.TeamName)
+                    @Html.ValidationMessageFor(model => model.ShortDescription)
+                    @Html.ValidationMessageFor(model => model.FullDescription)
+                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    @Html.ValidationMessageFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Fax)
+                    @Html.ValidationMessageFor(model => model.WebAddress)
+                </div>
+            </div>
+        </div>
+    </div>
+}

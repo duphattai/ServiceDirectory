@@ -1,0 +1,32 @@
+﻿
+<div class="modal fade" id="team_popup" role="dialog">
+    <!-- content of pop up here -->
+</div>
+
+<div class="row" style="border: 1px ridge silver; ">
+    <div style="margin-top:10px;">
+        <div style="padding-top: 10px; padding-bottom:10px;">
+            @Ajax.ActionLink("Add", "Add_ActionLink", new { TeamID = "" },
+                                                            new AjaxOptions {  HttpMethod = "POST", UpdateTargetId = "team_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_team_popup()" },
+                                                            new { @id = "add_team_link" })
+        </div>
+        <div id="team_table">
+            @Html.Action("GetListTeams", "MaintainTeam", new { page = 1 })
+        </div>
+    </div>
+</div>
+
+<script>
+    function set_attr_add_team_popup() {
+        $("#add_team_link").attr('data-toggle', 'modal');
+        $("#add_team_link").attr('data-target', '#team_popup');
+        $('#team_popup').modal('show');
+    }
+
+    function set_attr_edit_team_popup() {
+        $("#edit_team_link").attr('data-toggle', 'modal');
+        $("#edit_team_link").attr('data-target', '#team_popup');
+        $('#team_popup').modal('show');
+    }
+</script>
+
