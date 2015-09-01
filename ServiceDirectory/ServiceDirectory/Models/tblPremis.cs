@@ -39,8 +39,8 @@ namespace ServiceDirectory.Models
         public Nullable<bool> PrimaryLocation { get; set; }
         public Nullable<bool> LocationManaged { get; set; }
         public string LocationDescription { get; set; }
-        public Nullable<int> PhoneNumber { get; set; }
-        public Nullable<int> Fax { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Fax { get; set; }
         public Nullable<int> MinicomNumber { get; set; }
         public Nullable<System.DateTime> FlagDate { get; set; }
         public Nullable<bool> IsSpecialist { get; set; }

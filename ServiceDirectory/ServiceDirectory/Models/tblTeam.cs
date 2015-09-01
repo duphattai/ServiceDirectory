@@ -25,8 +25,8 @@ namespace ServiceDirectory.Models
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }
-        public Nullable<int> PhoneNumber { get; set; }
-        public Nullable<int> Fax { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Fax { get; set; }
         public string Email { get; set; }
         public string WebAddress { get; set; }
         public Nullable<bool> IsActive { get; set; }

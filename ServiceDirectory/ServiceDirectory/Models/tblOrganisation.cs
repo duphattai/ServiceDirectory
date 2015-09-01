@@ -31,8 +31,8 @@ namespace ServiceDirectory.Models
         public string OrgName { get; set; }
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
-        public Nullable<int> PhoneNumber { get; set; }
-        public Nullable<int> Fax { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Fax { get; set; }
         public string Email { get; set; }
         public string WebAddress { get; set; }
         public Nullable<int> CharityNumber { get; set; }

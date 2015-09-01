@@ -1,0 +1,47 @@
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblContact>
+@using PagedList.Mvc;
+
+<!-- Table -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Contact Name</th>
+            <th>Mobile Phone</th>
+            <th>Email</th>
+            <th>Contact Type</th>
+            <th>Is Active</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in @Model)
+        {
+            <tr>
+                <td>
+                    @item.FirstName @item.Surname
+                </td>
+                <td>
+                    @item.MobilePhone
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    Reference
+                </td>
+                <td>
+                    @Html.Raw(@item.IsActive)
+                </td>     
+                <td>
+                    @Ajax.ActionLink("Edit", "DeleteContact", "MaintainContact", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "maintain_contact_table" })){}
+                   @Ajax.ActionLink("Delete", "DeleteContact", "MaintainContact", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "maintain_contact_table" })){}
+
+                </td>           
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("GetListItems", new { page, Surname = @ViewBag.Surname, FirstName = @ViewBag.FirstName, check = @ViewBag.check }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "maintain_contact_table", HttpMethod = "POST", InsertionMode = InsertionMode.Replace }))

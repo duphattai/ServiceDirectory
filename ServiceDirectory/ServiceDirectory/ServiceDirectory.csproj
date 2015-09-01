@@ -40,6 +40,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -130,10 +136,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\NormalUser\NormalUserAreaRegistration.cs" />
     <Compile Include="Areas\SuperUser\SuperUserAreaRegistration.cs" />
-    <Compile Include="Controllers\AddContactController.cs" />
-    <Compile Include="Controllers\EditContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ListContactController.cs" />
+    <Compile Include="Controllers\MaintainContactController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -180,6 +184,9 @@
       <DependentUpon>ABSD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblGovOfficeRegion.cs">
+      <DependentUpon>ABSD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblGroupReference.cs">
       <DependentUpon>ABSD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMinorWork.cs">
@@ -244,6 +251,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -302,6 +310,16 @@
     <Content Include="Content\Site.css" />
     <Content Include="Areas\NormalUser\Views\Web.config" />
     <Content Include="Areas\SuperUser\Views\Web.config" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <EntityDeploy Include="Models\ABSD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ABSD.Designer.cs</LastGenOutput>
@@ -319,16 +337,6 @@
       <DependentUpon>ABSD.edmx</DependentUpon>
       <LastGenOutput>ABSD.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -357,10 +365,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\ListContact\ListContact.cshtml" />
+    <Content Include="Views\MaintainContact\ListContact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\AddContact\AddContact.cshtml" />
-    <Content Include="Views\EditContact\EditContact.cshtml" />
+    <Content Include="Views\MaintainContact\AddContact.cshtml" />
+    <Content Include="Views\MaintainContact\EditContact.cshtml" />
+    <Content Include="Views\MaintainContact\Elements\ListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\NormalUser\Controllers\" />

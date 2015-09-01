@@ -20,11 +20,11 @@ namespace ServiceDirectory.Models
         }
     
         public System.Guid TownID { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
+        public Nullable<System.Guid> CountyID { get; set; }
         public string TownName { get; set; }
         public string TownDescription { get; set; }
     
         public virtual ICollection<tblAddress> tblAddresses { get; set; }
-        public virtual tblContact tblContact { get; set; }
+        public virtual tblCounty tblCounty { get; set; }
     }
 }

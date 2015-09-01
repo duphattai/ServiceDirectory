@@ -1,0 +1,79 @@
+﻿
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+
+        <!-- Header content-->
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Search Contact</h4>
+        </div>
+
+        <!-- Body content-->
+        <div class="modal-body ">
+
+            <!-- Input -->
+           
+            <div class="form-horizontal">
+                @using (Ajax.BeginForm("GetListItems", "MaintainContact", new { page = 1 },
+                 new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "maintain_contact_table" }))
+                {
+                <div class="form-group" style=" border: 1px solid #ddd; margin: 5px 0px 5px 0px; padding: 10px 0px 10px 30px;">
+                    <label class="col-xs-2" style=" padding-top: 7px; margin-bottom: 0; text-align: left;">First Name:</label>
+                    <div class="col-xs-3">
+                        <input class="form-control" name="FirstName" type="text">
+                    </div>
+
+                    <label class="col-xs-2" style=" padding-top: 7px; margin-bottom: 0; text-align: left;">Surname:</label>
+                    <div class="col-xs-3">
+                        <input class="form-control" name="Surname" type="text">
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="submit" class="btn btn-primary btn-sm" style="margin-top:1px" value="Search" />
+                    </div>                    
+                    
+                </div>
+                <!-- Checkbox -->
+                <div class="checkbox" style="margin: 0px 0px 0px 0px ">
+                    <label><input name="check" type="checkbox" >Include in-active contact?</label>
+                </div>
+                }.
+            </div>
+
+            <!-- Top Group Button-->
+            <div style="margin: 10px 0px 10px 0px">
+                
+                <button type="button" class="btn btn-primary btn-sm">None</button>
+                <button type="button" class="btn btn-primary btn-sm">Clear</button>          
+                @Ajax.ActionLink("Create", "AddContact", "MaintainContact", new AjaxOptions { UpdateTargetId = "myAddModal", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_contact_add_action_link" }, new { @class = "btn btn-primary btn-sm", @id = "contact_add_action_link" })
+            </div>           
+
+            <div id="maintain_contact_table">
+                
+            </div>
+
+            <!-- Bottom Group Button-->
+            <div style="margin: 10px 0px 10px 0px">
+                    
+            </div>
+
+        </div>
+
+
+        <!-- footer content-->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function set_attr_contact_add_action_link()
+    {
+        $('#contact_add_action_link').attr('data-toggle', 'modal');
+        $('#contact_add_action_link').attr('data-target', '#myAddModal');
+
+        $('#myAddModal').modal('show');
+    }
+</script>

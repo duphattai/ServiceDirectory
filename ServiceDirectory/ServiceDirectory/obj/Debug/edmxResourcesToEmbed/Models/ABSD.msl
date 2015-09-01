@@ -160,6 +160,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tblGroupReferences">
+      <EntityTypeMapping TypeName="ServiceDirectoryModel.tblGroupReference">
+        <MappingFragment StoreEntitySet="tblGroupReference">
+          <ScalarProperty Name="GroupReferenceID" ColumnName="GroupReferenceID" />
+          <ScalarProperty Name="GroupValue" ColumnName="GroupValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tblMinorWorks">
       <EntityTypeMapping TypeName="ServiceDirectoryModel.tblMinorWork">
         <MappingFragment StoreEntitySet="tblMinorWork">
@@ -351,6 +359,7 @@
     <EntitySetMapping Name="tblSupportingMaterials">
       <EntityTypeMapping TypeName="ServiceDirectoryModel.tblSupportingMaterial">
         <MappingFragment StoreEntitySet="tblSupportingMaterial">
+          <ScalarProperty Name="SupportID" ColumnName="SupportID" />
           <ScalarProperty Name="URL" ColumnName="URL" />
           <ScalarProperty Name="OrgID" ColumnName="OrgID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -387,7 +396,7 @@
       <EntityTypeMapping TypeName="ServiceDirectoryModel.tblTown">
         <MappingFragment StoreEntitySet="tblTown">
           <ScalarProperty Name="TownID" ColumnName="TownID" />
-          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
           <ScalarProperty Name="TownName" ColumnName="TownName" />
           <ScalarProperty Name="TownDescription" ColumnName="TownDescription" />
         </MappingFragment>
@@ -423,6 +432,7 @@
           <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

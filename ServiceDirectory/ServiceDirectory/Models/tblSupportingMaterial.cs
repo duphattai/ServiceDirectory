@@ -14,8 +14,9 @@ namespace ServiceDirectory.Models
     
     public partial class tblSupportingMaterial
     {
+        public System.Guid SupportID { get; set; }
         public string URL { get; set; }
-        public System.Guid OrgID { get; set; }
+        public Nullable<System.Guid> OrgID { get; set; }
         public Nullable<System.Guid> UserID { get; set; }
         public string ShortDescription { get; set; }
         public string TypeFile { get; set; }
