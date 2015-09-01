@@ -33,8 +33,9 @@
                     @Html.Raw(@item.IsActive)
                 </td>     
                 <td>
-                    @Ajax.ActionLink("Edit", "DeleteContact", "MaintainContact", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "maintain_contact_table" })){}
-                   @Ajax.ActionLink("Delete", "DeleteContact", "MaintainContact", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "maintain_contact_table" })){}
+                    @Ajax.ActionLink("Edit", "DeleteContact", "MaintainContact", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "maintain_contact_table" }) 
+                    |
+                    @Ajax.ActionLink("Delete", "DeleteContact", "MaintainContact", null, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "maintain_contact_table" })
 
                 </td>           
             </tr>
@@ -44,4 +45,4 @@
 </table>
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("GetListItems", new { page, Surname = @ViewBag.Surname, FirstName = @ViewBag.FirstName, check = @ViewBag.check }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "maintain_contact_table", HttpMethod = "POST", InsertionMode = InsertionMode.Replace }))
+@Html.PagedListPager(Model, page => Url.Action("GetListItems", new { page, Surname = @ViewBag.Surname, FirstName = @ViewBag.FirstName, check=@ViewBag.check}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "maintain_contact_table", HttpMethod = "POST", InsertionMode = InsertionMode.Replace }))

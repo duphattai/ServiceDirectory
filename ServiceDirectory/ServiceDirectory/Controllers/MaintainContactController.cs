@@ -15,15 +15,15 @@ namespace ServiceDirectory.Controllers
 
         public ActionResult Index()
         {
-            ////tblContact model = new tblContact();
-            ////model.ContactID = new Guid();
-            ////model.FirstName = "Minh";
-            ////model.Surname = "Nhan";
-            ////model.Email = "123456@yahoo.com";
-            ////model.IsActive = true;
+            //tblContact model = new tblContact();
+            //model.ContactID = new Guid();
+            //model.FirstName = "Le";
+            //model.Surname = "T A";
+            //model.Email = "TA@yahoo.com";
+            //model.IsActive = false;
 
-            ////db.tblContacts.Add(model);
-            ////db.SaveChanges();
+            //db.tblContacts.Add(model);
+            //db.SaveChanges();
 
             return PartialView("ListContact");
         }
@@ -34,16 +34,56 @@ namespace ServiceDirectory.Controllers
             int pageSize = 15;
             int pageNumber = (page ?? 1);
             List<tblContact> list = null;
-            string a = check;
-            if (string.IsNullOrEmpty(FirstName) == false && string.IsNullOrEmpty(Surname) == true)
-                list = db.tblContacts.Where(t => t.FirstName.Contains(FirstName)).ToList();
-            else
-                if (string.IsNullOrEmpty(FirstName) == true && string.IsNullOrEmpty(Surname) == false)
-                    list = db.tblContacts.Where(t => t.Surname.Contains(Surname)).ToList();
-                else
-                    if(string.IsNullOrEmpty(FirstName) == false && string.IsNullOrEmpty(Surname) == false)
-                        list = db.tblContacts.Where(t => t.FirstName.Contains(FirstName) && t.Surname.Contains(Surname)).ToList();
 
+
+            if(check == "on")
+            {
+
+                if (string.IsNullOrEmpty(FirstName) == false && string.IsNullOrEmpty(Surname) == true)
+                {
+                    list = db.tblContacts.Where(t => t.FirstName.Contains(FirstName)).ToList();
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(FirstName) == true && string.IsNullOrEmpty(Surname) == false)
+                    {
+                        list = db.tblContacts.Where(t => t.Surname.Contains(Surname)).ToList();
+                    }
+
+                    else
+                        if (string.IsNullOrEmpty(FirstName) == false && string.IsNullOrEmpty(Surname) == false)
+                        {
+                            list = db.tblContacts.Where(t => t.FirstName.Contains(FirstName) && t.Surname.Contains(Surname)).ToList();
+                        }
+
+                }
+
+            }
+            else
+            {                  
+
+                    if (string.IsNullOrEmpty(FirstName) == false && string.IsNullOrEmpty(Surname) == true)
+                    {
+                        list = db.tblContacts.Where(t => t.FirstName.Contains(FirstName) && t.IsActive == true).ToList();
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(FirstName) == true && string.IsNullOrEmpty(Surname) == false)
+                        {
+                            list = db.tblContacts.Where(t => t.Surname.Contains(Surname) && t.IsActive == true).ToList();
+                        }
+                            
+                        else
+                        {
+                            if (string.IsNullOrEmpty(FirstName) == false && string.IsNullOrEmpty(Surname) == false)
+                                list = db.tblContacts.Where(t => t.FirstName.Contains(FirstName) && t.Surname.Contains(Surname) && t.IsActive == true).ToList();
+                        }
+                            
+                    }
+                        
+            }
+                            
+                  
             ViewBag.FirstName = FirstName;
             ViewBag.Surname = Surname;
             ViewBag.check = check;
