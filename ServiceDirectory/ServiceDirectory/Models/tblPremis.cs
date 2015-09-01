@@ -26,13 +26,13 @@ namespace ServiceDirectory.Models
             this.tblReferenceDatas = new HashSet<tblReferenceData>();
         }
     
-        public System.Guid PremisesID { get; set; }
+        public int PremisesID { get; set; }
         public string PremisesName { get; set; }
-        public Nullable<System.Guid> AddressID { get; set; }
+        public Nullable<int> AddressID { get; set; }
         public string AddressLine1 { get; set; }
         public string LocationName { get; set; }
         public string KnowAs { get; set; }
-        public Nullable<System.Guid> OrgID { get; set; }
+        public Nullable<int> OrgID { get; set; }
         public string LocationStatus { get; set; }
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }
@@ -44,9 +44,9 @@ namespace ServiceDirectory.Models
         public Nullable<int> MinicomNumber { get; set; }
         public Nullable<System.DateTime> FlagDate { get; set; }
         public Nullable<bool> IsSpecialist { get; set; }
-        public Nullable<System.Guid> MediaContactID { get; set; }
-        public Nullable<System.Guid> CateringContactID { get; set; }
-        public Nullable<System.Guid> CateringType { get; set; }
+        public Nullable<int> MediaContactID { get; set; }
+        public Nullable<int> CateringContactID { get; set; }
+        public Nullable<int> CateringType { get; set; }
         public string Network { get; set; }
         public string ClientITFacilities { get; set; }
         public string LocalDemographicNotes { get; set; }
@@ -55,7 +55,7 @@ namespace ServiceDirectory.Models
         public string Bus { get; set; }
         public string Rail { get; set; }
         public string Airport { get; set; }
-        public Nullable<System.Guid> HostingContactID { get; set; }
+        public Nullable<int> HostingContactID { get; set; }
         public Nullable<int> ParkingSpaces { get; set; }
         public string ParkingAlternative { get; set; }
         public Nullable<decimal> RoomRate { get; set; }

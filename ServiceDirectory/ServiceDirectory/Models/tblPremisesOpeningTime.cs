@@ -14,8 +14,8 @@ namespace ServiceDirectory.Models
     
     public partial class tblPremisesOpeningTime
     {
-        public System.Guid PremisesOpeningTimeID { get; set; }
-        public Nullable<System.Guid> PremisesID { get; set; }
+        public int PremisesOpeningTimeID { get; set; }
+        public Nullable<int> PremisesID { get; set; }
         public string WeekendDay { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }

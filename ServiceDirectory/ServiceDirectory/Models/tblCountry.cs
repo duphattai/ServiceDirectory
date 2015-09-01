@@ -20,7 +20,7 @@ namespace ServiceDirectory.Models
             this.tblTrustRegions = new HashSet<tblTrustRegion>();
         }
     
-        public System.Guid CountryID { get; set; }
+        public int CountryID { get; set; }
         public string CountryName { get; set; }
         public string CountryDescription { get; set; }
     

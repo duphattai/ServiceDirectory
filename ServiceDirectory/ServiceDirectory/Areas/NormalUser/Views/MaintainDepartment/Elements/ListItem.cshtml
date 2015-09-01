@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblDepartment>
+@using PagedList.Mvc;
+
+<table class="table table-bordered table-striped">
+    <tr class="label-info">
+        <th class="col-md-2">Department Name</th>
+        <th class="col-md-3">Address Line 1</th>
+        <th class="col-md-1">Postcode</th>
+        <th class="col-md-2">Contact</th>
+        <th class="col-md-2">is Active</th>
+        <th class="col-md-2">Action</th>
+    </tr>
+    <tbody id="supporting_material_list_item">
+        @foreach (var item in @Model)
+        {
+            <tr>
+                <td>
+                    @item.DepartmentName
+                </td>
+                <td>
+                    @item.AddressLine1
+                </td>
+                <td>
+                    @item.tblAddress.PostCode
+                </td>
+                <td>
+                    @item.tblContact.FirstName @item.tblContact.Surname
+                </td>
+                <td>
+                    @Html.Raw(@item.IsActive.Value)
+                </td>
+                <td>
+                    @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDepartment", new { DepartmentID = @item.DepartmentID },
+                                               new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_edit_department_popup()" },
+                                                  new { @id = "edit_department_link" }) |
+                    <!-- After delete will update list item -->
+                    @Ajax.ActionLink("Delete", "Delete_ActionLink", new { DepartmentID = @item.DepartmentID, page = @Model.PageNumber },
+                                   new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("GetListDepartments", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+</div>
+

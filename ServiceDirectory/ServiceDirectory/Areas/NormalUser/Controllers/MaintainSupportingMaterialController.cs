@@ -24,9 +24,8 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
         public ActionResult List(int? page)
         {
-            Guid guid = new Guid(OrgID);
 
-            var list = db.tblSupportingMaterials.Where(t => t.OrgID == guid).OrderBy(g => g.URL).ToList();
+            var list = db.tblSupportingMaterials.Where(t => t.OrgID == int.Parse(OrgID)).OrderBy(g => g.URL).ToList();
             int pageSize = 15;
             int pageNumber = (page ?? 1);
             return PartialView("Elements/ListItem", list.ToPagedList(pageNumber, pageSize));
@@ -48,15 +47,13 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         {
             if(string.IsNullOrEmpty(OldURL)) // add mode
             {
-                Guid guid = new Guid(OrgID);
                 // check URL is exists
-                tblSupportingMaterial exists = db.tblSupportingMaterials.Where(t => t.URL == model.URL && t.OrgID == guid).SingleOrDefault();
+                tblSupportingMaterial exists = db.tblSupportingMaterials.Where(t => t.URL == model.URL && t.OrgID == int.Parse(OrgID)).SingleOrDefault();
 
                 if(exists == null) // not exists, can insert
                 {
                     model.AddedDate = DateTime.Now;
-                    model.SupportID = Guid.NewGuid();
-                    model.OrgID = guid;
+                    model.OrgID = int.Parse(OrgID);
                     db.tblSupportingMaterials.Add(model);
                     db.SaveChanges();
 
@@ -68,7 +65,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             else //edit mode
             {
                 // check new URL is exists
-                List<tblSupportingMaterial> list = db.tblSupportingMaterials.Where(t => (t.URL == model.URL || t.URL == OldURL ) && t.OrgID == new Guid(OrgID)).ToList();
+                List<tblSupportingMaterial> list = db.tblSupportingMaterials.Where(t => (t.URL == model.URL || t.URL == OldURL ) && t.OrgID == int.Parse(OrgID)).ToList();
 
                 if(list.Count < 2) // not exist, can update
                 {
@@ -91,8 +88,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             tblSupportingMaterial model = new tblSupportingMaterial();
             if(!string.IsNullOrEmpty(URL))
             {
-                Guid guid = new Guid(OrgID);
-                model = db.tblSupportingMaterials.Where(t => t.URL == URL && t.OrgID == guid).SingleOrDefault();
+                model = db.tblSupportingMaterials.Where(t => t.URL == URL && t.OrgID == int.Parse(OrgID)).SingleOrDefault();
             }
             model.AddedDate = DateTime.Today;
             return PartialView("Elements/Details", model);
@@ -103,7 +99,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         {
             // delete item selected
             Guid guid = new Guid(OrgID);
-            tblSupportingMaterial delete = db.tblSupportingMaterials.Where(t => t.URL == URL && t.OrgID == guid).SingleOrDefault();
+            tblSupportingMaterial delete = db.tblSupportingMaterials.Where(t => t.URL == URL && t.OrgID == int.Parse(OrgID)).SingleOrDefault();
             if(delete != null)
             {
                 db.tblSupportingMaterials.Remove(delete);

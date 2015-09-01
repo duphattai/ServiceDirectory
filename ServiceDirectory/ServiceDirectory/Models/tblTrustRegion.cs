@@ -19,11 +19,11 @@ namespace ServiceDirectory.Models
             this.tblTrustDistricts = new HashSet<tblTrustDistrict>();
         }
     
-        public System.Guid TrustRegionID { get; set; }
-        public Nullable<System.Guid> CountryID { get; set; }
+        public int TrustRegionID { get; set; }
+        public Nullable<int> CountryID { get; set; }
         public string TrustRegionName { get; set; }
         public string TrustRegionDescription { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual tblCountry tblCountry { get; set; }
         public virtual ICollection<tblTrustDistrict> tblTrustDistricts { get; set; }

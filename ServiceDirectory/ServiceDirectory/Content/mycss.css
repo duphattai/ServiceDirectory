@@ -1,6 +1,6 @@
 ﻿.row {
     margin:5px;
-    padding:5px;
+    padding:1px;
 }
 .nav-tabs{
     border-bottom:none;
@@ -12,5 +12,11 @@
     margin:auto;
 }
 .modal-header{
-    padding-bottom: 0px;
+    padding-bottom:0px;
+}
+.btn{
+    padding: 5px 10px;
+}
+.modal-body{
+    padding-top:0px;
 }

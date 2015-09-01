@@ -23,9 +23,9 @@ namespace ServiceDirectory.Models
             this.tblReferenceDatas1 = new HashSet<tblReferenceData>();
         }
     
-        public System.Guid ServiceID { get; set; }
-        public Nullable<System.Guid> ProgrammeID { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
+        public int ServiceID { get; set; }
+        public Nullable<int> ProgrammeID { get; set; }
+        public Nullable<int> ContactID { get; set; }
         public string ServiceName { get; set; }
         public string ShortDescription { get; set; }
         public string ClientDescription { get; set; }
@@ -42,7 +42,7 @@ namespace ServiceDirectory.Models
         public Nullable<bool> ContractPayment { get; set; }
         public Nullable<System.DateTime> TimeLimitedYears { get; set; }
         public Nullable<System.DateTime> TimeLimitedMonths { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
         public string Participation { get; set; }
     
         public virtual tblContact tblContact { get; set; }

@@ -19,7 +19,7 @@ namespace ServiceDirectory.Models
             this.tblUsers = new HashSet<tblUser>();
         }
     
-        public System.Guid RoleID { get; set; }
+        public int RoleID { get; set; }
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
     

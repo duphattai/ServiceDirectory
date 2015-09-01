@@ -14,8 +14,8 @@ namespace ServiceDirectory.Models
     
     public partial class tblVolunteering
     {
-        public System.Guid ContactID { get; set; }
-        public System.Guid PremisesID { get; set; }
+        public int ContactID { get; set; }
+        public int PremisesID { get; set; }
         public string Purpose { get; set; }
         public string Detail { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }

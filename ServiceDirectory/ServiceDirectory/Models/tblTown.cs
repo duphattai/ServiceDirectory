@@ -19,8 +19,8 @@ namespace ServiceDirectory.Models
             this.tblAddresses = new HashSet<tblAddress>();
         }
     
-        public System.Guid TownID { get; set; }
-        public Nullable<System.Guid> CountyID { get; set; }
+        public int TownID { get; set; }
+        public Nullable<int> CountyID { get; set; }
         public string TownName { get; set; }
         public string TownDescription { get; set; }
     

@@ -19,11 +19,11 @@ namespace ServiceDirectory.Models
             this.tblTeams = new HashSet<tblTeam>();
         }
     
-        public System.Guid DepartmentID { get; set; }
-        public Nullable<System.Guid> DirectorateID { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
-        public Nullable<System.Guid> AddressID { get; set; }
-        public Nullable<System.Guid> BusinessID { get; set; }
+        public int DepartmentID { get; set; }
+        public Nullable<int> DirectorateID { get; set; }
+        public Nullable<int> ContactID { get; set; }
+        public Nullable<int> AddressID { get; set; }
+        public Nullable<int> BusinessID { get; set; }
         public string DepartmentName { get; set; }
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }

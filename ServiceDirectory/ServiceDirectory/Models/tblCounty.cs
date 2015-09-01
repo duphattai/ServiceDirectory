@@ -20,8 +20,8 @@ namespace ServiceDirectory.Models
             this.tblTowns = new HashSet<tblTown>();
         }
     
-        public System.Guid CountyID { get; set; }
-        public Nullable<System.Guid> CountryID { get; set; }
+        public int CountyID { get; set; }
+        public Nullable<int> CountryID { get; set; }
         public string CountyName { get; set; }
         public string CountyDescription { get; set; }
     

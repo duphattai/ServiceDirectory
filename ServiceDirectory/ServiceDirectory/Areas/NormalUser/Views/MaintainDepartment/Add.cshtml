@@ -1,51 +1,51 @@
-﻿@model ServiceDirectory.Models.tblTeam
+﻿@model ServiceDirectory.Models.tblDepartment
 
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
-@using (Ajax.BeginForm("InsertUpdate_Team", "MaintainTeam",
-    new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_team_message", InsertionMode = InsertionMode.Replace }))
+@using (Ajax.BeginForm("InsertUpdate_Department", "MaintainDepartment",
+    new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_department_message", InsertionMode = InsertionMode.Replace }))
 {
     <div class="modal-dialog modal-lg" style="width:950px;">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <font color="blue">Organisation</font> > <font color="blue">Directorate</font> > <font color="blue">Department</font>
+                    <font color="blue">Organisation</font> > <font color="blue">Directorate</font> >
                 </div>
-                <h4><font color="green" size="5">Team Details</font></h4>
+                <h4><font color="green" size="5">Department Details</font></h4>
             </div>
 
             <div class="modal-body">
                 <div class="nav">
                     <ul class="nav nav-tabs col-sm-1">
-                        <li class="active"><a href="#team_details" data-toggle="tab">Details</a></li>
+                        <li class="active"><a href="#team_tab" data-toggle="tab">Details</a></li>
                     </ul>
 
                     <div class="col-sm-2 col-sm-offset-7" style="padding-left:70px;">
                         @if (@ViewBag.IsEditMode == true)
                         {
-                            @Ajax.ActionLink("In-active", "MakeInActive", "MaintainTeam", new { IsActive = false, TeamID = @ViewBag.TeamID }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_team_message", Confirm = "Do you want to make this Team in-active?" }, new { @class = "btn btn-default" })
+                            @Ajax.ActionLink("In-active", "MakeInActive", "MaintainDepartment", new { IsActive = false, DepartmentID = @ViewBag.DepartmentID }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_department_message", Confirm = "Do you want to make this Department in-active?" }, new { @class = "btn btn-default" })
                         }
                     </div>
-                    
+
                     <div class="col-sm-1">
                         <input type="submit" value="Save" class="btn btn-default" />
                     </div>
                     <div class="col-sm-1">
-                        @Ajax.ActionLink("Back", "GetListTeams", "MaintainTeam", new { page = -1}, new AjaxOptions { UpdateTargetId = "team_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "close_popup_maintain_team()" }, new { @class = "btn btn-default", @id = "maintain_team_back" })
+                        @Ajax.ActionLink("Back", "GetListDepartments", "MaintainDepartment", new { page = -1 }, new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-default", @id = "maintain_department_add_back" })
                     </div>
                 </div>
 
                 <div class="tab-content table-bordered">
-                    <div class="tab-pane active" id="team_details">
-                        @Html.Action("Details", "MaintainTeam", new { TeamID = @ViewBag.TeamID })
+                    <div class="tab-pane active" id="team_tab">
+                        @Html.Action("Details", "MaintainDepartment", new { DepartmentID = @ViewBag.DepartmentID })
                     </div>
                 </div>
-                <div id="id_team_message">
+                <div id="id_department_message">
                     <!-- Message after call action here -->
                 </div>
                 <div>
-                    @Html.ValidationMessageFor(model => model.TeamName)
+                    @Html.ValidationMessageFor(model => model.DepartmentName)
                     @Html.ValidationMessageFor(model => model.ShortDescription)
                     @Html.ValidationMessageFor(model => model.FullDescription)
                     @Html.ValidationMessageFor(model => model.PhoneNumber)
@@ -59,12 +59,7 @@
 }
 
 <script>
-    function close_popup_maintain_team()
-    {
-        $('#department_popup').modal('show');
-    }
-
     $(document).ready(function () {
-        $('#maintain_team_back').attr('data-dismiss', 'modal');
+        $('#maintain_department_add_back').attr('data-dismiss', 'modal');
     })
 </script>

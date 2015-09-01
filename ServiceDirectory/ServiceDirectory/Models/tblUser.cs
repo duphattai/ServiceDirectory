@@ -19,10 +19,10 @@ namespace ServiceDirectory.Models
             this.tblSupportingMaterials = new HashSet<tblSupportingMaterial>();
         }
     
-        public System.Guid UserID { get; set; }
+        public int UserID { get; set; }
         public string Account { get; set; }
         public string UserPassword { get; set; }
-        public Nullable<System.Guid> RoleID { get; set; }
+        public Nullable<int> RoleID { get; set; }
         public string Email { get; set; }
         public string FullName { get; set; }
     

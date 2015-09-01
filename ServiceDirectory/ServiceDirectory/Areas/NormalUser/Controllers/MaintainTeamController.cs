@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using ServiceDirectory.Models;
+using System.Data.Entity.Validation;
 namespace ServiceDirectory.Areas.NormalUser.Controllers
 {
     public class MaintainTeamController : Controller
@@ -13,7 +14,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         //
         // GET: /NormalUser/MaintainTeam/
         static string DepartmentID;
-
+        static int PageNumber;
         
         public ActionResult Index(string DepartmentID)
         {
@@ -21,82 +22,70 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             return PartialView("List");
         }
 
-        public ActionResult GetListTeams(int? page)
+        public ActionResult GetListTeams(int page = -1, bool IncludeInActive = false)
         {
-            Guid guid = new Guid(DepartmentID);
+            int guid = int.Parse(DepartmentID);
+            List<tblTeam> list = null;
 
-            var list = db.tblTeams.Where(t => t.DepartmentID == guid).OrderBy(g => g.TeamName).ToList();
+            if(IncludeInActive)
+                list = db.tblTeams.Where(t => t.DepartmentID == guid).OrderBy(g => g.TeamName).ToList();
+            else
+                list = db.tblTeams.Where(t => t.DepartmentID == guid && t.IsActive == true).OrderBy(g => g.TeamName).ToList();
 
-            foreach(var item in list)
-            {
-                //item.tblContact = db.tblContacts.Where(t => t.ContactID == item.ContactID).SingleOrDefault();
-                //item.tblAddress = db.tblAddresses.Where(t => t.AddressID == item.AddressID).SingleOrDefault();
-                if (item.BusinessID == null)
-                    item.tblBusinessType = new tblBusinessType();
-                if (item.AddressID == null)
-                {
-                    item.tblAddress = new tblAddress();
-                    item.tblAddress.tblTown = new tblTown();
-                    item.tblAddress.tblTown.tblCounty = new tblCounty();
-                    item.tblAddress.tblTown.tblCounty.tblCountry = new tblCountry();
-                }
-                if (item.ContactID == null)
-                    item.tblContact = new tblContact();
-                if (item.DepartmentID == null)
-                    item.tblDepartment = new tblDepartment();
-            }
             int pageSize = 15;
-            int pageNumber = (page ?? 1);
-            return PartialView("Elements/ListItem", list.ToPagedList(pageNumber, pageSize));
+            PageNumber = page != -1 ? page : PageNumber; // if not new page, will load current page
+
+            return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, pageSize));
         }
 
 
         // if TeamId == null is add mode, else edit mode
         [HttpPost]
-        public ActionResult Add_ActionLink(string TeamID = "")
+        public ActionResult Add_ActionLink(string TeamID = null)
         {
             ViewBag.TeamID = TeamID; // make edit or add mode
+
+            // check if edit mode will add button in-active
+            ViewBag.IsEditMode = string.IsNullOrEmpty(TeamID) == true ? false : true;
+
             return PartialView("Add");
         }
 
-        public ActionResult Details(string TeamID = "")
+        public ActionResult Details(string TeamID = null)
         {
             tblTeam model = new tblTeam();
+            int departID = int.Parse(DepartmentID);
+            tblDepartment department = db.tblDepartments.Where(t => t.DepartmentID == departID).SingleOrDefault();
 
             if (!string.IsNullOrEmpty(TeamID)) // edit mode
             {
-                model = db.tblTeams.Where(t => t.TeamID == new Guid(TeamID)).SingleOrDefault();
+                int teamID = int.Parse(TeamID);
+                model = db.tblTeams.Where(t => t.TeamID == teamID).SingleOrDefault();
+            }
+            else 
+            {
+                model.TeamID = -1; // set id for add mode
+                // set default value
+                model.WebAddress = department.tblDirectorate.tblOrganisation.WebAddress;
+                model.tblBusinessType = db.tblBusinessTypes.Where(t => t.BusinessID == department.tblDirectorate.tblOrganisation.BusinessID).SingleOrDefault();
             }
 
-            if (model.BusinessID == null)
-            {
-                if (string.IsNullOrEmpty(TeamID)) // set default value for add mode
-                {
-                    tblDepartment department = db.tblDepartments.Where(t => t.DepartmentID == new Guid(DepartmentID)).SingleOrDefault();
-                    model.tblBusinessType = db.tblBusinessTypes.Where(t => t.BusinessID == department.tblDirectorate.tblOrganisation.BusinessID).SingleOrDefault();
-                }
-                else
-                    model.tblBusinessType = new tblBusinessType();
-            }
-             
-            if (model.AddressID == null)
-            {
-                model.tblAddress = new tblAddress();
-                model.tblAddress.tblTown = new tblTown();
-                model.tblAddress.tblTown.tblCounty = new tblCounty();
-                model.tblAddress.tblTown.tblCounty.tblCountry = new tblCountry();
-            }              
-            if (model.ContactID == null)
-                model.tblContact = new tblContact();
-            if (model.DepartmentID == null)
-                model.tblDepartment = new tblDepartment();
+            // set value for copy address checkbox
+            ViewBag.OrgAddressLine1 = department.tblDirectorate.tblOrganisation.AddressLine1;
+            ViewBag.OrgAddressLine2 = department.tblDirectorate.tblOrganisation.AddressLine2;
+            ViewBag.OrgAddressLine3 = department.tblDirectorate.tblOrganisation.AddressLine3;
+
+            ViewBag.DeparAddressLine1 = department.AddressLine1;
+            ViewBag.DeparAddressLine2 = department.AddressLine2;
+            ViewBag.DeparAddressLine3 = department.AddressLine3;
 
             return PartialView("Elements/Details", model);
         }
 
         public ActionResult Delete_ActionLink(string TeamID, string page)
         {
-            tblTeam model = db.tblTeams.Where(t => t.TeamID == new Guid(TeamID)).SingleOrDefault();
+            int teamID = int.Parse(TeamID);
+            tblTeam model = db.tblTeams.Where(t => t.TeamID == teamID).SingleOrDefault();
             if(model != null)
             {
                 db.tblTeams.Remove(model);
@@ -107,17 +96,16 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         }
 
 
-        // if teamID == null add mode ortherwise edit mode
+        // if teamID == -1 add mode ortherwise edit mode
         public ActionResult InsertUpdate_Team(tblTeam model)
         {
-            if(model.TeamID == Guid.Empty) // add mode
+            if(model.TeamID == -1) // add mode
             {
                 int count = db.tblTeams.Where(t => t.TeamName == model.TeamName).ToList().Count; // check new TeamName not exists
                 if (count != 0)
                     return Content("Team name is existed. Please input another name!");
                 
-                model.TeamID = Guid.NewGuid();
-                model.DepartmentID = Guid.Parse(DepartmentID);
+                model.DepartmentID = int.Parse(DepartmentID);
                 model.IsActive = true;
                 db.tblTeams.Add(model);
 
@@ -125,7 +113,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch(Exception ex)
+                catch
                 {
                     return Content("Failed to insert!");
                 }
@@ -146,19 +134,11 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                     return Content("Team not exists!");
 
                 // update information
-                update.WebAddress = model.WebAddress;
-                update.TeamName = model.TeamName;
-                update.ShortDescription = model.ShortDescription;
-                update.PhoneNumber = model.PhoneNumber;
-                update.FullDescription = model.FullDescription;
-                update.Fax = model.Fax;
-                update.Email = model.Email;
-                update.ContactID = model.ContactID;
-                update.BusinessID = model.BusinessID;
-                update.AddressLine1 = model.AddressLine1;
-                update.AddressLine2 = model.AddressLine2;
-                update.AddressLine3 = model.AddressLine3;
-                update.AddressID = model.AddressID;
+
+                db.Entry(update).CurrentValues.SetValues(model);
+                db.Entry(update).Property(p => p.TeamID).IsModified = false;
+                db.Entry(update).Property(p => p.IsActive).IsModified = false;
+                db.Entry(update).Property(p => p.DepartmentID).IsModified = false;
 
                 try 
                 {
@@ -172,6 +152,33 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
                 return Content("Update team successfully!");
             }
+        }
+
+
+        public ActionResult MakeInActive(bool IsActive, string TeamID)
+        {
+            tblTeam model = db.tblTeams.Where(t => t.TeamID == int.Parse(TeamID)).SingleOrDefault();
+            model.IsActive = IsActive;
+            try
+            {
+                db.SaveChanges();
+                return Content("Make the team in-active successfully");
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                string message = "";
+		        foreach (var validationErrors in dbEx.EntityValidationErrors)
+		        {
+		            foreach (var validationError in validationErrors.ValidationErrors)
+		            {
+                        //System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        message += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        message += '\n';
+		            }
+		        }
+
+                return Content(message);
+            }  
         }
     }
 }

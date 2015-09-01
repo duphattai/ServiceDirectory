@@ -51,26 +51,26 @@ SET DATEFORMAT DMY
 --------------------------Contact
 CREATE TABLE tblContact
 (
-	ContactID uniqueidentifier primary key,
-	FirstName nvarchar(50) NOT NULL,
-	Surname nvarchar(50) NOT NULL,
+	ContactID int identity(1,1) primary key,
+	FirstName nvarchar(50),
+	Surname nvarchar(50),
 	KnownAs nvarchar(50),
 	OfficePhone nvarchar(20),
 	MobilePhone nvarchar(20),
 	StHomePhone nvarchar(20),
 	Email nvarchar(50),
-	ManagerId uniqueidentifier foreign key references tblContact(ContactID),
+	ManagerId int foreign key references tblContact(ContactID),
 	JobRole nvarchar(50),
 	Workbase nvarchar(50),
 	JobTitle nvarchar(50),
-	IsActive bit NOT NULL,
+	IsActive bit ,
 )
 
 ------------------------Country
 CREATE TABLE tblCountry
 (
-	CountryID uniqueidentifier primary key,
-	CountryName nvarchar(50) NOT NULL,
+	CountryID int identity(1,1) primary key,
+	CountryName nvarchar(50),
 	CountryDescription nvarchar(150),
 )
 
@@ -78,27 +78,27 @@ CREATE TABLE tblCountry
 ------------------------County
 CREATE TABLE tblCounty
 (
-	CountyID uniqueidentifier primary key,
-	CountryID uniqueidentifier foreign key references tblCountry(CountryID),
-	CountyName nvarchar(50) NOT NULL,
+	CountyID int identity(1,1) primary key,
+	CountryID int foreign key references tblCountry(CountryID),
+	CountyName nvarchar(50),
 	CountyDescription nvarchar(150),
 )
 
 ------------------------Town
 CREATE TABLE tblTown
 (
-	TownID uniqueidentifier primary key,
-	CountyID uniqueidentifier foreign key references tblCounty(CountyID),
-	TownName nvarchar(50) NOT NULL,
+	TownID int identity(1,1) primary key,
+	CountyID int foreign key references tblCounty(CountyID),
+	TownName nvarchar(50),
 	TownDescription nvarchar(150),
 )
 
 ------------------------Address
 CREATE TABLE tblAddress
 (
-	AddressID uniqueidentifier primary key,
-	PostCode nvarchar(10) NOT NULL,
-	TownID uniqueidentifier foreign key references tblTown(TownID),
+	AddressID int identity(1,1) primary key,
+	PostCode nvarchar(10),
+	TownID int foreign key references tblTown(TownID),
 	AddressDescription nvarchar(150),
 	AddressName nvarchar(100),
 )
@@ -106,17 +106,17 @@ CREATE TABLE tblAddress
 -------------------------BusinessType
 CREATE TABLE tblBusinessType
 (
-	BusinessID uniqueidentifier primary key,
-	BusinessName nvarchar(200) not null,
-	SICCode int not null,
+	BusinessID int identity(1,1) primary key,
+	BusinessName nvarchar(200),
+	SICCode int,
 )
 
 CREATE TABLE tblOrganisation
 (
-	OrgID		uniqueidentifier primary key not null,
-	ContactID	uniqueidentifier foreign key references tblContact(ContactID),
-	AddressID	uniqueidentifier foreign key references tblAddress(AddressID),
-	BusinessID	uniqueidentifier foreign key references tblBusinessType(BusinessID),
+	OrgID		int identity(1,1) primary key not null,
+	ContactID	int foreign key references tblContact(ContactID),
+	AddressID	int foreign key references tblAddress(AddressID),
+	BusinessID	int foreign key references tblBusinessType(BusinessID),
 	OrgName		nvarchar(200),
 	ShortDescription nvarchar(1000),
 	FullDescription	nvarchar(2000),
@@ -142,16 +142,16 @@ CREATE TABLE tblGroupReference
 
 CREATE TABLE tblReferenceData
 (
-	RefID uniqueidentifier primary key,
+	RefID int identity(1,1) primary key,
 	RefCode int not null foreign key references tblGroupReference(GroupReferenceID),
-	RefValue nvarchar(50) not null,
+	RefValue nvarchar(50),
 )
 
 -------------------------ContactReference
 CREATE TABLE tblContactReference
 (
-	ContactID uniqueidentifier foreign key references tblContact(ContactID),
-	RefID uniqueidentifier foreign key references tblReferenceData(RefID),
+	ContactID int foreign key references tblContact(ContactID),
+	RefID int foreign key references tblReferenceData(RefID),
 
 	primary key (ContactID, RefID)
 )
@@ -160,8 +160,8 @@ CREATE TABLE tblContactReference
 -------------------------OrganisationReference
 CREATE TABLE tblOrganisationReference
 (
-	OrgID	uniqueidentifier foreign key references tblOrganisation(OrgID),
-	RefID	uniqueidentifier foreign key references tblReferenceData(RefID),
+	OrgID	int foreign key references tblOrganisation(OrgID),
+	RefID	int foreign key references tblReferenceData(RefID),
 
 	PRIMARY KEY (OrgID, RefID)
 )
@@ -169,21 +169,21 @@ CREATE TABLE tblOrganisationReference
 ----------------------Programme
 CREATE TABLE tblProgramme
 (
-	ProgrammeID uniqueidentifier primary key,
-	ProgrammeName nvarchar(50) NOT NULL,
-	ContactID uniqueidentifier foreign key references tblContact(ContactID),
+	ProgrammeID int identity(1,1) primary key,
+	ProgrammeName nvarchar(50) ,
+	ContactID int foreign key references tblContact(ContactID),
 	ProgrammeDescription nvarchar(150),
-	IsActive bit NOT NULL,
+	IsActive bit ,
 )
 
 ----------------Service
 CREATE TABLE tblService
 (
-	ServiceID uniqueidentifier primary key,
-	ProgrammeID uniqueidentifier foreign key references tblProgramme(ProgrammeID),
-	ContactID uniqueidentifier foreign key references tblContact(ContactID),
-	ServiceName nvarchar(50) NOT NULL,
-	ShortDescription nvarchar(100) NOT NULL,
+	ServiceID int identity(1,1) primary key,
+	ProgrammeID int foreign key references tblProgramme(ProgrammeID),
+	ContactID int foreign key references tblContact(ContactID),
+	ServiceName nvarchar(50) ,
+	ShortDescription nvarchar(100) ,
 	ClientDescription nvarchar(150) NULL,
 	StartExpected smalldatetime,
 	StartDate smalldatetime,
@@ -191,22 +191,22 @@ CREATE TABLE tblService
 	ExtendableYears int,
 	ExtendableMonths int,
 	FullDescription nvarchar(150),
-	DeptCode nvarchar(50) NOT NULL,
+	DeptCode nvarchar(50) ,
 	DescriptionDelivery nvarchar(150),
 	ContractCode nvarchar(50),
 	ContractValue nchar(10),
 	ContractPayment bit,
 	TimeLimitedYears smalldatetime,
 	TimeLimitedMonths smalldatetime,
-	IsActive bit NOT NULL,
+	IsActive bit ,
 	Participation nvarchar(50),
 )
 
 -----------------------------------OrganisationService
 CREATE TABLE tblOrganisationService
 (
-	OrgID	uniqueidentifier foreign key references tblOrganisation(OrgID),
-	ServiceID	uniqueidentifier foreign key references tblService(ServiceID),
+	OrgID	int foreign key references tblOrganisation(OrgID),
+	ServiceID	int foreign key references tblService(ServiceID),
 	Roles	varchar(100),
 
 	PRIMARY KEY (OrgID, ServiceID)
@@ -215,8 +215,8 @@ CREATE TABLE tblOrganisationService
 -----------------------------------OrganisationProgramme
 CREATE TABLE tblOrganisationProgramme
 (
-	OrgID	uniqueidentifier foreign key references tblOrganisation(OrgID),
-	ProgrammeID	uniqueidentifier foreign key references tblProgramme(ProgrammeID),
+	OrgID	int foreign key references tblOrganisation(OrgID),
+	ProgrammeID	int foreign key references tblProgramme(ProgrammeID),
 
 	PRIMARY KEY (OrgID, ProgrammeID)
 )
@@ -224,7 +224,7 @@ CREATE TABLE tblOrganisationProgramme
 --------------------------Role
 CREATE TABLE tblRole
 (
-	RoleID uniqueidentifier primary key,
+	RoleID int primary key,
 	RoleName nvarchar(50) not null,
 	RoleDescription nvarchar(150)
 )
@@ -232,21 +232,21 @@ CREATE TABLE tblRole
 -------------------------User
 CREATE TABLE tblUser
 (
-	UserID uniqueidentifier primary key,
-	Account nvarchar(50) NOT NULL,
-	UserPassword nvarchar(50) NOT NULL,
-	RoleID uniqueidentifier foreign key references tblRole(RoleID),
-	Email nvarchar(50) NOT NULL,
-	FullName nvarchar(50) NOT NULL
+	UserID int identity(1,1) primary key,
+	Account nvarchar(50) ,
+	UserPassword nvarchar(50) ,
+	RoleID int foreign key references tblRole(RoleID),
+	Email nvarchar(50) ,
+	FullName nvarchar(50) 
 )
 
 ------------------------------------SupportingMaterial
 CREATE TABLE tblSupportingMaterial
 (
-	SupportID uniqueidentifier primary key,
+	SupportID int identity(1,1) primary key,
 	URL	varchar(200),
-	OrgID	uniqueidentifier foreign key references tblOrganisation(OrgID),
-	UserID	uniqueidentifier foreign key references tblUser(UserID),
+	OrgID	int foreign key references tblOrganisation(OrgID),
+	UserID	int foreign key references tblUser(UserID),
 	ShortDescription nvarchar(1000),
 	TypeFile	varchar(100)	CHECK (TypeFile IN ('Doc', 'PDF', 'Excel')),
 	AddedDate smalldatetime,
@@ -257,11 +257,11 @@ CREATE TABLE tblSupportingMaterial
 ------------------------------------Directorate
 CREATE TABLE tblDirectorate
 (
-	DirectorateID uniqueidentifier primary key not null,
-	OrgID	uniqueidentifier foreign key references tblOrganisation(OrgID),
-	ContactID	uniqueidentifier foreign key references tblContact(ContactID),
-	AddressID	uniqueidentifier foreign key references tblAddress(AddressID),
-	BusinessID	uniqueidentifier foreign key references tblBusinessType(BusinessID),
+	DirectorateID int identity(1,1) primary key not null,
+	OrgID	int foreign key references tblOrganisation(OrgID),
+	ContactID	int foreign key references tblContact(ContactID),
+	AddressID	int foreign key references tblAddress(AddressID),
+	BusinessID	int foreign key references tblBusinessType(BusinessID),
 	DirectorateName nvarchar(200),
 	ShortDescription nvarchar(1000),
 	FullDescription	nvarchar(2000),
@@ -281,11 +281,11 @@ CREATE TABLE tblDirectorate
 -------------------------------DEPARTMENT
 CREATE TABLE tblDepartment
 (
-	DepartmentID uniqueidentifier primary key,
-	DirectorateID uniqueidentifier foreign key references tblDirectorate(DirectorateID),
-	ContactID	uniqueidentifier foreign key references tblContact(ContactID),
-	AddressID	uniqueidentifier foreign key references tblAddress(AddressID),
-	BusinessID	uniqueidentifier foreign key references tblBusinessType(BusinessID),
+	DepartmentID int identity(1,1) primary key,
+	DirectorateID int foreign key references tblDirectorate(DirectorateID),
+	ContactID	int foreign key references tblContact(ContactID),
+	AddressID	int foreign key references tblAddress(AddressID),
+	BusinessID	int foreign key references tblBusinessType(BusinessID),
 	DepartmentName nvarchar(200),
 	ShortDescription nvarchar(1000),
 	FullDescription	nvarchar(2000),
@@ -302,11 +302,11 @@ CREATE TABLE tblDepartment
 -----------------------------------Team
 CREATE TABLE tblTeam
 (
-	TeamID uniqueidentifier primary key,
-	DepartmentID uniqueidentifier foreign key references tblDepartment(DepartmentID),
-	ContactID	uniqueidentifier foreign key references tblContact(ContactID),
-	AddressID	uniqueidentifier foreign key references tblAddress(AddressID),
-	BusinessID	uniqueidentifier foreign key references tblBusinessType(BusinessID),
+	TeamID int identity(1,1) primary key,
+	DepartmentID int foreign key references tblDepartment(DepartmentID),
+	ContactID	int foreign key references tblContact(ContactID),
+	AddressID	int foreign key references tblAddress(AddressID),
+	BusinessID	int foreign key references tblBusinessType(BusinessID),
 	TeamName nvarchar(200),
 	ShortDescription nvarchar(1000),
 	FullDescription	nvarchar(2000),
@@ -325,13 +325,13 @@ CREATE TABLE tblTeam
 ----------------------Premises
 CREATE TABLE tblPremises
 (
-	PremisesID uniqueidentifier primary key,
+	PremisesID int identity(1,1) primary key,
 	PremisesName nvarchar(200),
-	AddressID	uniqueidentifier foreign key references tblAddress(AddressID),
+	AddressID	int foreign key references tblAddress(AddressID),
 	AddressLine1	nvarchar(500),
 	LocationName nvarchar(200),
 	KnowAs nvarchar(200),
-	OrgID	uniqueidentifier foreign key references tblOrganisation(OrgID),
+	OrgID	int foreign key references tblOrganisation(OrgID),
 	LocationStatus varchar(200) CHECK (LocationStatus in ('Pending Active', 'Active', 'Pending Closure', 'Closed items')),
 	AddressLine2	nvarchar(500),
 	AddressLine3	nvarchar(500),
@@ -343,9 +343,9 @@ CREATE TABLE tblPremises
 	MinicomNumber int,
 	FlagDate smalldatetime,
 	IsSpecialist bit,
-	MediaContactID uniqueidentifier foreign key references tblContact(ContactID),
-	CateringContactID uniqueidentifier foreign key references tblContact(ContactID),
-	CateringType uniqueidentifier foreign key references tblReferenceData(RefID),
+	MediaContactID int foreign key references tblContact(ContactID),
+	CateringContactID int foreign key references tblContact(ContactID),
+	CateringType int foreign key references tblReferenceData(RefID),
 	Network varchar(100) CHECK (Network in ('Open','Wip','Closed')),
 	ClientITFacilities nvarchar(2000),
 	LocalDemographicNotes nvarchar(1000),
@@ -354,7 +354,7 @@ CREATE TABLE tblPremises
 	Bus nvarchar(200),
 	Rail nvarchar(200),
 	Airport nvarchar(200),
-	HostingContactID uniqueidentifier foreign key references tblContact(ContactID),
+	HostingContactID int foreign key references tblContact(ContactID),
 	ParkingSpaces int,
 	ParkingAlternative varchar(200),
 	RoomRate money,
@@ -380,16 +380,16 @@ CREATE TABLE tblPremises
 -------------Facility
 CREATE TABLE tblFacility
 (
-	FacilityID uniqueidentifier primary key,
-	PremisesID uniqueidentifier foreign key references tblPremises(PremisesID),
-	FacilityType uniqueidentifier foreign key references tblReferenceData(RefID),
+	FacilityID int identity(1,1) primary key,
+	PremisesID int foreign key references tblPremises(PremisesID),
+	FacilityType int foreign key references tblReferenceData(RefID),
 	ShortDescription nvarchar(1000),
 	RoomCapacity int,
 	RoomSize int,
 	ConnectivityType nvarchar(100),
 	WireLess nvarchar(100),
-	LeadContactID uniqueidentifier foreign key references tblContact(ContactID),
-	RoomHostID uniqueidentifier foreign key references tblContact(ContactID),
+	LeadContactID int foreign key references tblContact(ContactID),
+	RoomHostID int foreign key references tblContact(ContactID),
 	Notes nvarchar(1000),
 	IsActive bit
 )
@@ -397,8 +397,8 @@ CREATE TABLE tblFacility
 -------------------Volunteering
 CREATE TABLE tblVolunteering
 (
-	ContactID uniqueidentifier foreign key references tblContact(ContactID),
-	PremisesID uniqueidentifier foreign key references tblPremises(PremisesID),
+	ContactID int foreign key references tblContact(ContactID),
+	PremisesID int foreign key references tblPremises(PremisesID),
 	Purpose nvarchar(1000),
 	Detail nvarchar(2000),
 	StartDate smalldatetime,
@@ -412,15 +412,15 @@ CREATE TABLE tblVolunteering
 ----------------------MinorWork
 CREATE TABLE tblMinorWork
 (
-	MinorWorkID uniqueidentifier primary key,
-	PremisesID uniqueidentifier foreign key references tblPremises(PremisesID),
+	MinorWorkID int identity(1,1) primary key,
+	PremisesID int foreign key references tblPremises(PremisesID),
 	ShortDecription nvarchar(1000),
 	NoteAction nvarchar(1000),
 	EstimatesCost  money,
 	ActualCost money,
-	DirectorateID uniqueidentifier foreign key references tblDirectorate(DirectorateID),
-	ContactID uniqueidentifier foreign key references tblContact(ContactID),
-	AuthorisedID uniqueidentifier foreign key references tblContact(ContactID),
+	DirectorateID int foreign key references tblDirectorate(DirectorateID),
+	ContactID int foreign key references tblContact(ContactID),
+	AuthorisedID int foreign key references tblContact(ContactID),
 	Statu nvarchar(100),
 	ReceiveDate smalldatetime,
 	AuthorisedDate smalldatetime,
@@ -435,16 +435,16 @@ CREATE TABLE tblMinorWork
 -------------------------PremiseReference
 CREATE TABLE tblPremisesReference
 (
-	PremisesID uniqueidentifier foreign key references tblPremises(PremisesID),
-	RefID	uniqueidentifier foreign key references tblReferenceData(RefID),
+	PremisesID int foreign key references tblPremises(PremisesID),
+	RefID	int foreign key references tblReferenceData(RefID),
 
 	PRIMARY KEY (PremisesID, RefID)
 )
 --------------------------PremisesOpeningTime
 CREATE TABLE tblPremisesOpeningTime
 (
-	PremisesOpeningTimeID uniqueidentifier primary key,
-	PremisesID uniqueidentifier foreign key references tblPremises(PremisesID),
+	PremisesOpeningTimeID int identity(1,1) primary key,
+	PremisesID int foreign key references tblPremises(PremisesID),
 	WeekendDay varchar(50),
 	StartTime datetime,
 	EndTime datetime
@@ -453,8 +453,8 @@ CREATE TABLE tblPremisesOpeningTime
 ------------------DetailPremises
 CREATE TABLE tblDetailPremises
 (
-	PreID uniqueidentifier foreign key references tblPremises(PremisesID),
-	PreIDRelationShip uniqueidentifier foreign key references tblPremises(PremisesID),
+	PreID int foreign key references tblPremises(PremisesID),
+	PreIDRelationShip int foreign key references tblPremises(PremisesID),
 
 	PRIMARY KEY (PreID, PreIDRelationShip)
 )
@@ -462,11 +462,11 @@ CREATE TABLE tblDetailPremises
 ------------------Funding
 CREATE TABLE tblFunding
 (
-	FundingID uniqueidentifier primary key,
-	ServiceID uniqueidentifier foreign key references tblService(ServiceID),
-	ContactID uniqueidentifier foreign key references tblContact(ContactID),
+	FundingID int identity(1,1) primary key,
+	ServiceID int foreign key references tblService(ServiceID),
+	ContactID int foreign key references tblContact(ContactID),
 	FundingSource int,
-	FundingAmount int NOT NULL,
+	FundingAmount int ,
 	FundingStart smalldatetime ,
 	FundingEnd smalldatetime ,
 	FundingNeeds int ,
@@ -487,8 +487,8 @@ CREATE TABLE tblFunding
 -------------------ServicePremise
 CREATE TABLE tblServicePremise
 (
-	ServiceID uniqueidentifier foreign key references tblService(ServiceID),
-	PremisesID uniqueidentifier foreign key references tblPremises(PremisesID),
+	ServiceID int foreign key references tblService(ServiceID),
+	PremisesID int foreign key references tblPremises(PremisesID),
 	ProjectCode varchar(20),
 
 	primary key (ServiceID, PremisesID)
@@ -497,8 +497,8 @@ CREATE TABLE tblServicePremise
 --------------------ServiceContract
 CREATE TABLE tblServiceContract
 (
-	ServiceID uniqueidentifier foreign key references tblService(ServiceID),
-	RefID uniqueidentifier foreign key references tblReferenceData(RefID),
+	ServiceID int foreign key references tblService(ServiceID),
+	RefID int foreign key references tblReferenceData(RefID),
 
 	primary key (ServiceID, RefID)
 )
@@ -506,8 +506,8 @@ CREATE TABLE tblServiceContract
 ----------------------ServiceReference
 CREATE TABLE tblServiceReference
 (
-	ServiceID uniqueidentifier foreign key references tblService(ServiceID),
-	RefID uniqueidentifier foreign key references tblReferenceData(RefID),
+	ServiceID int foreign key references tblService(ServiceID),
+	RefID int foreign key references tblReferenceData(RefID),
 
 	primary key (ServiceID, RefID)
 )
@@ -516,39 +516,39 @@ CREATE TABLE tblServiceReference
 ------------------------TrustRegion
 CREATE TABLE tblTrustRegion
 (
-	TrustRegionID uniqueidentifier primary key,
-	CountryID uniqueidentifier foreign key references tblCountry(CountryID),
-	TrustRegionName nvarchar(50) NOT NULL,
+	TrustRegionID int identity(1,1) primary key,
+	CountryID int foreign key references tblCountry(CountryID),
+	TrustRegionName nvarchar(50) ,
 	TrustRegionDescription nvarchar(150) ,
-	IsActive bit not null,
+	IsActive bit,
 )
 
 ------------------------TrustDistrict
 CREATE TABLE tblTrustDistrict
 (
-	TrustDistrictID uniqueidentifier primary key,
-	TrustRegionID uniqueidentifier foreign key references tblTrustRegion(TrustRegionID),
-	TrustDistrictName nvarchar(50) NOT NULL,
+	TrustDistrictID int identity(1,1) primary key,
+	TrustRegionID int foreign key references tblTrustRegion(TrustRegionID),
+	TrustDistrictName nvarchar(50) ,
 	TrustDistrictDescription nvarchar(150) NULL,
-	IsActive bit not null,
+	IsActive bit,
 )
 
 ------------------------GovOfficeRegion
 CREATE TABLE tblGovOfficeRegion
 (
-	GovOfficeRegionID uniqueidentifier primary key,
-	CountyID uniqueidentifier foreign key references tblCounty(CountyID),
-	GovOfficeRegionName nvarchar(50) NOT NULL,
-	GovOfficeRegionDescription nvarchar(150) NULL,
-	IsActive bit not null,
+	GovOfficeRegionID int identity(1,1) primary key,
+	CountyID int foreign key references tblCounty(CountyID),
+	GovOfficeRegionName nvarchar(50) ,
+	GovOfficeRegionDescription nvarchar(150),
+	IsActive bit,
 )
 
 
 
-INSERT INTO tblRole (RoleID,RoleName,RoleDescription) values(Convert(uniqueidentifier, '18ad571d-2c89-4b2d-b2a3-088d9518b2f2'),'NormalUser','Normal user')
-INSERT INTO tblRole (RoleID,RoleName,RoleDescription) values(Convert(uniqueidentifier, '80d2e54c-638f-4b6c-989f-392002f1b211'),'SuperUser','Super user')
-INSERT INTO tblUser (UserID,RoleID,Account,UserPassword,Email, FullName) VALUES(NEWID(),'18ad571d-2c89-4b2d-b2a3-088d9518b2f2','quoc','123456','quockhin@gmail.com', 'Quoc')
-INSERT INTO tblUser (UserID,RoleID,Account,UserPassword,Email, FullName) VALUES(NEWID(),'80d2e54c-638f-4b6c-989f-392002f1b211','tai','123456','uitdptai@gmail.com', 'Tai')
+INSERT INTO tblRole (RoleID,RoleName,RoleDescription) values(1,'NormalUser','Normal user')
+INSERT INTO tblRole (RoleID,RoleName,RoleDescription) values(2,'SuperUser','Super user')
+INSERT INTO tblUser (RoleID,Account,UserPassword,Email, FullName) VALUES(1,'quoc','123456','quockhin@gmail.com', 'Quoc')
+INSERT INTO tblUser (RoleID,Account,UserPassword,Email, FullName) VALUES(2,'tai','123456','uitdptai@gmail.com', 'Tai')
 
 
 INSERT INTO tblGroupReference(GroupReferenceID, GroupValue) values
@@ -561,80 +561,80 @@ INSERT INTO tblGroupReference(GroupReferenceID, GroupValue) values
 								(7, 'service benefits capabilities');
 
 								
-INSERT INTO tblReferenceData (RefID, RefCode, RefValue) values
-							(NEWID(), 1, 'Blind/Partially Sighted'),
-							(NEWID(), 1, 'Deaf/Hard of Hearing'),
-							(NEWID(), 1, 'Dyslexia'),
-							(NEWID(), 1, 'Learning Disability'),
-							(NEWID(), 1, 'Mental Health'),
+INSERT INTO tblReferenceData (RefCode, RefValue) values
+							( 1, 'Blind/Partially Sighted'),
+							( 1, 'Deaf/Hard of Hearing'),
+							(1, 'Dyslexia'),
+							(1, 'Learning Disability'),
+							(1, 'Mental Health'),
 
-							(NEWID(), 2, 'Carer Responsibilities'),
-							(NEWID(), 2, 'Lone Parent'),
+							(2, 'Carer Responsibilities'),
+							(2, 'Lone Parent'),
 
-							(NEWID(), 3, 'Chest, Breathing problems'),
-							(NEWID(), 3, 'Condition restricting mobility'),
-							(NEWID(), 3, 'Diabetes'),
-							(NEWID(), 3, 'Difficulty in hearing'),
+							( 3, 'Chest, Breathing problems'),
+							( 3, 'Condition restricting mobility'),
+							( 3, 'Diabetes'),
+							( 3, 'Difficulty in hearing'),
 
-							(NEWID(), 4, 'White British'),
-							(NEWID(), 4, 'White Irish'),
-							(NEWID(), 4, 'Other White'),
-							(NEWID(), 4, 'White & Black Caribbean'),
-							(NEWID(), 4, 'White & Black African'),
+							( 4, 'White British'),
+							( 4, 'White Irish'),
+							( 4, 'Other White'),
+							( 4, 'White & Black Caribbean'),
+							( 4, 'White & Black African'),
 
-							(NEWID(), 5, 'Lone Parent'),
-							(NEWID(), 5, 'ESOL'),
-							(NEWID(), 5, 'Refugee'),
-							(NEWID(), 5, 'Basic Skills'),
+							( 5, 'Lone Parent'),
+							( 5, 'ESOL'),
+							( 5, 'Refugee'),
+							( 5, 'Basic Skills'),
 
-							(NEWID(), 6, 'Two Ticks'),
-							(NEWID(), 6, 'Investors In People'),
-							(NEWID(), 6, 'ISO 9001'),
-							(NEWID(), 6, 'ISO 14001'),
-							(NEWID(), 6, 'ISO 27001'),
+							( 6, 'Two Ticks'),
+							( 6, 'Investors In People'),
+							( 6, 'ISO 9001'),
+							( 6, 'ISO 14001'),
+							( 6, 'ISO 27001'),
 
-							(NEWID(), 7, 'Disability Living Allowance'),
-							(NEWID(), 7, 'Employment'),
-							(NEWID(), 7, 'Incapacity'),
-							(NEWID(), 7, 'Income Support');
-
-
-
-INSERT INTO tblCountry(CountryID, CountryName) values (CONVERT(uniqueidentifier, '9cf02af4-7c47-4225-afa8-d3af64a8dd02'), N'Việt Nam')
-INSERT INTO tblCounty(CountyID, CountryID, CountyName) values(CONVERT(uniqueidentifier, '86a752c0-e2e7-4829-9127-00bd118ce194'),'9cf02af4-7c47-4225-afa8-d3af64a8dd02', N'Miền Tây' )
-INSERT INTO tblTown(TownID, CountyID, TownName) values (CONVERT(uniqueidentifier, '7af60496-f170-40c3-88ab-e090aa8d4af5'), '86a752c0-e2e7-4829-9127-00bd118ce194', N'Sóc Trăng')
-INSERT INTO tblTown(TownID, CountyID, TownName) values (CONVERT(uniqueidentifier, '4db27d47-2de5-4202-a48b-71c1ab2cc9d8'), '86a752c0-e2e7-4829-9127-00bd118ce194', N'Cà Mau')
-INSERT INTO tblAddress(AddressID, TownID, PostCode) values(CONVERT(uniqueidentifier, '5d109451-6738-4def-96d2-5a9e96783564'), '4db27d47-2de5-4202-a48b-71c1ab2cc9d8', '970000')
-INSERT INTO tblAddress(AddressID, TownID, PostCode) values(CONVERT(uniqueidentifier, '692377b4-9291-4b85-ad3f-6e24dd663c4d'), '7af60496-f170-40c3-88ab-e090aa8d4af5', '950000')
-
-INSERT INTO tblBusinessType(BusinessID, SICCode, BusinessName) values
-							(CONVERT(uniqueidentifier, '6da12942-7dd3-4416-8c75-2d96043790c3'), 01160, 'abaca and other vegetable textile fibre growing'),
-							(CONVERT(uniqueidentifier, 'fb077524-0ab3-4a10-abf6-467005e9c637'), 10110, 'abattoir (manufacture)'),
-							(convert(uniqueidentifier, '2da6aa37-5da4-49c3-aeaf-a7bec749fbeb'), 17120, 'abrasive base paper (manufacture)'),
-							(CONVERT(uniqueidentifier, '29e20707-b0b3-47ca-b183-b4d1a5e9bfe8'), 23910, 'abrasive bonded disc, wheel and segment (manufacture)'),
-							(convert(uniqueidentifier, '61fe44a1-752f-497d-aade-66027ff912ac'), 23910, 'abrasive cloth (manufacture)'),
-							(CONVERT(uniqueidentifier, 'f5929bae-8e75-4ab1-9fde-8580c744b224'), 23910, 'abrasive grain (manufacture)'),
-							(CONVERT(uniqueidentifier, '31dcc354-cd1c-4766-a14b-7db008e1e16e'), 23910, 'abrasive grain of aluminium oxide (manufacture)'),
-							(CONVERT(uniqueidentifier, 'ac3d7148-f1ab-420c-b03c-939e0f92cb43'), 23910, 'abrasive grain of artificial corundum (manufacture)');
-
-INSERT INTO tblOrganisation(OrgID, OrgName, ShortDescription, BusinessID, AddressLine1, AddressID, PhoneNumber) values
-							(CONVERT(uniqueidentifier, 'd5f1ffe9-cd05-4e24-9cd0-41d8812980ea'), 'Organisation name one', 'Short Description', '6da12942-7dd3-4416-8c75-2d96043790c3', 'Address line one', '5d109451-6738-4def-96d2-5a9e96783564', '1111111111'),
-							(CONVERT(uniqueidentifier, 'e66406b7-68d7-467e-a7ae-fad426f925e9'), 'Organisation name two', 'Short Description', 'fb077524-0ab3-4a10-abf6-467005e9c637', 'Address line two', '5d109451-6738-4def-96d2-5a9e96783564', '2222222222'),
-							(CONVERT(uniqueidentifier, 'fce3c330-2369-48bf-9163-f3c42a9a74d3'), 'Organisation name three', 'Short Description', '2da6aa37-5da4-49c3-aeaf-a7bec749fbeb', 'Address line three', '5d109451-6738-4def-96d2-5a9e96783564', '3333333333');
+							( 7, 'Disability Living Allowance'),
+							( 7, 'Employment'),
+							( 7, 'Incapacity'),
+							( 7, 'Income Support');
 
 
-INSERT INTO tblContact(ContactID, FirstName, Surname, IsActive) VALUES 
-					  (CONVERT(uniqueidentifier, 'a38c8ba8-883c-450b-a7d9-521e2853c9ee'), 'Phat', 'Tai', '1'),
-					  (CONVERT(uniqueidentifier, 'c3b2060f-0df6-474d-89c8-5b654536d78d'), 'Cam', 'Quoc', '1');
 
-INSERT INTO tblDirectorate(DirectorateID, OrgID, ContactID, AddressID, BusinessID) values
-						  (CONVERT(uniqueidentifier, '60e1dece-593e-4f36-b32e-2f10dfc296fe'), 'd5f1ffe9-cd05-4e24-9cd0-41d8812980ea', 'a38c8ba8-883c-450b-a7d9-521e2853c9ee', '5d109451-6738-4def-96d2-5a9e96783564', '6da12942-7dd3-4416-8c75-2d96043790c3');
+INSERT INTO tblCountry(CountryName) values (N'Việt Nam')
+INSERT INTO tblCounty(CountryID, CountyName) values(1, N'Miền Tây' )
+INSERT INTO tblTown(CountyID, TownName) values (1, N'Sóc Trăng')
+INSERT INTO tblTown(CountyID, TownName) values (1, N'Cà Mau')
+INSERT INTO tblAddress(TownID, PostCode) values(1, '970000')
+INSERT INTO tblAddress(TownID, PostCode) values(2, '950000')
 
-INSERT INTO tblDepartment( DepartmentID, DepartmentName, DirectorateID) VALUES
-						(CONVERT(uniqueidentifier, 'b01bdb82-ed9c-44ab-8bed-49b5868417f3'), 'Department one', '60e1dece-593e-4f36-b32e-2f10dfc296fe');
+INSERT INTO tblBusinessType(SICCode, BusinessName) values
+							(01160, 'abaca and other vegetable textile fibre growing'),
+							(10110, 'abattoir (manufacture)'),
+							(17120, 'abrasive base paper (manufacture)'),
+							(23910, 'abrasive bonded disc, wheel and segment (manufacture)'),
+							(23910, 'abrasive cloth (manufacture)'),
+							(23910, 'abrasive grain (manufacture)'),
+							(23910, 'abrasive grain of aluminium oxide (manufacture)'),
+							(23910, 'abrasive grain of artificial corundum (manufacture)');
 
-INSERT INTO tblTeam (TeamID, TeamName, DepartmentID, ContactID, AddressID, BusinessID) VALUES
-					(CONVERT(uniqueidentifier, '564b581f-7626-44ce-b126-26273859cb94'), 'Team one', 'b01bdb82-ed9c-44ab-8bed-49b5868417f3', 'a38c8ba8-883c-450b-a7d9-521e2853c9ee', '5d109451-6738-4def-96d2-5a9e96783564', '6da12942-7dd3-4416-8c75-2d96043790c3'),
-					(CONVERT(uniqueidentifier, '514729bb-9da6-46ac-b4b1-6df191e59c0a'), 'Team two', 'b01bdb82-ed9c-44ab-8bed-49b5868417f3', 'a38c8ba8-883c-450b-a7d9-521e2853c9ee', '5d109451-6738-4def-96d2-5a9e96783564', 'fb077524-0ab3-4a10-abf6-467005e9c637'),
-					(CONVERT(uniqueidentifier, '0651a43f-177e-4d43-950f-d82984edbc6d'), 'Team three', 'b01bdb82-ed9c-44ab-8bed-49b5868417f3', 'c3b2060f-0df6-474d-89c8-5b654536d78d', '5d109451-6738-4def-96d2-5a9e96783564', '61fe44a1-752f-497d-aade-66027ff912ac'),
-					(CONVERT(uniqueidentifier, 'fc5b2c28-3f65-4bfb-a22a-0f9a1c7e788b'), 'Team four', 'b01bdb82-ed9c-44ab-8bed-49b5868417f3', 'c3b2060f-0df6-474d-89c8-5b654536d78d', '692377b4-9291-4b85-ad3f-6e24dd663c4d', '31dcc354-cd1c-4766-a14b-7db008e1e16e');
+INSERT INTO tblOrganisation(OrgName, ShortDescription, BusinessID, AddressLine1, AddressID, PhoneNumber) values
+							('Organisation name one', 'Short Description', 1, 'Address line one', 1, '1111111111'),
+							('Organisation name two', 'Short Description', 2, 'Address line two', 1, '2222222222'),
+							('Organisation name three', 'Short Description', 3, 'Address line three', 2, '3333333333');
+
+
+INSERT INTO tblContact(FirstName, Surname, IsActive) VALUES 
+					  ('Phat', 'Tai', '1'),
+					  ('Cam', 'Quoc', '1');
+
+INSERT INTO tblDirectorate(OrgID, ContactID, AddressID, BusinessID) values
+						  (1, 1, 1, 2);
+
+INSERT INTO tblDepartment( DepartmentName, DirectorateID) VALUES
+						('Department one', 1);
+
+INSERT INTO tblTeam (TeamName, DepartmentID, ContactID, AddressID, BusinessID) VALUES
+					('Team one', 1, 1, 1, 1),
+					('Team two', 1, 1, 1, 2),
+					('Team three', 1, 2, 2, 3),
+					('Team four', 1, 2, 1, 4);

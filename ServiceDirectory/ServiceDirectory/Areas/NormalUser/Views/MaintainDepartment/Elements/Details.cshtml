@@ -1,59 +1,58 @@
-﻿@model ServiceDirectory.Models.tblTeam
+﻿@model ServiceDirectory.Models.tblDepartment
 
 <style>
     .table th, .table td {
         border-top: none !important;
-        padding:5px;
+        padding: 5px;
     }
 </style>
 
 <table class="table">
     <tr>
         <td width="20%;">
-            <label class="btn-block"> Team Name</label>
-            <input type="hidden" name="TeamID" value="@Model.TeamID"/>           
+            <label class="btn-block"> Department Name</label>
+            <input type="hidden" name="DepartmentID" value="@Model.DepartmentID" />
         </td>
         <td width="30%;">
-            @Html.TextBoxFor(model => model.TeamName, new { @class = "btn-block" })
+            @Html.TextBoxFor(model => model.DepartmentName, new { @class = "btn-block" })
         </td>
         <td width="20%;">
             <strong>Type of Business</strong>
         </td>
         <td width="30%;">
-            @if(@Model.BusinessID != null)
+            @if(Model.tblBusinessType == null)
             {
-                <input type="text" id="team_business_type" disabled="disabled" value="@Model.tblBusinessType.BusinessName" />
+                <input type="text" id="department_business_type" disabled="disabled" value="" />
             }
             else
             {
-                <input type="text" id="team_business_type" disabled="disabled" value="" />
+                <input type="text" id="department_business_type" disabled="disabled" value="@Model.tblBusinessType.BusinessName" />
             }
-            
             <a href="#">  Lookup</a>
-            <input type="hidden" name="BusinessID" value="@Model.BusinessID"/>
+            <input type="hidden" name="BusinessID" value="@Model.BusinessID" />
         </td>
     </tr>
 
     <tr>
         <td rowspan="2">
-            <strong>Team Short Description</strong>
+            <strong>Department Short Description</strong>
         </td>
         <td rowspan="2">
-            @Html.TextAreaFor(model => model.ShortDescription, new { @class = "btn-block"})
+            @Html.TextAreaFor(model => model.ShortDescription, new { @class = "btn-block" })
         </td>
         <td>
             <strong>SIC Code</strong>
         </td>
         <td>
-            @if(@Model.BusinessID != null)
+            @if(Model.tblBusinessType == null)
             {
-                <input type="text" readonly="readonly" name="siccode" disabled="disabled" value="@Model.tblBusinessType.SICCode"/>
+                 <input type="text" readonly="readonly" name="siccode" disabled="disabled" value="" />
             }
             else
             {
-                <input type="text" readonly="readonly" name="siccode" disabled="disabled" value=""/>
+                <input type="text" readonly="readonly" name="siccode" disabled="disabled" value="@Model.tblBusinessType.SICCode" />
             }
-            
+                
         </td>
     </tr>
     <tr>
@@ -65,7 +64,7 @@
             <strong>Lead Contact</strong>
         </td>
         <td>
-            @if(@Model.ContactID == null)
+            @if(Model.tblContact == null)
             {
                 <input type="text" readonly="readonly" disabled="disabled" value="" />
             }
@@ -73,12 +72,12 @@
             {
                 <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname" />
             }
-            
+
             <a href="#">  Lookup</a>
             <input type="hidden" name="ContactID" value="@Model.ContactID" />
         </td>
         <td rowspan="2">
-            <strong>Team Full Description</strong>
+            <strong>Department Full Description</strong>
         </td>
         <td rowspan="2">
             @Html.TextAreaFor(model => model.FullDescription, new { @class = "btn-block" })
@@ -89,8 +88,8 @@
             <strong>Copy Address from</strong>
         </td>
         <td>
-            <input type="radio" name="copy_address" id="team_organisation"/> Orgnisation
-            <input type="radio" name="copy_address" id="team_parent" /> Parent
+            <input type="radio" name="copy_address" id="department_organisation" /> Orgnisation
+            <input type="radio" name="copy_address" id="department_parent" /> Parent
         </td>
     </tr>
     <tr>
@@ -136,13 +135,13 @@
     <tr>
         <td><strong>Postcode</strong></td>
         <td>
-            @if(@Model.AddressID != null)
+            @if(Model.AddressID == null)
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblAddress.PostCode" />
+                <input type="text" readonly="readonly" disabled="disabled" value="" />
             }
             else
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="" />
+                <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblAddress.PostCode" />
             }
             
             <a href="#">  Lookup</a>
@@ -157,13 +156,13 @@
     <tr>
         <td><strong>City/Town</strong></td>
         <td>
-            @if (@Model.AddressID != null)
+            @if(Model.tblAddress == null)
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblAddress.tblTown.TownName" />
+                <input type="text" readonly="readonly" class="btn-block" value="" />
             }
             else
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="" />
+                <input type="text" readonly="readonly" class="btn-block" value="@Model.tblAddress.tblTown.TownName" />
             }
         </td>
     </tr>
@@ -171,28 +170,27 @@
     <tr>
         <td><strong>County</strong></td>
         <td>
-            @if (@Model.AddressID != null)
+            @if (Model.tblAddress == null)
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblAddress.tblTown.tblCounty.CountyName" />
+                <input type="text" readonly="readonly" class="btn-block" value="" />
             }
             else
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="" />
+                <input type="text" readonly="readonly" class="btn-block" value="@Model.tblAddress.tblTown.tblCounty.CountyName" />
             }
-            
         </td>
     </tr>
 
     <tr>
         <td><strong>Nation/Country</strong></td>
         <td>
-            @if (@Model.AddressID != null)
+            @if (Model.tblAddress == null)
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblAddress.tblTown.tblCounty.tblCountry.CountryName" />
+                <input type="text" readonly="readonly" class="btn-block" value="" />
             }
             else
             {
-                <input type="text" readonly="readonly" disabled="disabled" value="" />
+                <input type="text" readonly="readonly" class="btn-block" value="@Model.tblAddress.tblTown.tblCounty.tblCountry.CountryName" />
             }
         </td>
     </tr>
@@ -204,16 +202,16 @@
 
             // get id of tag
             var id = $(this).attr('id');
-            if (id == 'team_organisation') {
+            if (id == 'department_organisation') {
                 $('#AddressLine1').val('@ViewBag.OrgAddressLine1');
                 $('#AddressLine2').val('@ViewBag.OrgAddressLine2');
                 $('#AddressLine3').val('@ViewBag.OrgAddressLine3');
             }
             else
             {
-                $('#AddressLine1').val('@ViewBag.DeparAddressLine1');
-                $('#AddressLine2').val('@ViewBag.DeparAddressLine2');
-                $('#AddressLine3').val('@ViewBag.DeparAddressLine3');
+                $('#AddressLine1').val('@ViewBag.DirecAddressLine1');
+                $('#AddressLine2').val('@ViewBag.DirecAddressLine2');
+                $('#AddressLine3').val('@ViewBag.DirecAddressLine3');
             }
         })
     })

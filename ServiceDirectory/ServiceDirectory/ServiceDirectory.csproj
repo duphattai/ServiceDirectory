@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\NormalUser\Controllers\HomeController.cs" />
+    <Compile Include="Areas\NormalUser\Controllers\MaintainDepartmentController.cs" />
     <Compile Include="Areas\NormalUser\Controllers\MaintainOrganisationController.cs" />
     <Compile Include="Areas\NormalUser\Controllers\MaintainSupportingMaterialController.cs" />
     <Compile Include="Areas\NormalUser\Controllers\MaintainTeamController.cs" />
@@ -339,6 +340,12 @@
     <Content Include="Areas\NormalUser\Views\MaintainSupportingMaterial\Elements\ListItem.cshtml" />
     <Content Include="Areas\NormalUser\Views\MaintainTeam\List.cshtml" />
     <Content Include="Areas\NormalUser\Views\MaintainTeam\Add.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainTeam\Elements\ListItem.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainTeam\Elements\Details.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDepartment\List.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDepartment\Elements\ListItem.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDepartment\Add.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDepartment\Elements\Details.cshtml" />
     <EntityDeploy Include="Models\ABSD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ABSD.Designer.cs</LastGenOutput>
@@ -356,8 +363,7 @@
       <DependentUpon>ABSD.edmx</DependentUpon>
       <LastGenOutput>ABSD.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\NormalUser\Views\MaintainTeam\Elements\ListItem.cshtml" />
-    <Content Include="Areas\NormalUser\Views\MaintainTeam\Elements\Details.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDepartment\Edit.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -387,6 +393,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Popup\Popup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\NormalUser\Models\" />

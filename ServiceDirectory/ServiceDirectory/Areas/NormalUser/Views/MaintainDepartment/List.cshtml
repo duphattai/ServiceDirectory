@@ -1,0 +1,28 @@
+﻿
+<div class="row" style="border: 1px ridge silver; ">
+    <div style="margin-top:10px;">
+        <div class="row">
+            @Ajax.ActionLink("Add", "Add_ActionLink", "MaintainDepartment",
+                              new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_department_popup()" },
+                                       new { @id = "add_department_link", @class = "btn btn-default col-md-offset-11 col-md-1" })
+        </div>
+        <div id="department_table">
+            @Html.Action("GetListDepartments", "MaintainDepartment", new { page = 1 })
+        </div>
+    </div>
+</div>
+
+<script>
+    function set_attr_add_department_popup() {
+        $("#add_department_link").attr('data-toggle', 'modal');
+        $("#add_department_link").attr('data-target', '#department_popup');
+        $('#department_popup').modal('show');
+    }
+
+    function set_attr_edit_department_popup() {
+        $("#edit_team_link").attr('data-toggle', 'modal');
+        $("#edit_team_link").attr('data-target', '#department_popup');
+        $('#department_popup').modal('show');
+    }
+</script>
+

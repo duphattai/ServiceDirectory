@@ -14,11 +14,11 @@ namespace ServiceDirectory.Models
     
     public partial class tblFunding
     {
-        public System.Guid FundingID { get; set; }
-        public Nullable<System.Guid> ServiceID { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
+        public int FundingID { get; set; }
+        public Nullable<int> ServiceID { get; set; }
+        public Nullable<int> ContactID { get; set; }
         public Nullable<int> FundingSource { get; set; }
-        public int FundingAmount { get; set; }
+        public Nullable<int> FundingAmount { get; set; }
         public Nullable<System.DateTime> FundingStart { get; set; }
         public Nullable<System.DateTime> FundingEnd { get; set; }
         public Nullable<int> FundingNeeds { get; set; }

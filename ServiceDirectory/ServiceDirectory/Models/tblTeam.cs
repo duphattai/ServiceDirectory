@@ -11,30 +11,20 @@ namespace ServiceDirectory.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class tblTeam
     {
-        public System.Guid TeamID { get; set; }
-        public Nullable<System.Guid> DepartmentID { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
-        public Nullable<System.Guid> AddressID { get; set; }
-        public Nullable<System.Guid> BusinessID { get; set; }
-
-        [Required(ErrorMessage="Please input the team name!")]
-        [StringLength(200, ErrorMessage="Team name is not more than 200 characters!")]
+        public int TeamID { get; set; }
+        public Nullable<int> DepartmentID { get; set; }
+        public Nullable<int> ContactID { get; set; }
+        public Nullable<int> AddressID { get; set; }
+        public Nullable<int> BusinessID { get; set; }
         public string TeamName { get; set; }
-
-        [StringLength(1000, ErrorMessage = "Short description is not more than 1000 characters!")]
         public string ShortDescription { get; set; }
-
-        [StringLength(2000, ErrorMessage = "Full description is not more than 2000 characters!")]
         public string FullDescription { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string AddressLine3 { get; set; }
-
-        [StringLength(20, ErrorMessage = "Phone number is not more than 20 characters!")]
         public string PhoneNumber { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }

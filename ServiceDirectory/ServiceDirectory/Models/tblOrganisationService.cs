@@ -14,8 +14,8 @@ namespace ServiceDirectory.Models
     
     public partial class tblOrganisationService
     {
-        public System.Guid OrgID { get; set; }
-        public System.Guid ServiceID { get; set; }
+        public int OrgID { get; set; }
+        public int ServiceID { get; set; }
         public string Roles { get; set; }
     
         public virtual tblOrganisation tblOrganisation { get; set; }

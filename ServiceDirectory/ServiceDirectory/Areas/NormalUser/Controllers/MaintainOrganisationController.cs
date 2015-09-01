@@ -189,7 +189,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 listOrgLinkedProg = linked.tblProgrammes.ToList();
             }
             
-            // create checkbox item
+            // create checkbox item and make it checked
             foreach (var item in database.tblServices.ToList())
             {
                 listSer.Add(new SelectListItem { Text = item.ServiceName, Value = item.ServiceID.ToString() });
