@@ -15,6 +15,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         ServiceDirectoryEntities db = MaintainOrganisationController.database;
         static string DirectorateID;
         static int PageNumber;
+        static bool IncludeInActive = false; // save tage of include checkbox cheked
         public ActionResult Index(string DirectorateID)
         {
             MaintainDepartmentController.DirectorateID = DirectorateID;
@@ -26,27 +27,36 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         public ActionResult GetListDepartments(int page = -1)
         {
             int id = int.Parse(DirectorateID);
-            List<tblDepartment> list = db.tblDepartments.Where(t => t.DirectorateID == id).ToList();
+            List<tblDepartment> list = null;
 
-            foreach(var item in list)
-            {
-                if(item.AddressID == null)
-                {
-                    item.tblAddress = new tblAddress();
-                    item.tblAddress.tblTown = new tblTown();
-                    item.tblAddress.tblTown.tblCounty = new tblCounty();
-                    item.tblAddress.tblTown.tblCounty.tblCountry = new tblCountry();
-                }
-
-                if (item.ContactID == null)
-                    item.tblContact = new tblContact();
-            }
+            if(IncludeInActive == true)
+                list = db.tblDepartments.Where(t => t.DirectorateID == id).ToList();
+            else
+                list = db.tblDepartments.Where(t => t.DirectorateID == id && t.IsActive == true).ToList();
 
             int pageSize = 15;
             PageNumber = page != -1 ? page : PageNumber;
             return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, pageSize));
         }
 
+
+        public string GetListDepartmentsFromCheckbox(bool IncludeInActive)
+        {
+            int id = int.Parse(DirectorateID);
+            List<tblDepartment> list = null;
+            MaintainDepartmentController.IncludeInActive = IncludeInActive; // store tage of checkbox include in-active
+
+            if (IncludeInActive == true)
+                list = db.tblDepartments.Where(t => t.DirectorateID == id).ToList();
+            else
+                list = db.tblDepartments.Where(t => t.DirectorateID == id && t.IsActive == true).ToList();
+
+            int pageSize = 15;
+
+            string html = MaintainTeamController.RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainDepartment/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, pageSize));
+            html = html.Replace("/MaintainDepartment/Edit_ActionLink", "/NormalUser/MaintainDepartment/Edit_ActionLink");
+            return html;
+        }
 
         // if DepartmentID == "" add mode
         public ActionResult Add_ActionLink(string DepartmentID = null)
@@ -100,6 +110,8 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
         public ActionResult InsertUpdate_Department(tblDepartment model)
         {
+            model.IsActive = true;
+
             if(model.DepartmentID == 0) // add mode
             {
                 // check depart ment name exists
@@ -128,7 +140,6 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                     // update information
                     db.Entry(update).CurrentValues.SetValues(model);
                     db.Entry(update).Property(t => t.DirectorateID).IsModified = false;
-                    db.Entry(update).Property(t => t.IsActive).IsModified = false;
                 }
             }
 

@@ -5,3 +5,18 @@
 <div class="modal fade" id="team_popup" role="dialog" style="overflow-y:auto">
     <!-- content of pop up here -->
 </div>
+
+
+<script>
+    function set_attr_link_popup(idLink, idPopupShow, idPopupHide) {
+
+        idLink = "#" + idLink;
+        idPopupShow = "#" + idPopupShow;
+        idPopupHide = "#" + idPopupHide;
+
+        $(idLink).attr('data-toggle', 'modal');
+        $(idLink).attr('data-target', idPopupShow);
+        $(idPopupShow).modal('show');
+        $(idPopupHide).modal('hide');
+    }
+</script>

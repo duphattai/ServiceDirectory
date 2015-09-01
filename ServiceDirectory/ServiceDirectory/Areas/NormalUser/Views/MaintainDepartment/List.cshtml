@@ -3,8 +3,10 @@
     <div style="margin-top:10px;">
         <div class="row">
             @Ajax.ActionLink("Add", "Add_ActionLink", "MaintainDepartment",
-                              new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_department_popup()" },
-                                       new { @id = "add_department_link", @class = "btn btn-default col-md-offset-11 col-md-1" })
+                                                         new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_department_link', 'department_popup', '')" },
+                                       new { @id = "add_department_link", @class = "btn btn-default col-md-offset-9 col-md-1" })
+
+            <input type="checkbox" style="margin: 8px 8px;" onchange="maintain_department_include_inactive(this)" />Include In-active
         </div>
         <div id="department_table">
             @Html.Action("GetListDepartments", "MaintainDepartment", new { page = 1 })
@@ -13,16 +15,18 @@
 </div>
 
 <script>
-    function set_attr_add_department_popup() {
-        $("#add_department_link").attr('data-toggle', 'modal');
-        $("#add_department_link").attr('data-target', '#department_popup');
-        $('#department_popup').modal('show');
-    }
+    function maintain_department_include_inactive(checkbox) {
+        var url = "/MaintainDepartment/GetListDepartmentsFromCheckbox";
 
-    function set_attr_edit_department_popup() {
-        $("#edit_team_link").attr('data-toggle', 'modal');
-        $("#edit_team_link").attr('data-target', '#department_popup');
-        $('#department_popup').modal('show');
+        if (checkbox.checked) {
+            $.post(url, { IncludeInActive: true }, function (data) {
+                $("#department_table").html(data);
+            });
+        }
+        else {
+            $.post(url, { IncludeInActive: false }, function (data) {
+                $("#department_table").html(data);
+            });
+        }
     }
 </script>
-

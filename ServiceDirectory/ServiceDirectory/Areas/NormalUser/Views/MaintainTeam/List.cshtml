@@ -3,8 +3,9 @@
     <div>
         <div class="row">
             @Ajax.ActionLink("Add", "Add_ActionLink", "MaintainTeam",
-                                                            new AjaxOptions {  HttpMethod = "POST", UpdateTargetId = "team_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_team_popup()" },
-                                                                     new { @id = "add_team_link", @class = "btn btn-default col-md-offset-11 col-md-1" })
+                                                                     new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "team_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_team_link', 'team_popup', 'department_popup')" },
+                                                                              new { @class = "btn btn-default col-md-offset-9 col-md-1", @id = "add_team_link" })
+            <input type="checkbox" style="margin: 8px 8px;" onchange="maintain_team_include_inactive(this)"/>Include In-active
         </div>
         <div id="team_table" class="row">
             @Html.Action("GetListTeams", "MaintainTeam", new { page = 1 })
@@ -13,18 +14,25 @@
 </div>
 
 <script>
-    function set_attr_add_team_popup() {
-        $("#add_team_link").attr('data-toggle', 'modal');
-        $("#add_team_link").attr('data-target', '#team_popup');
-        $('#team_popup').modal('show');
-        $('#department_popup').modal('hide');
-    }
 
-    function set_attr_edit_team_popup() {
-        $("#edit_team_link").attr('data-toggle', 'modal');
-        $("#edit_team_link").attr('data-target', '#team_popup');
-        $('#team_popup').modal('show');
-        $('#department_popup').modal('hide');
+    // see more include in-active records
+    function maintain_team_include_inactive(checkbox)
+    {
+        var url = "/MaintainTeam/GetListTeamsFromCheckbox";
+
+        if(checkbox.checked)
+        {
+            $.post(url, { IncludeInActive: true }, function (data) {
+                $("#team_table").html(data);
+            });
+        }
+        else
+        {
+            $.post(url, { IncludeInActive: false }, function (data) {
+                $("#team_table").html(data);
+            });
+        }
     }
+    
 </script>
 

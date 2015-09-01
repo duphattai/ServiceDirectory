@@ -21,18 +21,42 @@
                     @item.AddressLine1
                 </td>
                 <td>
-                    @item.tblAddress.PostCode
+                    @if(@item.AddressID != null)
+                    {
+                        @item.tblAddress.PostCode
+                    }
                 </td>
                 <td>
-                    @item.tblContact.FirstName @item.tblContact.Surname
+                    @if(item.ContactID != null)
+                    {
+                         @item.tblContact.FirstName @item.tblContact.Surname;
+                    }              
                 </td>
                 <td>
-                    @Html.Raw(@item.IsActive.Value)
+                    @if(item.IsActive.Value)
+                    {
+                        <label>Yes</label>
+                    }
+                    else
+                    {
+                        <label>No</label>
+                    }
+
                 </td>
                 <td>
-                    @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDepartment", new { DepartmentID = @item.DepartmentID },
-                                               new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_edit_department_popup()" },
-                                                  new { @id = "edit_department_link" }) |
+                    @if (item.IsActive == true)
+                    {
+                        @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDepartment", new { DepartmentID = @item.DepartmentID },
+                                            new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_"+  @item.DepartmentID + "', 'department_popup', '')" },
+                                                  new { @id = "edit_department_link_" + @item.DepartmentID }) 
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDepartment", new { DepartmentID = @item.DepartmentID },
+                                            new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_"+  @item.DepartmentID + "', 'department_popup', '')", Confirm = "Do you want make this department active?" },
+                                                  new { @id = "edit_department_link_" + @item.DepartmentID })
+                    }
+                     |
                     <!-- After delete will update list item -->
                     @Ajax.ActionLink("Delete", "Delete_ActionLink", new { DepartmentID = @item.DepartmentID, page = @Model.PageNumber },
                                    new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })

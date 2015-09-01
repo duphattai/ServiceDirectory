@@ -43,9 +43,18 @@
                     }
                 </td>
                 <td>
-                    @Ajax.ActionLink("Edit", "Add_ActionLink", "MaintainTeam", new { TeamID = @item.TeamID },
-                                                  new AjaxOptions { UpdateTargetId = "team_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST",OnComplete = "set_attr_edit_team_popup()" },
-                                                  new { @id = "edit_team_link" }) |
+                    @if(@item.IsActive == false)
+                    {
+                        @Ajax.ActionLink("Edit", "Add_ActionLink", "MaintainTeam", new { TeamID = @item.TeamID },
+                                                            new AjaxOptions { UpdateTargetId = "team_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_team_link_" + @item.TeamID + "', 'team_popup', 'department_popup')", Confirm = "Do you want to make this Team active?" })
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink("Edit", "Add_ActionLink", "MaintainTeam", new { TeamID = @item.TeamID },
+                                                            new AjaxOptions { UpdateTargetId = "team_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_team_link_" + @item.TeamID + "', 'team_popup', 'department_popup')" });
+                    }
+
+                    |
                     <!-- After delete will update list item -->
                     @Ajax.ActionLink("Delete", "Delete_ActionLink", new { TeamID = @item.TeamID, page = @Model.PageNumber },
                                       new AjaxOptions { UpdateTargetId = "team_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
