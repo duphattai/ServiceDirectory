@@ -1,35 +1,37 @@
 ﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblSupportingMaterial>
 @using PagedList.Mvc;
 
-<div class="modal fade" id="supportingmaterial_popup" role="dialog">
-<!-- content of pop up here -->
-</div>
-
 <div class="row" style="border: 1px ridge silver; ">
     <div><strong>Current List of Supporting Materials</strong></div>
     <div style="margin-top:10px;">
-        <div style="padding-top: 10px; padding-bottom:10px;">
-            @Ajax.ActionLink("Add", "Add_ActionLink", new { URL = ""},
-                                                  new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_add_supportingmaterial_popup()" },
-                                                  new { @id = "add_supportingmaterial_link" })
+        <div class="row">
+            @Ajax.ActionLink("Add", "Add_ActionLink", "MaintainSupportingMaterial",
+                             new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_supportingmaterial_link', 'supportingmaterial_popup', 'organisation_popup')" },
+                             new { @id = "add_supportingmaterial_link", @class = "btn btn-default col-md-offset-9 col-md-1" })
+
+            <input type="checkbox" style="margin: 8px 8px;" onchange="maintain_supportingmaterial_include_inactive(this)" />Include In-active
         </div>
         <div id="supporting_material_table">
-            @Html.Action("List", "MaintainSupportingMaterial", new { page = 1 })
+            @Html.Action("GetListSupportingMaterials", "MaintainSupportingMaterial", new { page = 1 })
         </div>
     </div>
 </div>
 
 <script>
-    function set_attr_add_supportingmaterial_popup() {
-        $("#add_supportingmaterial_link").attr('data-toggle', 'modal');
-        $("#add_supportingmaterial_link").attr('data-target', '#supportingmaterial_popup');
-        $('#supportingmaterial_popup').modal('show');
-    }
+    function maintain_supportingmaterial_include_inactive(checkbox)
+    {
+        var url = "/MaintainSupportingMaterial/GetListSupportingMaterialsFromCheckbox";
 
-    function set_attr_edit_supportingmaterial_popup() {
-        $("#edit_supportingmaterial_link").attr('data-toggle', 'modal');
-        $("#edit_supportingmaterial_link").attr('data-target', '#supportingmaterial_popup');
-        $('#supportingmaterial_popup').modal('show');
+        if (checkbox.checked) {
+            $.post(url, { IncludeInActive: true }, function (data) {
+                $("#supporting_material_table").html(data);
+            });
+        }
+        else {
+            $.post(url, { IncludeInActive: false }, function (data) {
+                $("#supporting_material_table").html(data);
+            });
+        }
     }
 </script>
 

@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ServiceDirectory.Models;
-
+using PagedList;
 namespace ServiceDirectory.Areas.NormalUser.Controllers
 {
     public class MaintainOrganisationController : Controller
     {
         static public ServiceDirectoryEntities database = new ServiceDirectoryEntities();
-
+        static int PageNumber;
+        int PageSize = 5;
+        static bool IncludeInActive = false;
         enum GroupReference
         {
             organisation_specicalism = 1,
@@ -24,35 +26,37 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         //
         // GET: /NormalUser/MaintainOrganisation/
 
-        public ActionResult List()
+        public ActionResult Index()
         {
-            List<tblOrganisation> list;
-            using(ServiceDirectoryEntities db = new ServiceDirectoryEntities())
-            {
-                list = db.tblOrganisations.Take(15).ToList();
-                foreach(var item in list)
-                {
-                    item.tblContact = db.tblContacts.Where(t => t.ContactID == item.ContactID).SingleOrDefault();
-                    item.tblAddress = db.tblAddresses.Where(t => t.AddressID == item.AddressID).SingleOrDefault();
-                }
-            }
-
-            return PartialView("~/Areas/NormalUser/Views/MaintainOrganisation/List.cshtml", list);
+            return PartialView("List");
         }
 
         // call view Add
         public ActionResult Add_ActionLink()
         {
-            return PartialView("~/Areas/NormalUser/Views/MaintainOrganisation/Add.cshtml", new tblOrganisation());
+            return PartialView("Add", new tblOrganisation());
         }
 
         // call view Edit
-        public ActionResult Edit_ActionLink(string id)
+        public ActionResult Edit_ActionLink(string OrgID)
         {
-            ViewBag.OrgID = id;
-            return PartialView("~/Areas/NormalUser/Views/MaintainOrganisation/Edit.cshtml");
+            ViewBag.OrgID = OrgID;
+            return PartialView("Edit");
         }
 
+
+        public ActionResult GetListOrganisations(int page = -1)
+        {
+            List<tblOrganisation> list = null;
+
+            if (IncludeInActive == true)
+                list = database.tblOrganisations.ToList();
+            else
+                list = database.tblOrganisations.Where(t => t.IsActive == true).ToList();
+
+            PageNumber = page != -1 ? page : PageNumber;
+            return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, PageSize));
+        }
 
         // get data and fill data into Details 1
         // if OrgId == "" add mode, otherwise edit mode
@@ -61,18 +65,18 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             tblOrganisation model = new tblOrganisation();
             if(!string.IsNullOrEmpty(OrgID))
             {
-                Guid guid = new Guid(OrgID);
-                model = database.tblOrganisations.Where(t => t.OrgID.Equals(guid)).SingleOrDefault();
+                int id = int.Parse(OrgID);
+                model = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault();
             }
 
-            return PartialView("~/Areas/NormalUser/Views/MaintainOrganisation/Elements/Details_one.cshtml", model);
+            return PartialView("Elements/Details_one", model);
         }
 
         // get data and fill data into Details 2
         // if OrgId == "" add mode, otherwise edit mode
         public ActionResult Details_two(string OrgID = "")
         {
-            Guid guid = Guid.Empty;
+            int id;
 
             List<SelectListItem> listSerPers = new List<SelectListItem>();
             List<SelectListItem> listSerDis = new List<SelectListItem>();
@@ -86,8 +90,8 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             List<tblReferenceData> listReference = null;
             if(!string.IsNullOrEmpty(OrgID))
             {
-                guid = new Guid(OrgID);
-                listReference = database.tblOrganisations.Where(t => t.OrgID.Equals(guid)).SingleOrDefault().tblReferenceDatas.ToList();
+                id = int.Parse(OrgID);
+                listReference = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault().tblReferenceDatas.ToList();
             }
                 
 
@@ -168,14 +172,15 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             ViewBag.listSerBarri = listSerBarri;
             ViewBag.listAccr = listAccr;
             ViewBag.listSerBene = listSerBene;
-            return PartialView("~/Areas/NormalUser/Views/MaintainOrganisation/Elements/Details_two.cshtml");
+
+            return PartialView("Elements/Details_two");
         }
 
         // get data and fill data into Details 3
         // If OrgId == "" add mode, OrgID != "" edit mode 
         public ActionResult Details_three(string OrgID = "")
         {
-            Guid guid = Guid.Empty;
+            int id;
             List<SelectListItem> listSer = new List<SelectListItem>();
             List<SelectListItem> listProg = new List<SelectListItem>();
             
@@ -183,9 +188,9 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             List<tblProgramme> listOrgLinkedProg = null;
             if(!string.IsNullOrEmpty(OrgID))
             {
-                guid = new Guid(OrgID);
-                listOrgLinkedSer = database.tblOrganisationServices.Where(t => t.OrgID.Equals(guid)).ToList();
-                tblOrganisation linked = database.tblOrganisations.Where(t => t.OrgID.Equals(guid)).SingleOrDefault();
+                id = int.Parse(OrgID);
+                listOrgLinkedSer = database.tblOrganisationServices.Where(t => t.OrgID == id).ToList();
+                tblOrganisation linked = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault();
                 listOrgLinkedProg = linked.tblProgrammes.ToList();
             }
             
@@ -213,7 +218,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             ViewBag.listProg = listProg;
             ViewBag.listSer = listSer;
 
-            return PartialView("~/Areas/NormalUser/Views/MaintainOrganisation/Elements/Details_three.cshtml");
+            return PartialView("Elements/Details_three");
         }
 
         // get data and fill data into Details 4
@@ -221,11 +226,29 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         {
             List<tblPremis> listLinked;
             
-            Guid guid = new Guid(OrgID);
-            listLinked = database.tblOrganisations.Where(t => t.OrgID.Equals(guid)).SingleOrDefault().tblPremises.ToList();
+            int id  = int.Parse(OrgID);
+            listLinked = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault().tblPremises.ToList();
             
+            return PartialView("Elements/Details_four", listLinked);
+        }
 
-            return PartialView("~/Areas/NormalUser/Views/MaintainOrganisation/Elements/Details_four.cshtml", listLinked);
+
+        public string GetListOrganisationsFromCheckbox(bool IncludeInActive)
+        {
+            MaintainOrganisationController.IncludeInActive = IncludeInActive;
+            List<tblOrganisation> list = null;
+
+            if (IncludeInActive == true)
+                list = database.tblOrganisations.ToList();
+            else
+                list = database.tblOrganisations.Where(t => t.IsActive == true).ToList();
+
+            string html = MaintainTeamController.RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainOrganisation/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, PageSize));
+
+            // fix href missing name of ares
+            html = html.Replace("/MaintainOrganisation/Edit_ActionLink", "/NormalUser/MaintainOrganisation/Edit_ActionLink");
+            html = html.Replace("/MaintainOrganisation/GetListOrganisations", "/NormalUser/MaintainOrganisation/GetListOrganisations");
+            return html;
         }
 
 

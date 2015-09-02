@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblDirectorate>
+@using PagedList.Mvc;
+
+<table class="table table-bordered table-striped">
+    <tr class="label-info">
+        <th class="col-md-2">BU/Directorate Name</th>
+        <th class="col-md-3">Office Address Line 1</th>
+        <th class="col-md-1">Postcode</th>
+        <th class="col-md-2">Contact</th>
+        <th class="col-md-2">Is Active</th>
+        <th class="col-md-2">Action</th>
+    </tr>
+    <tbody>
+        @foreach (var item in @Model)
+        {
+        <tr>
+            <td>
+                @item.DirectorateName
+            </td>
+            <td>
+                @item.AddressLine1
+            </td>
+            <td>
+                @if(@item.AddressID != null)
+                {
+                    @item.tblAddress.PostCode
+                }
+            </td>
+            <td>
+                @if(item.ContactID != null)
+                {
+                    @item.tblContact.FirstName @item.tblContact.Surname;
+                }
+            </td>
+            <td>
+                @if(item.IsActive.Value)
+                {
+                    <label>Yes</label>
+                }
+                else
+                {
+                    <label>No</label>
+                }
+
+            </td>
+            <td>
+                @if (item.IsActive == true)
+                    {
+                    @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDirectorate", new { DirectorateID = @item.DirectorateID },
+                                                                                new AjaxOptions { UpdateTargetId = "directorate_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_directorate_link_" + @item.DirectorateID + "', 'directorate_popup', 'organisation_popup')" },
+                                                           new { @id = "edit_directorate_link_" + @item.DirectorateID })
+                    }
+                    else
+                    {
+                    @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDirectorate", new { DirectorateID = @item.DirectorateID },
+                                                                    new AjaxOptions { UpdateTargetId = "directorate_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_directorate_link_" + @item.DirectorateID + "', 'directorate_popup', 'organisation_popup')", Confirm = "Do you want make this directorate active?" },
+                                                                    new { @id = "edit_directorate_link_" + @item.DirectorateID })
+                    }
+                |
+                <!-- After delete will update list item -->
+                @Ajax.ActionLink("Delete", "Delete_ActionLink", new { DirectorateID = @item.DirectorateID, page = @Model.PageNumber },
+                                    new AjaxOptions { UpdateTargetId = "directorate_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("GetListDirectorates", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "directorate_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+</div>
+

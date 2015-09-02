@@ -1,0 +1,37 @@
+﻿
+<div class="row" style="border: 1px ridge silver; ">
+    <div style="margin-top:10px;">
+        <div class="row">
+            @Ajax.ActionLink("Add", "Add_ActionLink", "MaintainDirectorate",
+                             new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "directorate_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_directorate_link', 'directorate_popup', 'organisation_popup')" },
+                             new { @id = "add_directorate_link", @class = "btn btn-default col-md-offset-9 col-md-1" })
+
+            <input type="checkbox" style="margin: 8px 8px;" onchange="maintain_directorate_include_inactive(this)" />Include In-active
+        </div>
+        <div id="directorate_table">
+            @Html.Action("GetListDirectorates", "MaintainDirectorate", new { page = 1 })
+        </div>
+    </div>
+</div>
+
+<script>
+    function maintain_directorate_include_inactive(checkbox) {
+        var url = "/MaintainDirectorate/GetListDirectoratesFromCheckbox";
+
+        if (checkbox.checked) {
+            $.post(url, { IncludeInActive: true }, function (data) {
+                $("#directorate_table").html(data);
+            });
+        }
+        else {
+            $.post(url, { IncludeInActive: false }, function (data) {
+                $("#directorate_table").html(data);
+            });
+        }
+    }
+
+    function close_popup_maintain_directorate() {
+        $('#organisation_popup').modal('show');
+    }
+</script>
+

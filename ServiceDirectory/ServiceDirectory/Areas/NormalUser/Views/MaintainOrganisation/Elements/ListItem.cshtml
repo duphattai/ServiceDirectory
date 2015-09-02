@@ -1,0 +1,88 @@
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblOrganisation>
+@using PagedList.Mvc;
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr class="label-info">
+            <th>
+                <strong>Organisation Name</strong>
+            </th>
+            <th>
+                <strong>Head Office Address Line 1</strong>
+            </th>
+            <th>
+                <strong>Postcode</strong>
+            </th>
+            <th>
+                <strong>Contact</strong>
+            </th>
+            <th>
+                <strong>Is Active?</strong>
+            </th>
+            <th>
+                <strong>Action</strong>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrgName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressLine1)
+                </td>
+                <td>
+                    @if(item.AddressID != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.tblAddress.PostCode)
+                    }
+                </td>
+                <td>
+                    @if(item.ContactID != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.tblContact.FirstName)
+                        @Html.DisplayFor(modelItem => item.tblContact.Surname)
+                    }
+                </td>
+
+                <td>
+                    @if (item.IsActive.Value == true)
+                    {
+                        <label>Yes</label>
+                    }
+                    else
+                    {
+                        <label>No</label>
+                    }
+                </td>
+
+                <td>
+                    @if (item.IsActive == true)
+                    {
+                        @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainOrganisation", new { OrgID = @item.OrgID },
+                                          new AjaxOptions { UpdateTargetId = "organisation_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_organisation_link_" + @item.OrgID + "', 'organisation_popup', '')" },
+                                          new { @id = "edit_organisation_link_" + @item.OrgID })
+                    }
+                    else
+                    {
+                        @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainOrganisation", new { OrgID = @item.OrgID },
+                                          new AjaxOptions { UpdateTargetId = "organisation_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_organisation_link_" + @item.OrgID + "', 'organisation_popup', '')", Confirm = "Do you want make this organisation active?" },
+                                          new { @id = "edit_organisation_link_" + @item.OrgID })
+                    }
+                    |
+                    <!-- After delete will update list item -->
+                    @Ajax.ActionLink("Delete", "Delete_ActionLink", new { OrgID = @item.OrgID, page = @Model.PageNumber },
+                                    new AjaxOptions { UpdateTargetId = "organisation_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("GetListOrganisations", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "organisation_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+</div>

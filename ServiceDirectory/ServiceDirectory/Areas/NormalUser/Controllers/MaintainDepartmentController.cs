@@ -15,6 +15,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         ServiceDirectoryEntities db = MaintainOrganisationController.database;
         static string DirectorateID;
         static int PageNumber;
+        int PageSize = 5;
         static bool IncludeInActive = false; // save tage of include checkbox cheked
         public ActionResult Index(string DirectorateID)
         {
@@ -34,9 +35,8 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             else
                 list = db.tblDepartments.Where(t => t.DirectorateID == id && t.IsActive == true).ToList();
 
-            int pageSize = 15;
             PageNumber = page != -1 ? page : PageNumber;
-            return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, pageSize));
+            return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, PageSize));
         }
 
 
@@ -51,10 +51,11 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             else
                 list = db.tblDepartments.Where(t => t.DirectorateID == id && t.IsActive == true).ToList();
 
-            int pageSize = 15;
+            string html = MaintainTeamController.RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainDepartment/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, PageSize));
 
-            string html = MaintainTeamController.RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainDepartment/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, pageSize));
-            html = html.Replace("/MaintainDepartment/Edit_ActionLink", "/NormalUser/MaintainDepartment/Edit_ActionLink");
+            // fix href missing name or ares
+            html = html.Replace("/MaintainDepartment/Edit_ActionLink", "/NormalUser/MaintainDepartment/Edit_ActionLink"); // fix error ajax not work (wrong href)
+            html = html.Replace("/MaintainDepartment/GetListDepartments", "/NormalUser/MaintainDepartment/GetListDepartments"); // fix error paging not work
             return html;
         }
 

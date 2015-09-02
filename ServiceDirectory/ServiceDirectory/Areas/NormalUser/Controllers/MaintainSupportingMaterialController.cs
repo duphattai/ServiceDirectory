@@ -11,31 +11,56 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
     public class MaintainSupportingMaterialController : Controller
     {
         ServiceDirectoryEntities db = MaintainOrganisationController.database;
-        static string OrgID = null;
+        static int OrgID;
+        static bool IncludeInactive = false;
+        int PageSize = 15;
+        static int PageNumber;
         //
         // GET: /NormalUser/MaintainSupportingMaterial/
 
 
-        public ActionResult Index(string orgID)
+        public ActionResult Index(string OrgID)
         {
-            OrgID = orgID;
+            MaintainSupportingMaterialController.OrgID = int.Parse(OrgID);
             return PartialView("List");
         }
 
-        public ActionResult List(int? page)
+        public ActionResult GetListSupportingMaterials(int page = -1)
         {
+            List<tblSupportingMaterial> list = null;
 
-            var list = db.tblSupportingMaterials.Where(t => t.OrgID == int.Parse(OrgID)).OrderBy(g => g.URL).ToList();
-            int pageSize = 15;
-            int pageNumber = (page ?? 1);
-            return PartialView("Elements/ListItem", list.ToPagedList(pageNumber, pageSize));
+            if(IncludeInactive)
+                list = db.tblSupportingMaterials.Where(t => t.OrgID == OrgID).OrderBy(g => g.URL).ToList();
+            else
+                list = db.tblSupportingMaterials.Where(t => t.OrgID == OrgID && t.IsActive == true).OrderBy(g => g.URL).ToList();
+
+            PageNumber = page != -1 ? page : PageNumber;
+            return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, PageSize));
         }
 
+        public string GetListSupportingMaterialsFromCheckbox(bool IncludeInactive)
+        {
+            MaintainSupportingMaterialController.IncludeInactive = IncludeInactive;
+            List<tblSupportingMaterial> list = null;
+
+            if (IncludeInactive)
+                list = db.tblSupportingMaterials.Where(t => t.OrgID == OrgID).OrderBy(g => g.URL).ToList();
+            else
+                list = db.tblSupportingMaterials.Where(t => t.OrgID == OrgID && t.IsActive == true).OrderBy(g => g.URL).ToList();
+
+
+            string html = MaintainTeamController.RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainSupportingMaterial/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, PageSize));
+
+            // fix href missing name of ares
+            html = html.Replace("/MaintainSupportingMaterial/Add_ActionLink", "/NormalUser/MaintainSupportingMaterial/Add_ActionLink");
+            html = html.Replace("/MaintainSupportingMaterial/GetListSupportingMaterials", "/NormalUser/MaintainSupportingMaterial/GetListSupportingMaterials");
+            return html;
+        }
 
         // if URL == "" add mode, otherwise edit mode
-        public ActionResult Add_ActionLink(string URL = "")
+        public ActionResult Add_ActionLink(string SupportID)
         {
-            @ViewBag.URL = URL;
+            @ViewBag.SupportID = SupportID;
             return PartialView("Add");
         }
 
@@ -43,21 +68,19 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
         // if URL == "" is add mode, else edit mode
         [HttpPost]
-        public ActionResult InsertUpdate_SupportMaterial(tblSupportingMaterial model, string OldURL = "")
+        public ActionResult InsertUpdate_SupportMaterial(tblSupportingMaterial model)
         {
-            if(string.IsNullOrEmpty(OldURL)) // add mode
+            model.IsActive = true;
+            if(model.SupportID == 0) // add mode
             {
                 // check URL is exists
-                tblSupportingMaterial exists = db.tblSupportingMaterials.Where(t => t.URL == model.URL && t.OrgID == int.Parse(OrgID)).SingleOrDefault();
+                int exists = db.tblSupportingMaterials.Where(t => t.URL == model.URL).ToList().Count;
 
-                if(exists == null) // not exists, can insert
+                if(exists == 0) // not exists, can insert
                 {
                     model.AddedDate = DateTime.Now;
-                    model.OrgID = int.Parse(OrgID);
+                    model.OrgID = OrgID;
                     db.tblSupportingMaterials.Add(model);
-                    db.SaveChanges();
-
-                    return Content("Save supporting material successfully");
                 }
                 else
                     return Content("URL is exist. Please input difference URL");  
@@ -65,56 +88,59 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             else //edit mode
             {
                 // check new URL is exists
-                List<tblSupportingMaterial> list = db.tblSupportingMaterials.Where(t => (t.URL == model.URL || t.URL == OldURL ) && t.OrgID == int.Parse(OrgID)).ToList();
+                int exist = db.tblSupportingMaterials.Where(t => t.URL == model.URL && t.SupportID != model.SupportID).ToList().Count;
 
-                if(list.Count < 2) // not exist, can update
+                if (exist == 0) // not exist, can update
                 {
-                    tblSupportingMaterial update = db.tblSupportingMaterials.Where(t => t.URL == OldURL).SingleOrDefault();
-                    update.URL = model.URL;
-                    update.ShortDescription = model.ShortDescription;
-                    update.TypeFile = model.TypeFile;
+                    tblSupportingMaterial update = db.tblSupportingMaterials.Where(t => t.SupportID == model.SupportID).SingleOrDefault();
 
-                    db.SaveChanges();
-                    return Content("Save supporting material successfully");
+                    db.Entry(update).CurrentValues.SetValues(model);
+                    db.Entry(update).Property(t => t.OrgID).IsModified = false;
+                    db.Entry(update).Property(t => t.AddedDate).IsModified = false;
+                    db.Entry(update).Property(t => t.UserID).IsModified = false;
                 }
                 else // new URL is exists
                     return Content("URL is exist. Please input difference URL");
             }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Content("Cannot save supporting material");
+            }
+
+            return Content("Save supporting material successfully");
         }
 
         // if Id == "" add mode, otherwise edit mode
-        public ActionResult Details(string URL = "")
+        public ActionResult Details(string SupportID = "")
         {
             tblSupportingMaterial model = new tblSupportingMaterial();
-            if(!string.IsNullOrEmpty(URL))
+            if (!string.IsNullOrEmpty(SupportID))
             {
-                model = db.tblSupportingMaterials.Where(t => t.URL == URL && t.OrgID == int.Parse(OrgID)).SingleOrDefault();
+                int id = int.Parse(SupportID);
+                model = db.tblSupportingMaterials.Where(t => t.SupportID == id).SingleOrDefault();
             }
             model.AddedDate = DateTime.Today;
             return PartialView("Elements/Details", model);
         }
 
         // delete item from list
-        public ActionResult Delete_ActionLink(string URL, string offset = "")
+        public ActionResult Delete_ActionLink(string SupportID)
         {
+            int id = int.Parse(SupportID);
             // delete item selected
-            Guid guid = new Guid(OrgID);
-            tblSupportingMaterial delete = db.tblSupportingMaterials.Where(t => t.URL == URL && t.OrgID == int.Parse(OrgID)).SingleOrDefault();
+            tblSupportingMaterial delete = db.tblSupportingMaterials.Where(t => t.SupportID == id).SingleOrDefault();
             if(delete != null)
             {
                 db.tblSupportingMaterials.Remove(delete);
                 db.SaveChanges();
             }
 
-            // show new list item
-            List<tblSupportingMaterial> model = db.tblSupportingMaterials.OrderByDescending(order => order.URL).Skip(0).Take(15).ToList();
-            // create user account into model
-            foreach (var item in model)
-            {
-                item.tblUser = db.tblUsers.Where(t => t.UserID == item.UserID).SingleOrDefault();
-            }
-
-            return PartialView("Elements/ListItem", model);
+            return GetListSupportingMaterials(-1);
         }
     }
 }

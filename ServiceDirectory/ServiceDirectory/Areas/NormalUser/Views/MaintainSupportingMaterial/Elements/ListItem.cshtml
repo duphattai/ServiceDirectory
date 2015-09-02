@@ -10,7 +10,7 @@
         <th class="col-md-2">Added Date</th>
         <th class="col-md-2">Action</th>
     </tr>
-    <tbody id="supporting_material_list_item">
+    <tbody>
         @foreach (var item in @Model)
         {
             <tr>
@@ -24,18 +24,32 @@
                     @item.TypeFile
                 </td>
                 <td>
-                    @*@item.tblUser.FullName*@
+                    @if(item.UserID != null)
+                    {
+                        @item.tblUser.FullName 
+                    }
                 </td>
                 <td>
                     @item.AddedDate.Value.ToString("dd-MM-yyyy")
                 </td>
                 <td>
-                    @Ajax.ActionLink("Edit", "Add_ActionLink", new { URL = @item.URL },
-                                                  new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_edit_supportingmaterial_popup()" },
-                                                  new { @id = "edit_supportingmaterial_link" }) |
+                    @if (item.IsActive == true)
+                    {
+                         @Ajax.ActionLink("Edit", "Add_ActionLink", new { SupportID = @item.SupportID },
+                                         new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('edit_supportingmaterial_link_" + @item.SupportID + "', 'supportingmaterial_popup', 'organisation_popup')" },
+                                         new { @id = "edit_supportingmaterial_link_" + @item.SupportID })
+                    }
+                    else
+                    {
+                          @Ajax.ActionLink("Edit", "Add_ActionLink", new { SupportID = @item.SupportID },
+                                         new AjaxOptions { UpdateTargetId = "supportingmaterial_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('edit_supportingmaterial_link_" + @item.SupportID + "', 'supportingmaterial_popup', 'organisation_popup')", Confirm = "Do you want make this supporting material active?" },
+                                         new { @id = "edit_supportingmaterial_link_" + @item.SupportID })
+                    }
+
+                    |
                     <!-- After delete will update list item -->
-                    @Ajax.ActionLink("Delete", "Delete_ActionLink", new { URL = @item.URL },
-                                            new AjaxOptions { UpdateTargetId = "supporting_material_list_item", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
+                    @Ajax.ActionLink("Delete", "Delete_ActionLink", new { SupportID = @item.SupportID },
+                                     new AjaxOptions { UpdateTargetId = "supporting_material_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
 
                 </td>
             </tr>

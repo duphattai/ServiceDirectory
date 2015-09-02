@@ -3,7 +3,7 @@
     <div style="margin-top:10px;">
         <div class="row">
             @Ajax.ActionLink("Add", "Add_ActionLink", "MaintainDepartment",
-                                                         new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_department_link', 'department_popup', '')" },
+                                                                  new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_department_link', 'department_popup', 'directorate_popup')" },
                                        new { @id = "add_department_link", @class = "btn btn-default col-md-offset-9 col-md-1" })
 
             <input type="checkbox" style="margin: 8px 8px;" onchange="maintain_department_include_inactive(this)" />Include In-active
@@ -28,5 +28,9 @@
                 $("#department_table").html(data);
             });
         }
+    }
+
+    function close_popup_maintain_department() {
+        $('#directorate_popup').modal('show');
     }
 </script>

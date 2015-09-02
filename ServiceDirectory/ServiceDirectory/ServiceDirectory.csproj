@@ -137,6 +137,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\NormalUser\Controllers\HomeController.cs" />
     <Compile Include="Areas\NormalUser\Controllers\MaintainDepartmentController.cs" />
+    <Compile Include="Areas\NormalUser\Controllers\MaintainDirectorateController.cs" />
     <Compile Include="Areas\NormalUser\Controllers\MaintainOrganisationController.cs" />
     <Compile Include="Areas\NormalUser\Controllers\MaintainSupportingMaterialController.cs" />
     <Compile Include="Areas\NormalUser\Controllers\MaintainTeamController.cs" />
@@ -364,6 +365,12 @@
       <LastGenOutput>ABSD.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\NormalUser\Views\MaintainDepartment\Edit.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDirectorate\List.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDirectorate\Elements\ListItem.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDirectorate\Add.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDirectorate\Elements\Details.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainDirectorate\Edit.cshtml" />
+    <Content Include="Areas\NormalUser\Views\MaintainOrganisation\Elements\ListItem.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />

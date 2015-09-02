@@ -1,15 +1,12 @@
 ﻿<link href="~/Content/mycss.css" rel="stylesheet" />
 
 <div>
-    @*@Html.Action("List", "MaintainOrganisation", new { area = "NormalUser" })*@
+    @Html.Action("Index", "MaintainOrganisation", new { area = "NormalUser" })
 </div>
 @*<div>
-    @Html.Action("Index", "MaintainSupportingMaterial", new { area = "NormalUser", orgID = "d5f1ffe9-cd05-4e24-9cd0-41d8812980ea" })
-</div>*@
-@*<div>
-    @Html.Action("Index", "MaintainTeam", new { area = "NormalUser", DepartmentID = "b01bdb82-ed9c-44ab-8bed-49b5868417f3" })
+    @Html.Action("Index", "MaintainSupportingMaterial", new { area = "NormalUser", OrgID = "1" })
 </div>*@
 
-<div>
-    @Html.Action("Index", "MaintainDepartment", new { area = "NormalUser", DirectorateID = "1" })
-</div>
+@*<div>
+    @Html.Action("Index", "MaintainDirectorate", new { area = "NormalUser", OrganisationID = "1" })
+</div>*@

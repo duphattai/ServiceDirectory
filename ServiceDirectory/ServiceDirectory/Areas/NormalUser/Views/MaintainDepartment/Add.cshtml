@@ -18,7 +18,7 @@
             <div class="modal-body">
                 <div class="nav">
                     <ul class="nav nav-tabs col-sm-1">
-                        <li class="active"><a href="#team_tab" data-toggle="tab">Details</a></li>
+                        <li class="active"><a href="#department_tab" data-toggle="tab">Details</a></li>
                     </ul>
 
                     <div class="col-sm-2 col-sm-offset-7" style="padding-left:70px;">
@@ -32,12 +32,12 @@
                         <input type="submit" value="Save" class="btn btn-default" />
                     </div>
                     <div class="col-sm-1">
-                        @Ajax.ActionLink("Back", "GetListDepartments", "MaintainDepartment", new { page = -1 }, new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-default", @id = "maintain_department_add_back" })
+                        @Ajax.ActionLink("Back", "GetListDepartments", "MaintainDepartment", new { page = -1 }, new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "close_popup_maintain_department()"  }, new { @class = "btn btn-default", @id = "maintain_department_add_back" })
                     </div>
                 </div>
 
                 <div class="tab-content table-bordered">
-                    <div class="tab-pane active" id="team_tab">
+                    <div class="tab-pane active" id="department_tab">
                         @Html.Action("Details", "MaintainDepartment", new { DepartmentID = @ViewBag.DepartmentID })
                     </div>
                 </div>

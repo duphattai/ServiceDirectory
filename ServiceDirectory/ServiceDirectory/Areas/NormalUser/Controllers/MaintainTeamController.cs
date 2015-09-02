@@ -17,6 +17,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         // GET: /NormalUser/MaintainTeam/
         static string DepartmentID;
         static int PageNumber;
+        int PageSize = 5;
         static bool IncludeInactive = false;
         public ActionResult Index(string DepartmentID)
         {
@@ -36,10 +37,9 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             else
                 list = db.tblTeams.Where(t => t.DepartmentID == guid && t.IsActive == true).OrderBy(g => g.TeamName).ToList();
 
-            int pageSize = 15;
             PageNumber = page != -1 ? page : PageNumber; // if not new page, will load current page
 
-            return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, pageSize));
+            return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, PageSize));
         }
 
         public string GetListTeamsFromCheckbox(bool IncludeInActive)
@@ -53,10 +53,11 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             else
                 list = db.tblTeams.Where(t => t.DepartmentID == guid && t.IsActive == true).OrderBy(g => g.TeamName).ToList();
 
-            int pageSize = 15;
             
-            string html = RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainTeam/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, pageSize));
-            html = html.Replace("/MaintainTeam/Add_ActionLink", "/NormalUser/MaintainTeam/Add_ActionLink"); // fix wrong href, href missing name of areas
+            string html = RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainTeam/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, PageSize));
+
+            html = html.Replace("/MaintainTeam/Add_ActionLink", "/NormalUser/MaintainTeam/Add_ActionLink"); // fix wrong href, href missing name of areas (error ajax not call)
+            html = html.Replace("/MaintainTeam/GetListTeams", "/NormalUser/MaintainTeam/GetListTeams"); // fix error paging not work (wrong href)
             return html;
         }
 

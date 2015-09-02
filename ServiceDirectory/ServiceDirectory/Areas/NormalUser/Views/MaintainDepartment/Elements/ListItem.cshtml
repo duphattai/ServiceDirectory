@@ -47,13 +47,13 @@
                     @if (item.IsActive == true)
                     {
                         @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDepartment", new { DepartmentID = @item.DepartmentID },
-                                            new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_"+  @item.DepartmentID + "', 'department_popup', '')" },
+                                                 new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_" + @item.DepartmentID + "', 'department_popup', 'directorate_popup')" },
                                                   new { @id = "edit_department_link_" + @item.DepartmentID }) 
                     }
                     else
                     {
                         @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDepartment", new { DepartmentID = @item.DepartmentID },
-                                            new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_"+  @item.DepartmentID + "', 'department_popup', '')", Confirm = "Do you want make this department active?" },
+                                                 new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_" + @item.DepartmentID + "', 'department_popup', 'directorate_popup')", Confirm = "Do you want make this department active?" },
                                                   new { @id = "edit_department_link_" + @item.DepartmentID })
                     }
                      |

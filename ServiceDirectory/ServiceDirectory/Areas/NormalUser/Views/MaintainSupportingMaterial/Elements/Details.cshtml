@@ -6,7 +6,8 @@
 <div class="row">
     <div class="col-md-2"><strong>URL </strong><font color="red">*</font></div>
     <div class="col-md-4">
-        @Html.TextBoxFor(model => model.URL)        
+        @Html.TextBoxFor(model => model.URL, new { @class="btn-block"})       
+        <input type="hidden" name="SupportID" value="@Model.SupportID" /> 
     </div>
     <div class="col-md-2"><strong>Added By</strong></div>
     <div class="col-md-4">
@@ -16,7 +17,7 @@
 <div class="row">
     <div class="col-md-2"><strong>Description</strong></div>
     <div class="col-md-4">
-        <textarea name="ShortDescription" class="btn-block">@Model.ShortDescription</textarea>
+        <textarea name="ShortDescription" style="resize:none;" class="btn-block">@Model.ShortDescription</textarea>
     </div>
     <div class="col-md-2"><strong>Added Date</strong></div>
     <div class="col-md-4">

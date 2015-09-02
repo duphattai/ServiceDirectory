@@ -20,7 +20,7 @@
                     Preferred Organisation
                 </td>
                 <td style="width:30%">
-                    <input type="checkbox" name="Preferred" checked="@Model.Preferred"/>
+                    <input type="checkbox" name="Preferred" checked="@Model.Preferred.Value"/>
                 </td>
             </tr>
 
@@ -43,7 +43,14 @@
                     Type Of Business
                 </td>
                 <td>
-                    <input type="text" readonly="readonly" disabled="disabled"/>
+                    @if(Model.BusinessID != null)
+                    {
+                        <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblBusinessType.BusinessName"/>
+                    }
+                    else
+                    {
+                        <input type="text" readonly="readonly" disabled="disabled"/>   
+                    }
                     <a href="#">  Lookup</a>
                     <input type="hidden" name="BusinessID" value="@Model.BusinessID"/>
                 </td>
@@ -53,7 +60,15 @@
                     Lead Contact
                 </td>
                 <td>
-                    <input type="text" readonly="readonly" disabled="disabled" />
+                    @if(Model.ContactID != null)
+                    {
+                        <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname"/>
+                    }
+                    else
+                    {
+                        <input type="text" readonly="readonly" disabled="disabled" />
+                    }
+                    
                     <a href="#">  Lookup</a>
                     <input type="hidden" name="ContactID" value="@Model.ContactID" />
                 </td>
@@ -61,7 +76,15 @@
                     SIC Code
                 </td>
                 <td>
-                    <input type="text" readonly="readonly" name="siccode" disabled="disabled" />
+                    @if(Model.BusinessID != null)
+                    {
+                        <input type="text" readonly="readonly" name="siccode" disabled="disabled" value="@Model.tblBusinessType.SICCode" />
+                    }
+                    else
+                    {
+                        <input type="text" readonly="readonly" name="siccode" disabled="disabled" />
+                    }
+                    
                     <a href="#">  Lookup</a>
                 </td>
             </tr>
@@ -70,7 +93,7 @@
                     Address Line 1 <font color="red">*</font>
                 </td>
                 <td>
-                    <input type="text" name="AddressLine1" class="btn-block" value="@Model.AddressLine1"/>
+                    @Html.TextBoxFor(model => model.AddressLine1, new { @class = "btn-block" })
                 </td>
                 <td rowspan="2">
                     Organisation Full Description
@@ -102,7 +125,15 @@
             <tr>
                 <td>Postcode <font color="red">*</font></td>
                 <td>
-                    <input type="text" readonly="readonly" disabled="disabled" />
+                    @if(Model.AddressID != null)
+                    {
+                        <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblAddress.PostCode"/>
+                    }
+                    else
+                    {
+                        <input type="text" readonly="readonly" disabled="disabled" />
+                    }
+                    
                     <a href="#">  Lookup</a>
                     <input type="hidden" name="AddressID" value="@Model.AddressID"/>
                 </td>
@@ -115,7 +146,15 @@
             <tr>
                 <td>City/Town</td>
                 <td>
-                    <input type="text" readonly="readonly" class="btn-block" value="@ViewBag.City"/>
+                    @if(Model.AddressID != null)
+                    {
+                        <input type="text" readonly="readonly" class="btn-block" value="@Model.tblAddress.tblTown.TownName"/>
+                    }
+                    else
+                    {
+                        <input type="text" readonly="readonly" class="btn-block"/>
+                    }
+                    
                 </td>
                 <td>Email </td>
                 <td>
@@ -126,7 +165,15 @@
             <tr>
                 <td>County</td>
                 <td>
-                    <input type="text" readonly="readonly" class="btn-block" value="@ViewBag.County"/>
+                    @if(Model.AddressID != null)
+                    {
+                        <input type="text" readonly="readonly" class="btn-block" value="@Model.tblAddress.tblTown.tblCounty.CountyName"/>
+                    }
+                    else
+                    {
+                        <input type="text" readonly="readonly" class="btn-block"/>
+                    }
+                    
                 </td>
                 <td>Web Address </td>
                 <td>
@@ -137,17 +184,26 @@
             <tr>
                 <td>Nation/Country</td>
                 <td>
-                    <input type="text" readonly="readonly" class="btn-block" value="@ViewBag.Country"/>
+                    @if(Model.AddressID != null)
+                    {
+                        <input type="text" readonly="readonly" class="btn-block" value="@Model.tblAddress.tblTown.tblCounty.tblCountry.CountryName"/>
+                    }
+                    else
+                    {
+                        <input type="text" readonly="readonly" class="btn-block"/>
+                    }
+
+                    
                 </td>
                 <td>Charity Number</td>
-                <td>@Html.EditorFor(model => model.CharityNumber, new { @class = "btn-block", @value = @Model.CharityNumber})</td>
+                <td>@Html.TextBoxFor(model => model.CharityNumber, new { @class = "btn-block"})</td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td>Company Number</td>
                 <td>
-                    @Html.EditorFor(model => model.CompanyNumber, new { @class="btn-block", @value = @Model.CompanyNumber})
+                    @Html.TextBoxFor(model => model.CompanyNumber, new { @class="btn-block"})
                 </td>
             </tr>
         </table>
@@ -160,10 +216,10 @@
     function openDetails(checkbox)
     {
         if (checkbox.checked) {
-            $('#organisation_tabs').append('<li id="org_id_details_three"><a href="#details_three" data-toggle="tab">Details 3</a></li>');
+            $('#org_id_details_three').show();
         }
         else {
-            $('#org_id_details_three').remove();
+            $('#org_id_details_three').hide();
         }
     }
 </script>

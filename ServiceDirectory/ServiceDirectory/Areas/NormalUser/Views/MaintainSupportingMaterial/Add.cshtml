@@ -1,7 +1,6 @@
 ﻿@model ServiceDirectory.Models.tblSupportingMaterial
 
-@using (Ajax.BeginForm("InsertUpdate_SupportMaterial", "MaintainSupportingMaterial", 
-    new { OldURL = @ViewBag.URL},
+@using (Ajax.BeginForm("InsertUpdate_SupportMaterial", "MaintainSupportingMaterial",
     new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_supporting_message", InsertionMode = InsertionMode.Replace }))
 { 
     <div class="modal-dialog modal-lg" style="width:950px;">
@@ -24,13 +23,13 @@
                         <input type="submit" value="Save" class="btn btn-default" />
                     </div>
                     <div class="col-sm-1">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        @Ajax.ActionLink("Back", "GetListSupportingMaterials", "MaintainSupportingMaterial", new { page = -1 }, new AjaxOptions { UpdateTargetId = "supporting_material_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "close_popup_maintain_supportingmaterial()" }, new { @class = "btn btn-default", @id = "maintain_supportingmaterial_add_back" })
                     </div>
                 </div>
 
                 <div class="tab-content table-bordered">
                     <div class="tab-pane active" id="support_material_details_one">
-                        @Html.Action("Details", "MaintainSupportingMaterial", new { URL = @ViewBag.URL })
+                        @Html.Action("Details", "MaintainSupportingMaterial", new { SupportID = @ViewBag.SupportID })
                     </div>
                 </div>
                 <div id="id_supporting_message">
@@ -43,3 +42,13 @@
         </div>
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+        $('#maintain_supportingmaterial_add_back').attr('data-dismiss', 'modal');
+    })
+
+    function close_popup_maintain_supportingmaterial() {
+        $('#organisation_popup').modal('show');
+    }
+</script>

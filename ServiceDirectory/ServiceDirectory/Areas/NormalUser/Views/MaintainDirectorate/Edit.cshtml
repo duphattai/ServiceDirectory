@@ -1,0 +1,66 @@
+﻿@model ServiceDirectory.Models.tblDirectorate
+
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+@using (Ajax.BeginForm("InsertUpdate_Directorate", "MaintainDirectorate",
+    new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_directorate_message", InsertionMode = InsertionMode.Replace }))
+{
+    <div class="modal-dialog modal-lg" style="width:950px;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <font color="blue">Organisation</font> >
+                </div>
+                <h4><font color="green" size="5">Business Unit/Directorate Details</font></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="nav">
+                    <ul class="nav nav-tabs col-md-4">
+                        <li class="active"><a href="#maintain_directorate_tab" data-toggle="tab">Details</a></li>
+                        <li><a href="#maintain_department_tab" data-toggle="tab">Departments</a></li>
+                    </ul>
+
+                    <div class="col-md-2 col-sm-offset-4" style="padding-left:70px;">
+                        @Ajax.ActionLink("In-active", "MakeInActive", "MaintainDirectorate", new { DirectorateID = @ViewBag.DirectorateID }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_directorate_message", Confirm = "Do you want to make this Directorate in-active?" }, new { @class = "btn btn-default" })
+                    </div>
+
+                    <div class="col-sm-1">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                    <div class="col-sm-1">
+                        @Ajax.ActionLink("Back", "GetListDirectorates", "MaintainDirectorate", new { page = -1 }, new AjaxOptions { UpdateTargetId = "directorate_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "close_popup_maintain_directorate()" }, new { @class = "btn btn-default", @id = "maintain_directorate_edit_back" })
+                    </div>
+                </div>
+
+                <div class="tab-content table-bordered">
+                    <div class="tab-pane active" id="maintain_directorate_tab">
+                        @Html.Action("Details", "MaintainDirectorate", new { DirectorateID = @ViewBag.DirectorateID })
+                    </div>
+                    <div class="tab-pane" id="maintain_department_tab">
+                        @Html.Action("Index", "MaintainDepartment", new { DirectorateID = @ViewBag.DirectorateID })
+                    </div>
+                </div>
+                <div id="id_directorate_message">
+                    <!-- Message after call action here -->
+                </div>
+                <div>
+                    @Html.ValidationMessageFor(model => model.DirectorateName)
+                    @Html.ValidationMessageFor(model => model.ShortDescription)
+                    @Html.ValidationMessageFor(model => model.FullDescription)
+                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                    @Html.ValidationMessageFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Fax)
+                    @Html.ValidationMessageFor(model => model.WebAddress)
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#maintain_directorate_edit_back').attr('data-dismiss', 'modal');
+    })
+</script>
