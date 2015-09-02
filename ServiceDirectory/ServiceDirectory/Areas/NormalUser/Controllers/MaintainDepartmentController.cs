@@ -147,20 +147,9 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbEntityValidationException dbEx)
+            catch 
             {
-                string message = "";
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        //System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                        message += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                        message += '\n';
-                    }
-                }
-
-                return Content(message);
+                return Content("Cannot save this department");
             }
 
             return Content("Save department successfully");
@@ -181,9 +170,17 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                
             return GetListDepartments(page);
         }
-        public ActionResult MakeInActive()
+        public ActionResult MakeInActive(string DepartmentID)
         {
-            return PartialView();
+            int id = int.Parse(DepartmentID);
+            tblDepartment model = db.tblDepartments.Where(t => t.DepartmentID == id).SingleOrDefault();
+            if(model != null)
+            {
+                model.IsActive = false;
+                db.SaveChanges();
+            }
+
+            return Content("Make this department in-active successfully");
         }
     }
 }

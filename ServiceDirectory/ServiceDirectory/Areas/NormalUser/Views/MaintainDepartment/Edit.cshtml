@@ -17,22 +17,19 @@
 
             <div class="modal-body">
                 <div class="nav">
-                    <ul class="nav nav-tabs col-sm-4">
+                    <ul class="nav nav-tabs col-md-4">
                         <li class="active"><a href="#department_tab" data-toggle="tab">Details</a></li>
                         <li><a href="#team_tab" data-toggle="tab">Teams</a></li>
                     </ul>
 
-                    <div class="col-sm-2 col-sm-offset-4" style="padding-left:70px;">
-                        @if (@ViewBag.IsEditMode == true)
-                        {
-                            @Ajax.ActionLink("In-active", "MakeInActive", "MaintainDepartment", new { IsActive = false, DepartmentID = @ViewBag.DepartmentID }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_department_message", Confirm = "Do you want to make this Department in-active?" }, new { @class = "btn btn-default" })
-                        }
+                    <div class="col-md-2 col-sm-offset-4" style="padding-left:70px;">
+                        @Ajax.ActionLink("In-active", "MakeInActive", "MaintainDepartment", new { IsActive = false, DepartmentID = @ViewBag.DepartmentID }, new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "id_department_message", Confirm = "Do you want to make this Department in-active?" }, new { @class = "btn btn-default"})
                     </div>
 
-                    <div class="col-sm-1">
+                    <div class="col-md-1">
                         <input type="submit" value="Save" class="btn btn-default" />
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-md-1">
                         @Ajax.ActionLink("Back", "GetListDepartments", "MaintainDepartment", new { page = -1 }, new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-default", @id = "maintain_department_edit_back" })
                     </div>
                 </div>
