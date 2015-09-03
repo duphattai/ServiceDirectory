@@ -14,16 +14,16 @@ namespace ServiceDirectory.Models
     
     public partial class tblFacility
     {
-        public System.Guid FacilityID { get; set; }
-        public Nullable<System.Guid> PremisesID { get; set; }
-        public Nullable<System.Guid> FacilityType { get; set; }
+        public int FacilityID { get; set; }
+        public Nullable<int> PremisesID { get; set; }
+        public Nullable<int> FacilityType { get; set; }
         public string ShortDescription { get; set; }
         public Nullable<int> RoomCapacity { get; set; }
         public Nullable<int> RoomSize { get; set; }
         public string ConnectivityType { get; set; }
         public string WireLess { get; set; }
-        public Nullable<System.Guid> LeadContactID { get; set; }
-        public Nullable<System.Guid> RoomHostID { get; set; }
+        public Nullable<int> LeadContactID { get; set; }
+        public Nullable<int> RoomHostID { get; set; }
         public string Notes { get; set; }
         public Nullable<bool> IsActive { get; set; }
     

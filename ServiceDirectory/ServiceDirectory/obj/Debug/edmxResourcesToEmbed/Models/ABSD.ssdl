@@ -4,9 +4,9 @@
     <Key>
       <PropertyRef Name="AddressID" />
     </Key>
-    <Property Name="AddressID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="PostCode" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="TownID" Type="uniqueidentifier" />
+    <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="TownID" Type="int" />
     <Property Name="AddressDescription" Type="nvarchar" MaxLength="150" />
     <Property Name="AddressName" Type="nvarchar" MaxLength="100" />
   </EntityType>
@@ -14,62 +14,62 @@
     <Key>
       <PropertyRef Name="BusinessID" />
     </Key>
-    <Property Name="BusinessID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="BusinessName" Type="nvarchar" MaxLength="200" Nullable="false" />
-    <Property Name="SICCode" Type="int" Nullable="false" />
+    <Property Name="BusinessID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusinessName" Type="nvarchar" MaxLength="200" />
+    <Property Name="SICCode" Type="int" />
   </EntityType>
   <EntityType Name="tblContact">
     <Key>
       <PropertyRef Name="ContactID" />
     </Key>
-    <Property Name="ContactID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="50" />
     <Property Name="KnownAs" Type="nvarchar" MaxLength="50" />
     <Property Name="OfficePhone" Type="nvarchar" MaxLength="20" />
     <Property Name="MobilePhone" Type="nvarchar" MaxLength="20" />
     <Property Name="StHomePhone" Type="nvarchar" MaxLength="20" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="ManagerId" Type="uniqueidentifier" />
+    <Property Name="ManagerId" Type="int" />
     <Property Name="JobRole" Type="nvarchar" MaxLength="50" />
     <Property Name="Workbase" Type="nvarchar" MaxLength="50" />
     <Property Name="JobTitle" Type="nvarchar" MaxLength="50" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="tblContactReference">
     <Key>
       <PropertyRef Name="ContactID" />
       <PropertyRef Name="RefID" />
     </Key>
-    <Property Name="ContactID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="RefID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ContactID" Type="int" Nullable="false" />
+    <Property Name="RefID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tblCountry">
     <Key>
       <PropertyRef Name="CountryID" />
     </Key>
-    <Property Name="CountryID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="CountryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="nvarchar" MaxLength="50" />
     <Property Name="CountryDescription" Type="nvarchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="tblCounty">
     <Key>
       <PropertyRef Name="CountyID" />
     </Key>
-    <Property Name="CountyID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="CountryID" Type="uniqueidentifier" />
-    <Property Name="CountyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CountyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="CountyName" Type="nvarchar" MaxLength="50" />
     <Property Name="CountyDescription" Type="nvarchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="tblDepartment">
     <Key>
       <PropertyRef Name="DepartmentID" />
     </Key>
-    <Property Name="DepartmentID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="DirectorateID" Type="uniqueidentifier" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
-    <Property Name="AddressID" Type="uniqueidentifier" />
-    <Property Name="BusinessID" Type="uniqueidentifier" />
+    <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DirectorateID" Type="int" />
+    <Property Name="ContactID" Type="int" />
+    <Property Name="AddressID" Type="int" />
+    <Property Name="BusinessID" Type="int" />
     <Property Name="DepartmentName" Type="nvarchar" MaxLength="200" />
     <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
     <Property Name="FullDescription" Type="nvarchar" MaxLength="2000" />
@@ -87,18 +87,18 @@
       <PropertyRef Name="PreID" />
       <PropertyRef Name="PreIDRelationShip" />
     </Key>
-    <Property Name="PreID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="PreIDRelationShip" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PreID" Type="int" Nullable="false" />
+    <Property Name="PreIDRelationShip" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tblDirectorate">
     <Key>
       <PropertyRef Name="DirectorateID" />
     </Key>
-    <Property Name="DirectorateID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="OrgID" Type="uniqueidentifier" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
-    <Property Name="AddressID" Type="uniqueidentifier" />
-    <Property Name="BusinessID" Type="uniqueidentifier" />
+    <Property Name="DirectorateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrgID" Type="int" />
+    <Property Name="ContactID" Type="int" />
+    <Property Name="AddressID" Type="int" />
+    <Property Name="BusinessID" Type="int" />
     <Property Name="DirectorateName" Type="nvarchar" MaxLength="200" />
     <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
     <Property Name="FullDescription" Type="nvarchar" MaxLength="2000" />
@@ -117,16 +117,16 @@
     <Key>
       <PropertyRef Name="FacilityID" />
     </Key>
-    <Property Name="FacilityID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="PremisesID" Type="uniqueidentifier" />
-    <Property Name="FacilityType" Type="uniqueidentifier" />
+    <Property Name="FacilityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PremisesID" Type="int" />
+    <Property Name="FacilityType" Type="int" />
     <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
     <Property Name="RoomCapacity" Type="int" />
     <Property Name="RoomSize" Type="int" />
     <Property Name="ConnectivityType" Type="nvarchar" MaxLength="100" />
     <Property Name="WireLess" Type="nvarchar" MaxLength="100" />
-    <Property Name="LeadContactID" Type="uniqueidentifier" />
-    <Property Name="RoomHostID" Type="uniqueidentifier" />
+    <Property Name="LeadContactID" Type="int" />
+    <Property Name="RoomHostID" Type="int" />
     <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
     <Property Name="IsActive" Type="bit" />
   </EntityType>
@@ -134,11 +134,11 @@
     <Key>
       <PropertyRef Name="FundingID" />
     </Key>
-    <Property Name="FundingID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ServiceID" Type="uniqueidentifier" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
+    <Property Name="FundingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServiceID" Type="int" />
+    <Property Name="ContactID" Type="int" />
     <Property Name="FundingSource" Type="int" />
-    <Property Name="FundingAmount" Type="int" Nullable="false" />
+    <Property Name="FundingAmount" Type="int" />
     <Property Name="FundingStart" Type="smalldatetime" />
     <Property Name="FundingEnd" Type="smalldatetime" />
     <Property Name="FundingNeeds" Type="int" />
@@ -159,11 +159,11 @@
     <Key>
       <PropertyRef Name="GovOfficeRegionID" />
     </Key>
-    <Property Name="GovOfficeRegionID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="CountyID" Type="uniqueidentifier" />
-    <Property Name="GovOfficeRegionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="GovOfficeRegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountyID" Type="int" />
+    <Property Name="GovOfficeRegionName" Type="nvarchar" MaxLength="50" />
     <Property Name="GovOfficeRegionDescription" Type="nvarchar" MaxLength="150" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="tblGroupReference">
     <Key>
@@ -176,15 +176,15 @@
     <Key>
       <PropertyRef Name="MinorWorkID" />
     </Key>
-    <Property Name="MinorWorkID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="PremisesID" Type="uniqueidentifier" />
+    <Property Name="MinorWorkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PremisesID" Type="int" />
     <Property Name="ShortDecription" Type="nvarchar" MaxLength="1000" />
     <Property Name="NoteAction" Type="nvarchar" MaxLength="1000" />
     <Property Name="EstimatesCost" Type="money" />
     <Property Name="ActualCost" Type="money" />
-    <Property Name="DirectorateID" Type="uniqueidentifier" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
-    <Property Name="AuthorisedID" Type="uniqueidentifier" />
+    <Property Name="DirectorateID" Type="int" />
+    <Property Name="ContactID" Type="int" />
+    <Property Name="AuthorisedID" Type="int" />
     <Property Name="Statu" Type="nvarchar" MaxLength="100" />
     <Property Name="ReceiveDate" Type="smalldatetime" />
     <Property Name="AuthorisedDate" Type="smalldatetime" />
@@ -198,10 +198,10 @@
     <Key>
       <PropertyRef Name="OrgID" />
     </Key>
-    <Property Name="OrgID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
-    <Property Name="AddressID" Type="uniqueidentifier" />
-    <Property Name="BusinessID" Type="uniqueidentifier" />
+    <Property Name="OrgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContactID" Type="int" />
+    <Property Name="AddressID" Type="int" />
+    <Property Name="BusinessID" Type="int" />
     <Property Name="OrgName" Type="nvarchar" MaxLength="200" />
     <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
     <Property Name="FullDescription" Type="nvarchar" MaxLength="2000" />
@@ -222,37 +222,37 @@
       <PropertyRef Name="OrgID" />
       <PropertyRef Name="ProgrammeID" />
     </Key>
-    <Property Name="OrgID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ProgrammeID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="OrgID" Type="int" Nullable="false" />
+    <Property Name="ProgrammeID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tblOrganisationReference">
     <Key>
       <PropertyRef Name="OrgID" />
       <PropertyRef Name="RefID" />
     </Key>
-    <Property Name="OrgID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="RefID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="OrgID" Type="int" Nullable="false" />
+    <Property Name="RefID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tblOrganisationService">
     <Key>
       <PropertyRef Name="OrgID" />
       <PropertyRef Name="ServiceID" />
     </Key>
-    <Property Name="OrgID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ServiceID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="OrgID" Type="int" Nullable="false" />
+    <Property Name="ServiceID" Type="int" Nullable="false" />
     <Property Name="Roles" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="tblPremises">
     <Key>
       <PropertyRef Name="PremisesID" />
     </Key>
-    <Property Name="PremisesID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PremisesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PremisesName" Type="nvarchar" MaxLength="200" />
-    <Property Name="AddressID" Type="uniqueidentifier" />
+    <Property Name="AddressID" Type="int" />
     <Property Name="AddressLine1" Type="nvarchar" MaxLength="500" />
     <Property Name="LocationName" Type="nvarchar" MaxLength="200" />
     <Property Name="KnowAs" Type="nvarchar" MaxLength="200" />
-    <Property Name="OrgID" Type="uniqueidentifier" />
+    <Property Name="OrgID" Type="int" />
     <Property Name="LocationStatus" Type="varchar" MaxLength="200" />
     <Property Name="AddressLine2" Type="nvarchar" MaxLength="500" />
     <Property Name="AddressLine3" Type="nvarchar" MaxLength="500" />
@@ -264,9 +264,9 @@
     <Property Name="MinicomNumber" Type="int" />
     <Property Name="FlagDate" Type="smalldatetime" />
     <Property Name="IsSpecialist" Type="bit" />
-    <Property Name="MediaContactID" Type="uniqueidentifier" />
-    <Property Name="CateringContactID" Type="uniqueidentifier" />
-    <Property Name="CateringType" Type="uniqueidentifier" />
+    <Property Name="MediaContactID" Type="int" />
+    <Property Name="CateringContactID" Type="int" />
+    <Property Name="CateringType" Type="int" />
     <Property Name="Network" Type="varchar" MaxLength="100" />
     <Property Name="ClientITFacilities" Type="nvarchar" MaxLength="2000" />
     <Property Name="LocalDemographicNotes" Type="nvarchar" MaxLength="1000" />
@@ -275,7 +275,7 @@
     <Property Name="Bus" Type="nvarchar" MaxLength="200" />
     <Property Name="Rail" Type="nvarchar" MaxLength="200" />
     <Property Name="Airport" Type="nvarchar" MaxLength="200" />
-    <Property Name="HostingContactID" Type="uniqueidentifier" />
+    <Property Name="HostingContactID" Type="int" />
     <Property Name="ParkingSpaces" Type="int" />
     <Property Name="ParkingAlternative" Type="varchar" MaxLength="200" />
     <Property Name="RoomRate" Type="money" />
@@ -301,8 +301,8 @@
     <Key>
       <PropertyRef Name="PremisesOpeningTimeID" />
     </Key>
-    <Property Name="PremisesOpeningTimeID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="PremisesID" Type="uniqueidentifier" />
+    <Property Name="PremisesOpeningTimeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PremisesID" Type="int" />
     <Property Name="WeekendDay" Type="varchar" MaxLength="50" />
     <Property Name="StartTime" Type="datetime" />
     <Property Name="EndTime" Type="datetime" />
@@ -312,32 +312,32 @@
       <PropertyRef Name="PremisesID" />
       <PropertyRef Name="RefID" />
     </Key>
-    <Property Name="PremisesID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="RefID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="PremisesID" Type="int" Nullable="false" />
+    <Property Name="RefID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tblProgramme">
     <Key>
       <PropertyRef Name="ProgrammeID" />
     </Key>
-    <Property Name="ProgrammeID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ProgrammeName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
+    <Property Name="ProgrammeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProgrammeName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContactID" Type="int" />
     <Property Name="ProgrammeDescription" Type="nvarchar" MaxLength="150" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="tblReferenceData">
     <Key>
       <PropertyRef Name="RefID" />
     </Key>
-    <Property Name="RefID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RefID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RefCode" Type="int" Nullable="false" />
-    <Property Name="RefValue" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RefValue" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblRole">
     <Key>
       <PropertyRef Name="RoleID" />
     </Key>
-    <Property Name="RoleID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
     <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="RoleDescription" Type="nvarchar" MaxLength="150" />
   </EntityType>
@@ -345,11 +345,11 @@
     <Key>
       <PropertyRef Name="ServiceID" />
     </Key>
-    <Property Name="ServiceID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="ProgrammeID" Type="uniqueidentifier" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
-    <Property Name="ServiceName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="ShortDescription" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProgrammeID" Type="int" />
+    <Property Name="ContactID" Type="int" />
+    <Property Name="ServiceName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ShortDescription" Type="nvarchar" MaxLength="100" />
     <Property Name="ClientDescription" Type="nvarchar" MaxLength="150" />
     <Property Name="StartExpected" Type="smalldatetime" />
     <Property Name="StartDate" Type="smalldatetime" />
@@ -357,14 +357,14 @@
     <Property Name="ExtendableYears" Type="int" />
     <Property Name="ExtendableMonths" Type="int" />
     <Property Name="FullDescription" Type="nvarchar" MaxLength="150" />
-    <Property Name="DeptCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DeptCode" Type="nvarchar" MaxLength="50" />
     <Property Name="DescriptionDelivery" Type="nvarchar" MaxLength="150" />
     <Property Name="ContractCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ContractValue" Type="nchar" MaxLength="10" />
     <Property Name="ContractPayment" Type="bit" />
     <Property Name="TimeLimitedYears" Type="smalldatetime" />
     <Property Name="TimeLimitedMonths" Type="smalldatetime" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
     <Property Name="Participation" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblServiceContract">
@@ -372,16 +372,16 @@
       <PropertyRef Name="ServiceID" />
       <PropertyRef Name="RefID" />
     </Key>
-    <Property Name="ServiceID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="RefID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ServiceID" Type="int" Nullable="false" />
+    <Property Name="RefID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tblServicePremise">
     <Key>
       <PropertyRef Name="ServiceID" />
       <PropertyRef Name="PremisesID" />
     </Key>
-    <Property Name="ServiceID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="PremisesID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ServiceID" Type="int" Nullable="false" />
+    <Property Name="PremisesID" Type="int" Nullable="false" />
     <Property Name="ProjectCode" Type="varchar" MaxLength="20" />
   </EntityType>
   <EntityType Name="tblServiceReference">
@@ -389,17 +389,17 @@
       <PropertyRef Name="ServiceID" />
       <PropertyRef Name="RefID" />
     </Key>
-    <Property Name="ServiceID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="RefID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ServiceID" Type="int" Nullable="false" />
+    <Property Name="RefID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tblSupportingMaterial">
     <Key>
       <PropertyRef Name="SupportID" />
     </Key>
-    <Property Name="SupportID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="SupportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="URL" Type="varchar" MaxLength="200" />
-    <Property Name="OrgID" Type="uniqueidentifier" />
-    <Property Name="UserID" Type="uniqueidentifier" />
+    <Property Name="OrgID" Type="int" />
+    <Property Name="UserID" Type="int" />
     <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
     <Property Name="TypeFile" Type="varchar" MaxLength="100" />
     <Property Name="AddedDate" Type="smalldatetime" />
@@ -409,11 +409,11 @@
     <Key>
       <PropertyRef Name="TeamID" />
     </Key>
-    <Property Name="TeamID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="DepartmentID" Type="uniqueidentifier" />
-    <Property Name="ContactID" Type="uniqueidentifier" />
-    <Property Name="AddressID" Type="uniqueidentifier" />
-    <Property Name="BusinessID" Type="uniqueidentifier" />
+    <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentID" Type="int" />
+    <Property Name="ContactID" Type="int" />
+    <Property Name="AddressID" Type="int" />
+    <Property Name="BusinessID" Type="int" />
     <Property Name="TeamName" Type="nvarchar" MaxLength="200" />
     <Property Name="ShortDescription" Type="nvarchar" MaxLength="1000" />
     <Property Name="FullDescription" Type="nvarchar" MaxLength="2000" />
@@ -430,49 +430,49 @@
     <Key>
       <PropertyRef Name="TownID" />
     </Key>
-    <Property Name="TownID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="CountyID" Type="uniqueidentifier" />
-    <Property Name="TownName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TownID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountyID" Type="int" />
+    <Property Name="TownName" Type="nvarchar" MaxLength="50" />
     <Property Name="TownDescription" Type="nvarchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="tblTrustDistrict">
     <Key>
       <PropertyRef Name="TrustDistrictID" />
     </Key>
-    <Property Name="TrustDistrictID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="TrustRegionID" Type="uniqueidentifier" />
-    <Property Name="TrustDistrictName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TrustDistrictID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TrustRegionID" Type="int" />
+    <Property Name="TrustDistrictName" Type="nvarchar" MaxLength="50" />
     <Property Name="TrustDistrictDescription" Type="nvarchar" MaxLength="150" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="tblTrustRegion">
     <Key>
       <PropertyRef Name="TrustRegionID" />
     </Key>
-    <Property Name="TrustRegionID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="CountryID" Type="uniqueidentifier" />
-    <Property Name="TrustRegionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TrustRegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="TrustRegionName" Type="nvarchar" MaxLength="50" />
     <Property Name="TrustRegionDescription" Type="nvarchar" MaxLength="150" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="tblUser">
     <Key>
       <PropertyRef Name="UserID" />
     </Key>
-    <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Account" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="UserPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="RoleID" Type="uniqueidentifier" />
-    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Account" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserPassword" Type="nvarchar" MaxLength="50" />
+    <Property Name="RoleID" Type="int" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="tblVolunteering">
     <Key>
       <PropertyRef Name="ContactID" />
       <PropertyRef Name="PremisesID" />
     </Key>
-    <Property Name="ContactID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="PremisesID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ContactID" Type="int" Nullable="false" />
+    <Property Name="PremisesID" Type="int" Nullable="false" />
     <Property Name="Purpose" Type="nvarchar" MaxLength="1000" />
     <Property Name="Detail" Type="nvarchar" MaxLength="2000" />
     <Property Name="StartDate" Type="smalldatetime" />

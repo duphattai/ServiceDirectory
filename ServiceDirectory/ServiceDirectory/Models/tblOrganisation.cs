@@ -24,10 +24,10 @@ namespace ServiceDirectory.Models
             this.tblReferenceDatas = new HashSet<tblReferenceData>();
         }
     
-        public System.Guid OrgID { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
-        public Nullable<System.Guid> AddressID { get; set; }
-        public Nullable<System.Guid> BusinessID { get; set; }
+        public int OrgID { get; set; }
+        public Nullable<int> ContactID { get; set; }
+        public Nullable<int> AddressID { get; set; }
+        public Nullable<int> BusinessID { get; set; }
         public string OrgName { get; set; }
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }

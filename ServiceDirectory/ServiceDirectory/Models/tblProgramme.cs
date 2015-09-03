@@ -20,11 +20,11 @@ namespace ServiceDirectory.Models
             this.tblOrganisations = new HashSet<tblOrganisation>();
         }
     
-        public System.Guid ProgrammeID { get; set; }
+        public int ProgrammeID { get; set; }
         public string ProgrammeName { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
+        public Nullable<int> ContactID { get; set; }
         public string ProgrammeDescription { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual tblContact tblContact { get; set; }
         public virtual ICollection<tblService> tblServices { get; set; }

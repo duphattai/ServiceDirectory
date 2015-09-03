@@ -14,11 +14,11 @@ namespace ServiceDirectory.Models
     
     public partial class tblTrustDistrict
     {
-        public System.Guid TrustDistrictID { get; set; }
-        public Nullable<System.Guid> TrustRegionID { get; set; }
+        public int TrustDistrictID { get; set; }
+        public Nullable<int> TrustRegionID { get; set; }
         public string TrustDistrictName { get; set; }
         public string TrustDistrictDescription { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual tblTrustRegion tblTrustRegion { get; set; }
     }

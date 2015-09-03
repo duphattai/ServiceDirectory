@@ -11,6 +11,7 @@ namespace ServiceDirectory.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class tblContact
     {
@@ -35,7 +36,8 @@ namespace ServiceDirectory.Models
             this.tblReferenceDatas = new HashSet<tblReferenceData>();
         }
     
-        public System.Guid ContactID { get; set; }
+        public int ContactID { get; set; }
+        [Required (ErrorMessage = "Please input FirstName")]
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string KnownAs { get; set; }
@@ -43,11 +45,11 @@ namespace ServiceDirectory.Models
         public string MobilePhone { get; set; }
         public string StHomePhone { get; set; }
         public string Email { get; set; }
-        public Nullable<System.Guid> ManagerId { get; set; }
+        public Nullable<int> ManagerId { get; set; }
         public string JobRole { get; set; }
         public string Workbase { get; set; }
         public string JobTitle { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual ICollection<tblContact> tblContact1 { get; set; }
         public virtual tblContact tblContact2 { get; set; }

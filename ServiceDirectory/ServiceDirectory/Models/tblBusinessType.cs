@@ -22,9 +22,9 @@ namespace ServiceDirectory.Models
             this.tblTeams = new HashSet<tblTeam>();
         }
     
-        public System.Guid BusinessID { get; set; }
+        public int BusinessID { get; set; }
         public string BusinessName { get; set; }
-        public int SICCode { get; set; }
+        public Nullable<int> SICCode { get; set; }
     
         public virtual ICollection<tblDepartment> tblDepartments { get; set; }
         public virtual ICollection<tblDirectorate> tblDirectorates { get; set; }

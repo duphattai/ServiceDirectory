@@ -14,11 +14,11 @@ namespace ServiceDirectory.Models
     
     public partial class tblGovOfficeRegion
     {
-        public System.Guid GovOfficeRegionID { get; set; }
-        public Nullable<System.Guid> CountyID { get; set; }
+        public int GovOfficeRegionID { get; set; }
+        public Nullable<int> CountyID { get; set; }
         public string GovOfficeRegionName { get; set; }
         public string GovOfficeRegionDescription { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual tblCounty tblCounty { get; set; }
     }

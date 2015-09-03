@@ -14,8 +14,8 @@ namespace ServiceDirectory.Models
     
     public partial class tblServicePremise
     {
-        public System.Guid ServiceID { get; set; }
-        public System.Guid PremisesID { get; set; }
+        public int ServiceID { get; set; }
+        public int PremisesID { get; set; }
         public string ProjectCode { get; set; }
     
         public virtual tblPremis tblPremis { get; set; }

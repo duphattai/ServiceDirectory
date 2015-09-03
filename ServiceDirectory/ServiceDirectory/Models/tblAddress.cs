@@ -23,9 +23,9 @@ namespace ServiceDirectory.Models
             this.tblTeams = new HashSet<tblTeam>();
         }
     
-        public System.Guid AddressID { get; set; }
+        public int AddressID { get; set; }
         public string PostCode { get; set; }
-        public Nullable<System.Guid> TownID { get; set; }
+        public Nullable<int> TownID { get; set; }
         public string AddressDescription { get; set; }
         public string AddressName { get; set; }
     

@@ -35,7 +35,7 @@
                 </div>
                 <!-- Checkbox -->
                 <div class="checkbox" style="margin: 0px 0px 0px 0px ">
-                    <label><input name="check" type="checkbox" >Include in-active contact?</label>
+                    <label><input name="Check" type="checkbox" >Include in-active contact?</label>
                 </div>
                 }.
             </div>
@@ -43,9 +43,9 @@
             <!-- Top Group Button-->
             <div style="margin: 10px 0px 10px 0px">
                 
-                <button type="button" class="btn btn-primary btn-sm">None</button>
+                <button type="button" class="btn btn-primary btn-sm">Select</button>
                 <button type="button" class="btn btn-primary btn-sm">Clear</button>          
-                @Ajax.ActionLink("Create", "AddContact", "MaintainContact", new AjaxOptions { UpdateTargetId = "myAddModal", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_contact_add_action_link" }, new { @class = "btn btn-primary btn-sm", @id = "contact_add_action_link" })
+                @Ajax.ActionLink("Create", "Add_ActionLink", "MaintainContact", new AjaxOptions { UpdateTargetId = "myAddModal", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_contact_add_action_link" }, new { @class = "btn btn-primary btn-sm", @id = "contact_add_action_link" })
             </div>           
 
             <div id="maintain_contact_table">
@@ -62,7 +62,13 @@
 
         <!-- footer content-->
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="col-sm-10" id="info_contact_list_label">
+
+            </div>
+            <div class="col-sm-2">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            
         </div>
 
     </div>
@@ -75,5 +81,19 @@
         $('#contact_add_action_link').attr('data-target', '#myAddModal');
 
         $('#myAddModal').modal('show');
+    }
+
+    function set_attr_contact_edit_action_link() {
+        $('#edit_maintain_contact').attr('data-toggle', 'modal');
+        $('#edit_maintain_contact').attr('data-target', '#myAddModal');
+
+        $('#myAddModal').modal('show');
+    }
+
+    function set_attr_contact_manager_lookup() {
+        $('#maintain_contact_manager_lookup').attr('data-toggle', 'modal');
+        $('#maintain_contact_manager_lookup').attr('data-target', '#lookup');
+
+        $('#lookup').modal('show');
     }
 </script>

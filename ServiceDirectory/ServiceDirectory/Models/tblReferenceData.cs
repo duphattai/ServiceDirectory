@@ -25,7 +25,7 @@ namespace ServiceDirectory.Models
             this.tblServices1 = new HashSet<tblService>();
         }
     
-        public System.Guid RefID { get; set; }
+        public int RefID { get; set; }
         public int RefCode { get; set; }
         public string RefValue { get; set; }
     

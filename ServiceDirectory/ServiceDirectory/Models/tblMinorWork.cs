@@ -14,15 +14,15 @@ namespace ServiceDirectory.Models
     
     public partial class tblMinorWork
     {
-        public System.Guid MinorWorkID { get; set; }
-        public Nullable<System.Guid> PremisesID { get; set; }
+        public int MinorWorkID { get; set; }
+        public Nullable<int> PremisesID { get; set; }
         public string ShortDecription { get; set; }
         public string NoteAction { get; set; }
         public Nullable<decimal> EstimatesCost { get; set; }
         public Nullable<decimal> ActualCost { get; set; }
-        public Nullable<System.Guid> DirectorateID { get; set; }
-        public Nullable<System.Guid> ContactID { get; set; }
-        public Nullable<System.Guid> AuthorisedID { get; set; }
+        public Nullable<int> DirectorateID { get; set; }
+        public Nullable<int> ContactID { get; set; }
+        public Nullable<int> AuthorisedID { get; set; }
         public string Statu { get; set; }
         public Nullable<System.DateTime> ReceiveDate { get; set; }
         public Nullable<System.DateTime> AuthorisedDate { get; set; }
