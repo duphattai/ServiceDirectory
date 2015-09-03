@@ -70,7 +70,10 @@
                         <input type="text" readonly="readonly" disabled="disabled" />
                     }
                     
-                    <a href="#">  Lookup</a>
+                    <!-- Tai 3/9 3h44 -->
+                    @*<a href="#">  Lookup</a>*@
+                    @Ajax.ActionLink("lookup", "Index", "MaintainContact", new {area=""}, new AjaxOptions { UpdateTargetId = "lookup", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('lead_contact_lookup', 'lookup', 'organisation_popup')" }, new { @id = "lead_contact_lookup" })
+                    <!--End-->
                     <input type="hidden" name="ContactID" value="@Model.ContactID" />
                 </td>
                 <td>

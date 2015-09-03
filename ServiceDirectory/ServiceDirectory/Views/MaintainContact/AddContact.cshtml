@@ -1,0 +1,182 @@
+﻿@model ServiceDirectory.Models.tblContact
+
+
+<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+
+        <!-- Header content-->
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            <h4 class="modal-title">
+                <strong>Search Contact</strong>
+            </h4>
+
+        </div>
+
+        @using (Ajax.BeginForm("InsertUpdate_Contact", "MaintainContact", new { page = 1 },
+                new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "add_status_lable" }))
+        {
+        <!-- Body content-->
+            <div class="modal-body ">
+                <div>
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 34px; color: #44c140;">
+                        @ViewBag.Title
+                    </span>
+                </div>
+
+
+                <!-- input -->
+                <div class="form-horizontal" role="form">
+                    <div class="form-group" style=" border: 1px solid #ddd; margin: 5px 0px 5px 0px; padding: 10px 0px 10px 5px;">
+
+                        <!--column 1-->
+                        <div class="col-sm-6">
+                            <div class="col-sm-12" style="margin-bottom: 12px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">First Name <font color="red">*</font></label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" id="FirstName" name="FirstName" type="text" value="@Model.FirstName">
+                                    <input type="hidden" value="@Model.ContactID" name="ContactID" />
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px; ">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Surname <font color="red">*</font></label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="Surname" type="text" value="@Model.Surname">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px; ">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Known as</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="KnownAs" type="text" value="@Model.KnownAs">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px; ">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Office Phone</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="OfficePhone" type="text" value="@Model.OfficePhone">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px; ">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Mobile Phone</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="MobilePhone" type="text" value="@Model.MobilePhone">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px; ">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">ST Home Phone</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="StHomePhone" type="text" value="@Model.StHomePhone">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Email Address</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="Email" type="text" value="@Model.Email">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--column 2-->
+                        <div class="col-sm-6">
+                            <div class="col-sm-12" style="margin-bottom: 10px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Manager Name</label>
+                                <div class="col-sm-5">
+                                    @if (Model.ManagerId == null)
+                                    {
+                                        <input class="form-control" disabled="disabled" type="text">
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" disabled="disabled" type="text" value="@Model.tblContact2.FirstName @Model.tblContact2.Surname">
+                                    }
+
+                                    <input name="ManagerId" type="hidden" value="@Model.ManagerId">
+                                </div>
+                                <div class="col-sm-2" style=" padding-top: 7px; text-align: left;">
+                                    @Ajax.ActionLink("Lookup", "Index", "MaintainContact", new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "lookup", OnComplete = "set_attr_contact_manager_lookup" }, new { @id = "maintain_contact_manager_lookup" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 10px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Contact Type <font color="red">*</font></label>
+                                <div class="col-sm-7" style="margin-top: 10px;">
+                                    <select name="ContactType" class="selectpicker">
+                                        @foreach (var item in @ViewBag.listContactType)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 10px; height: 35px;">
+                                <label class="col-sm-5 nopadding" style=" text-align: left;">Best Contact Method</label>
+                                <div class="col-sm-7" style="margin-top: 10px;">
+                                    <select class="selectpicker" name="BestContactMethod">
+                                        @foreach (var item in @ViewBag.listBestContactMethod)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Job Role</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="JobRole" type="text" value="@Model.JobRole">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Workbase</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="Workbase" type="text" value="@Model.Workbase">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Job Tile</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="JobTitle" type="text" value="@Model.JobTitle">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12" style="margin-bottom: 12px">
+                                <label class="col-sm-5" style=" padding-top: 7px; text-align: left;">Is Active?</label>
+                                <div class="col-sm-7">
+                                    <div class="checkbox">
+                                        <label><input name="Check" type="checkbox"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Bottom Group Button-->
+            <div class="modal-footer">
+                <div class="col-sm-12">
+                    <div class="col-sm-8" id="add_status_lable">
+
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="submit" class="btn btn-primary btn-sm" style="margin-top:1px" value="Save" />
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Back</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

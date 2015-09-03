@@ -144,6 +144,7 @@
     <Compile Include="Areas\NormalUser\NormalUserAreaRegistration.cs" />
     <Compile Include="Areas\SuperUser\SuperUserAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintainContactController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -408,6 +409,9 @@
     <Content Include="Views\Home\ForgotPassword.cshtml" />
     <Content Include="Views\Home\SignUp.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\MaintainContact\ListContact.cshtml" />
+    <Content Include="Views\MaintainContact\AddContact.cshtml" />
+    <Content Include="Views\MaintainContact\Elements\ListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\NormalUser\Models\" />
