@@ -1,0 +1,59 @@
+﻿@*<meta name="viewport" content="width=device-width, initial-scale=1">*@
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Styles.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/modernizr")
+
+
+<div class="row label-info">
+    <font color="blue" size="7" class="col-md-4">Service Directory</font>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <nav class="navbar navbar-default sidebar btn-block" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+                        <!-- Tai -->
+                        <li>@Ajax.ActionLink("Organisation", "Index", "MaintainOrganisation", new { area = "NormalUser" }, new AjaxOptions { UpdateTargetId = "content", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })</li>
+                        <!--End-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+                            <ul class="dropdown-menu forAnimate" role="menu">
+                                <li><a href="#">Programme Maintenance </a></li>
+                                <li><a href="#">Service Maintenance</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Geography<span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-map-marker"></span></a>
+                            <ul class="dropdown-menu forAnimate" role="menu">
+                                <li><a href="#">Trust Regions Maintenances</a></li>
+                                <li><a href="#">Government Office Region </a></li>
+                                <li><a href="#">Government Office List </a></li>
+                                <li><a href="#">Government Office View </a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Premises <span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tree-deciduous"></span></a></li>
+                        <li><a href="/Home/Index">Log out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-off"></span></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="col-md-9" id="content">
+
+    </div>
+</div>
+
+@RenderPage("~/Views/Popup/Popup.cshtml")

@@ -23,3 +23,10 @@
 .nav > li > a {
     padding: 6px 15px;
 }
+
+.col-md-3{
+    padding-left:0px;
+}
+.col-md-9{
+    padding-right:0px;
+}

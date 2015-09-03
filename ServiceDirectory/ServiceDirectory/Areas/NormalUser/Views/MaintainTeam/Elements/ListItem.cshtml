@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblTeam>
 @using PagedList.Mvc;
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-hover">
     <tr class="label-info">
         <th class="col-md-2">Team Name</th>
         <th class="col-md-3">Address Line 1</th>
@@ -21,19 +21,19 @@
                     @item.AddressLine1
                 </td>
                 <td>
-                    @if(@item.AddressID != null)
+                    @if (@item.AddressID != null)
                     {
                         @item.tblAddress.PostCode
-                    }                    
+                    }
                 </td>
                 <td>
-                    @if(@item.ContactID != null)
+                    @if (@item.ContactID != null)
                     {
                         @item.tblContact.FirstName @item.tblContact.Surname
                     }
                 </td>
                 <td>
-                    @if(@item.IsActive.Value == true)
+                    @if (@item.IsActive.Value == true)
                     {
                         <label>Yes</label>
                     }
@@ -43,7 +43,7 @@
                     }
                 </td>
                 <td>
-                    @if(@item.IsActive == false)
+                    @if (@item.IsActive == false)
                     {
                         @Ajax.ActionLink("Edit", "Add_ActionLink", "MaintainTeam", new { TeamID = @item.TeamID },
                                                             new AjaxOptions { UpdateTargetId = "team_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_team_link_" + @item.TeamID + "', 'team_popup', 'department_popup')", Confirm = "Do you want to make this Team active?" })

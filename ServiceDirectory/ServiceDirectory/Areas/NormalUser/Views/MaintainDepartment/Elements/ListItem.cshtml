@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblDepartment>
 @using PagedList.Mvc;
 
-<table class="table table-bordered table-striped">
+<table class="table table-hover table-bordered">
     <tr class="label-info">
         <th class="col-md-2">Department Name</th>
         <th class="col-md-3">Address Line 1</th>
@@ -21,19 +21,19 @@
                     @item.AddressLine1
                 </td>
                 <td>
-                    @if(@item.AddressID != null)
+                    @if (@item.AddressID != null)
                     {
                         @item.tblAddress.PostCode
                     }
                 </td>
                 <td>
-                    @if(item.ContactID != null)
+                    @if (item.ContactID != null)
                     {
-                         @item.tblContact.FirstName @item.tblContact.Surname;
-                    }              
+                        @item.tblContact.FirstName @item.tblContact.Surname;
+                    }
                 </td>
                 <td>
-                    @if(item.IsActive.Value)
+                    @if (item.IsActive.Value)
                     {
                         <label>Yes</label>
                     }
@@ -48,7 +48,7 @@
                     {
                         @Ajax.ActionLink("Edit", "Edit_ActionLink", "MaintainDepartment", new { DepartmentID = @item.DepartmentID },
                                                  new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_" + @item.DepartmentID + "', 'department_popup', 'directorate_popup')" },
-                                                  new { @id = "edit_department_link_" + @item.DepartmentID }) 
+                                                  new { @id = "edit_department_link_" + @item.DepartmentID })
                     }
                     else
                     {
@@ -56,7 +56,7 @@
                                                  new AjaxOptions { UpdateTargetId = "department_popup", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_link_popup('edit_department_link_" + @item.DepartmentID + "', 'department_popup', 'directorate_popup')", Confirm = "Do you want make this department active?" },
                                                   new { @id = "edit_department_link_" + @item.DepartmentID })
                     }
-                     |
+                    |
                     <!-- After delete will update list item -->
                     @Ajax.ActionLink("Delete", "Delete_ActionLink", new { DepartmentID = @item.DepartmentID, page = @Model.PageNumber },
                                    new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })

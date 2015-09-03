@@ -29,7 +29,10 @@ namespace ServiceDirectory
                     "~/Content/site.css",
                     "~/Content/bootstrap.css",
                     "~/Content/bootstrap-theme.css",
-                    "~/Content/PagedList.css"));
+                    "~/Content/PagedList.css",
+                    "~/Content/themes/base/Logon.css", 
+                    "~/Content/mycss.css",
+                    "~/Content/themes/Home.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
