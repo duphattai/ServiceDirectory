@@ -15,12 +15,13 @@
                 </td>
                 <td style="width:30%">
                     <input type="text" name="OrgName" class="btn-block" value="@Model.OrgName"/>
+                    <input type="hidden" name="OrgID" value="@Model.OrgID" />
                 </td>
                 <td style="width:20%">
                     Preferred Organisation
                 </td>
                 <td style="width:30%">
-                    <input type="checkbox" name="Preferred" checked="@Model.Preferred.Value"/>
+                    <input type="checkbox" name="Preferred" checked="@Model.Preferred"/>
                 </td>
             </tr>
 

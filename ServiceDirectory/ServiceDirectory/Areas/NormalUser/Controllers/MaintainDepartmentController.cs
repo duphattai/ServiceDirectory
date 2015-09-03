@@ -10,12 +10,13 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 {
     public class MaintainDepartmentController : Controller
     {
+        ServiceDirectoryEntities db = new ServiceDirectoryEntities();
+
         //
         // GET: /NormalUser/MaintainDepartment/
-        ServiceDirectoryEntities db = MaintainOrganisationController.database;
         static string DirectorateID;
         static int PageNumber;
-        int PageSize = 5;
+        int PageSize = 15;
         static bool IncludeInActive = false; // save tage of include checkbox cheked
         public ActionResult Index(string DirectorateID)
         {
@@ -27,21 +28,24 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         // if page = -1, load current pageNumber before, else load new pageNumber
         public ActionResult GetListDepartments(int page = -1)
         {
+            
             int id = int.Parse(DirectorateID);
             List<tblDepartment> list = null;
 
-            if(IncludeInActive == true)
+            if (IncludeInActive == true)
                 list = db.tblDepartments.Where(t => t.DirectorateID == id).ToList();
             else
                 list = db.tblDepartments.Where(t => t.DirectorateID == id && t.IsActive == true).ToList();
 
             PageNumber = page != -1 ? page : PageNumber;
             return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, PageSize));
+             
         }
 
 
         public string GetListDepartmentsFromCheckbox(bool IncludeInActive)
         {
+             
             int id = int.Parse(DirectorateID);
             List<tblDepartment> list = null;
             MaintainDepartmentController.IncludeInActive = IncludeInActive; // store tage of checkbox include in-active
@@ -57,6 +61,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             html = html.Replace("/MaintainDepartment/Edit_ActionLink", "/NormalUser/MaintainDepartment/Edit_ActionLink"); // fix error ajax not work (wrong href)
             html = html.Replace("/MaintainDepartment/GetListDepartments", "/NormalUser/MaintainDepartment/GetListDepartments"); // fix error paging not work
             return html;
+            
         }
 
         // if DepartmentID == "" add mode
@@ -75,6 +80,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
         public ActionResult Details(string DepartmentID = null)
         {
+            
             int direcID = int.Parse(DirectorateID);
 
             tblDirectorate direc = db.tblDirectorates.Where(t => t.DirectorateID == direcID).SingleOrDefault();
@@ -106,6 +112,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             ViewBag.DeparAddressLine3 = direc.AddressLine3;
 
             return PartialView("Elements/Details",model);
+        
         }
 
 
@@ -154,34 +161,46 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             }
 
             return Content("Save department successfully");
+            
         }
 
 
         public ActionResult Delete_ActionLink(string DepartmentID, int page)
         {
+            
             int id = int.Parse(DepartmentID);
 
             tblDepartment delete = db.tblDepartments.Where(t => t.DepartmentID == id).SingleOrDefault();
-
+            string message = "";
             if (delete != null)
             {
-                db.tblDepartments.Remove(delete);
-                db.SaveChanges();
+                try
+                {
+                    db.tblDepartments.Remove(delete);
+                    db.SaveChanges();
+                }
+                catch 
+                {
+                    message = "This department is using. Cannot delete it!";
+                }
             }
-               
+            ViewBag.Message = message;
             return GetListDepartments(page);
+            
         }
         public ActionResult MakeInActive(string DepartmentID)
         {
+            
             int id = int.Parse(DepartmentID);
             tblDepartment model = db.tblDepartments.Where(t => t.DepartmentID == id).SingleOrDefault();
-            if(model != null)
+            if (model != null)
             {
                 model.IsActive = false;
                 db.SaveChanges();
             }
 
             return Content("Make this department in-active successfully");
+            
         }
     }
 }

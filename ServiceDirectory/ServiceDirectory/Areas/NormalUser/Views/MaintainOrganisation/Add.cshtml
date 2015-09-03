@@ -1,18 +1,22 @@
 ﻿@model ServiceDirectory.Models.tblOrganisation
 
-@using (Ajax.BeginForm("Add_Organisation", "MaintainOrganisation", new AjaxOptions() 
-    { 
-        InsertionMode = InsertionMode.Replace, 
-        HttpMethod = "POST"
-    }))
-{
-    <div class="modal-dialog modal-lg" style="width:950px;">
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+<div class="modal-dialog modal-lg" style="width:950px;">
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title"><font color="blue">Organisation Details</font></h4>
         </div>
 
+        @using (Ajax.BeginForm("InsertUpdate_Organisation", "MaintainOrganisation", new AjaxOptions
+        {
+            UpdateTargetId = "id_organisation_message",
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace
+        }))
+        {
         <div class="modal-body">
             <div class="nav">
                 <ul class="nav nav-tabs col-sm-4">
@@ -35,15 +39,29 @@
                 </div>
 
                 <div class="tab-pane" id="details_two">
-                   @Html.Action("Details_two", "MaintainOrganisation")
+                    @Html.Action("Details_two", "MaintainOrganisation")
                 </div>
 
                 <div class="tab-pane" id="details_three">
                     @Html.Action("Details_three", "MaintainOrganisation")
                 </div>
             </div>
+
+            <div id="id_organisation_message">
+
+            </div>
+            <div>
+                @Html.ValidationMessageFor(model => model.OrgName)
+                @Html.ValidationMessageFor(model => model.ShortDescription)
+              @*@Html.ValidationMessageFor(model => model.FullDescription)
+                @Html.ValidationMessageFor(model => model.PhoneNumber)
+                @Html.ValidationMessageFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Fax)
+                @Html.ValidationMessageFor(model => model.WebAddress)*@
+            </div>
         </div>
+            
+        }
     </div>
 </div>
 
-}

@@ -12,12 +12,13 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 {
     public class MaintainTeamController : Controller
     {
-        ServiceDirectory.Models.ServiceDirectoryEntities db = MaintainOrganisationController.database;
+        ServiceDirectoryEntities db = new ServiceDirectoryEntities();
+
         //
         // GET: /NormalUser/MaintainTeam/
         static string DepartmentID;
         static int PageNumber;
-        int PageSize = 5;
+        int PageSize = 15;
         static bool IncludeInactive = false;
         public ActionResult Index(string DepartmentID)
         {
@@ -32,12 +33,14 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             int guid = int.Parse(DepartmentID);
             List<tblTeam> list = null;
 
-            if(IncludeInactive)
+            
+            if (IncludeInactive)
                 list = db.tblTeams.Where(t => t.DepartmentID == guid).OrderBy(g => g.TeamName).ToList();
             else
                 list = db.tblTeams.Where(t => t.DepartmentID == guid && t.IsActive == true).OrderBy(g => g.TeamName).ToList();
 
             PageNumber = page != -1 ? page : PageNumber; // if not new page, will load current page
+            
 
             return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, PageSize));
         }
@@ -48,11 +51,12 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             MaintainTeamController.IncludeInactive = IncludeInActive;
             List<tblTeam> list = null;
 
+            
             if (IncludeInActive)
                 list = db.tblTeams.Where(t => t.DepartmentID == guid).OrderBy(g => g.TeamName).ToList();
             else
                 list = db.tblTeams.Where(t => t.DepartmentID == guid && t.IsActive == true).OrderBy(g => g.TeamName).ToList();
-
+            
             
             string html = RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainTeam/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, PageSize));
 
@@ -68,8 +72,8 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
             controller.ViewData.Model = model;
 
-            using (StringWriter sw = new StringWriter())
-            {
+            using(StringWriter sw = new StringWriter())
+            { 
                 ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewName);
                 ViewContext viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, sw);
                 viewResult.View.Render(viewContext, sw);
@@ -95,20 +99,23 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         {
             tblTeam model = new tblTeam();
             int departID = int.Parse(DepartmentID);
-            tblDepartment department = db.tblDepartments.Where(t => t.DepartmentID == departID).SingleOrDefault();
+            tblDepartment department = null;
+            
+            department = db.tblDepartments.Where(t => t.DepartmentID == departID).SingleOrDefault();
 
             if (!string.IsNullOrEmpty(TeamID)) // edit mode
             {
                 int teamID = int.Parse(TeamID);
                 model = db.tblTeams.Where(t => t.TeamID == teamID).SingleOrDefault();
             }
-            else 
+            else
             {
                 model.TeamID = -1; // set id for add mode
                 // set default value
                 model.WebAddress = department.tblDirectorate.tblOrganisation.WebAddress;
                 model.tblBusinessType = db.tblBusinessTypes.Where(t => t.BusinessID == department.tblDirectorate.tblOrganisation.BusinessID).SingleOrDefault();
             }
+            
 
             // set value for copy address checkbox
             ViewBag.OrgAddressLine1 = department.tblDirectorate.tblOrganisation.AddressLine1;
@@ -124,9 +131,10 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
         public ActionResult Delete_ActionLink(string TeamID, string page)
         {
+            
             int teamID = int.Parse(TeamID);
             tblTeam model = db.tblTeams.Where(t => t.TeamID == teamID).SingleOrDefault();
-            if(model != null)
+            if (model != null)
             {
                 db.tblTeams.Remove(model);
                 db.SaveChanges();
@@ -139,6 +147,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         // if teamID == -1 add mode ortherwise edit mode
         public ActionResult InsertUpdate_Team(tblTeam model)
         {
+            
             model.IsActive = true;
 
             if(model.TeamID == -1) // add mode
@@ -189,15 +198,16 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 {
                     return Content(ex.Message);
                 }
-
-                return Content("Update team successfully!");
             }
+            return Content("Update team successfully!");
+            
         }
 
 
         public ActionResult MakeInActive(bool IsActive, string TeamID)
         {
             int id = int.Parse(TeamID);
+            
             tblTeam model = db.tblTeams.Where(t => t.TeamID == id).SingleOrDefault();
             model.IsActive = IsActive;
             try
@@ -205,7 +215,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 db.SaveChanges();
                 return Content("Make the team in-active successfully");
             }
-            catch 
+            catch
             {
                 return Content("Cannot make in-active");
             }  

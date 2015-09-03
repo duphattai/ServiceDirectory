@@ -1,8 +1,8 @@
 ﻿@model ServiceDirectory.Models.tblOrganisation
 
-@using (Ajax.BeginForm("Edit_Organisation", "MaintainOrganisation", 
-        new AjaxOptions{ UpdateTargetId = "id_organisation_message", HttpMethod = "POST", InsertionMode = InsertionMode.Replace}))
-{
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
     <div class="modal-dialog modal-lg" style="width:950px;">
         <!-- Modal content-->
         <div class="modal-content">
@@ -11,74 +11,79 @@
             </div>
 
             <div class="modal-body">
-                <div class="nav">
-                    <ul class="nav nav-tabs col-sm-10">
-                        <li class="active">
-                            <a href="#organisation_details_one" data-toggle="tab">Details 1</a>
-                        </li>
-                        <li>
-                            <a href="#organisation_details_two" data-toggle="tab">Details 2</a>
-                        </li>
-                        <li id="org_id_details_three" style="display:none">
-                            <a href="#organisation_details_three" data-toggle="tab">Details 3</a>
-                        </li>
-                        <li>
-                            <a href="#organisation_details_four" data-toggle="tab">Details 4</a>
-                        </li>
-                        <li>
-                            <a href="#organisation_details_five" data-toggle="tab">Details 5</a>
-                        </li>
-                        <li>
-                            <a href="#organisation_details_six" data-toggle="tab">BU/Directorates</a>
-                        </li>
-                    </ul>
+                @using (Ajax.BeginForm("InsertUpdate_Organisation", "MaintainOrganisation",
+                        new AjaxOptions { UpdateTargetId = "id_organisation_message", HttpMethod = "POST", InsertionMode = InsertionMode.Replace }))
+                {
+                    <div class="nav">
+                        <ul class="nav nav-tabs col-sm-10">
+                            <li class="active">
+                                <a href="#organisation_details_one" data-toggle="tab">Details 1</a>
+                            </li>
+                            <li>
+                                <a href="#organisation_details_two" data-toggle="tab">Details 2</a>
+                            </li>
+                            <li id="org_id_details_three" style="display:none">
+                                <a href="#organisation_details_three" data-toggle="tab">Details 3</a>
+                            </li>
+                            <li>
+                                <a href="#organisation_details_four" data-toggle="tab">Details 4</a>
+                            </li>
+                            <li>
+                                <a href="#organisation_details_five" data-toggle="tab">Details 5</a>
+                            </li>
+                            <li>
+                                <a href="#organisation_details_six" data-toggle="tab">BU/Directorates</a>
+                            </li>
+                        </ul>
 
-                    <div class="col-sm-1">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                    <div class="col-sm-1">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
-                <div class="tab-content table-bordered">
-                    <div class="tab-pane active" id="organisation_details_one">
-                       @Html.Action("Details_One", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                        <div class="col-sm-1">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
 
-                    <div class="tab-pane" id="organisation_details_two">
-                        @Html.Action("Details_two", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
-                    </div>
+                    <div class="tab-content table-bordered">
+                        <div class="tab-pane active" id="organisation_details_one">
+                           @Html.Action("Details_One", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                        </div>
 
-                    <div class="tab-pane" id="organisation_details_three">
-                        @Html.Action("Details_three", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
-                    </div>
+                        <div class="tab-pane" id="organisation_details_two">
+                            @Html.Action("Details_two", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                        </div>
 
-                    <div class="tab-pane" id="organisation_details_four">
-                        @Html.Action("Details_four", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
-                    </div>
-                    <div class="tab-pane" id="organisation_details_five">
-                        @Html.Action("Index", "MaintainSupportingMaterial", new { OrgID = @ViewBag.OrgID })
-                    </div>
-                    <div class="tab-pane" id="organisation_details_six">
-                        @Html.Action("Index", "MaintainDirectorate", new { OrganisationID = @ViewBag.OrgID })
-                    </div>
-                </div>
+                        <div class="tab-pane" id="organisation_details_three">
+                            @Html.Action("Details_three", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                        </div>
 
-                <div id="id_organisation_message">
-                    <!-- Message after call action here -->
-                </div>
-                <div>
-                    @Html.ValidationMessageFor(model => model.OrgName)
-                    @Html.ValidationMessageFor(model => model.ShortDescription)
-                    @Html.ValidationMessageFor(model => model.FullDescription)
-                    @Html.ValidationMessageFor(model => model.PhoneNumber)
-                    @Html.ValidationMessageFor(model => model.Email)
-                    @Html.ValidationMessageFor(model => model.Fax)
-                    @Html.ValidationMessageFor(model => model.WebAddress)
-                </div>
+                        <div class="tab-pane" id="organisation_details_four">
+                            @Html.Action("Details_four", "MaintainOrganisation", new { OrgID = @ViewBag.OrgID })
+                        </div>
+                    
+                        <div class="tab-pane" id="organisation_details_five">
+                            @Html.Action("Index", "MaintainSupportingMaterial", new { OrgID = @ViewBag.OrgID })
+                        </div>
+                        <div class="tab-pane" id="organisation_details_six">
+                            @Html.Action("Index", "MaintainDirectorate", new { OrganisationID = @ViewBag.OrgID })
+                        </div>
+                    </div>
+                
+           
+                    <div id="id_organisation_message">
+                        <!-- Message after call action here -->
+                    </div>
+                    <div>
+                        @*@Html.ValidationMessageFor(model => model.OrgName)
+                        @Html.ValidationMessageFor(model => model.ShortDescription)
+                        @Html.ValidationMessageFor(model => model.FullDescription)
+                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                        @Html.ValidationMessageFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Fax)
+                        @Html.ValidationMessageFor(model => model.WebAddress)*@
+                    </div>
+                }
             </div>
         </div>
     </div>
 
-}

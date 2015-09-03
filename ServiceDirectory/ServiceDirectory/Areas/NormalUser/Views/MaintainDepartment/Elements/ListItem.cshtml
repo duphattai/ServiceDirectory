@@ -72,3 +72,7 @@
     @Html.PagedListPager(Model, page => Url.Action("GetListDepartments", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "department_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
 </div>
 
+<div>
+    <font color="red">@ViewBag.Message;</font>
+</div>
+

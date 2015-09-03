@@ -9,9 +9,10 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 {
     public class MaintainOrganisationController : Controller
     {
-        static public ServiceDirectoryEntities database = new ServiceDirectoryEntities();
+        ServiceDirectoryEntities database = new ServiceDirectoryEntities();
+
         static int PageNumber;
-        int PageSize = 5;
+        int PageSize = 15;
         static bool IncludeInActive = false;
         enum GroupReference
         {
@@ -45,36 +46,60 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         }
 
 
+        // page == -1 wil load pagenumber before
         public ActionResult GetListOrganisations(int page = -1)
         {
             List<tblOrganisation> list = null;
-
+           
             if (IncludeInActive == true)
                 list = database.tblOrganisations.ToList();
             else
                 list = database.tblOrganisations.Where(t => t.IsActive == true).ToList();
-
+            
             PageNumber = page != -1 ? page : PageNumber;
             return PartialView("Elements/ListItem", list.ToPagedList(PageNumber, PageSize));
         }
 
         // get data and fill data into Details 1
         // if OrgId == "" add mode, otherwise edit mode
-        public ActionResult Details_One(string OrgID = "")
+        public ActionResult Details_One(string OrgID = null)
         {
             tblOrganisation model = new tblOrganisation();
-            if(!string.IsNullOrEmpty(OrgID))
+            if (!string.IsNullOrEmpty(OrgID)) // edit
             {
                 int id = int.Parse(OrgID);
                 model = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault();
+            }
+            else
+            {
+                model.OrgID = -1; // key to know add mode or edit mode
             }
 
             return PartialView("Elements/Details_one", model);
         }
 
+
+        private List<SelectListItem> MakeSelectedCheckbox(List<tblReferenceData> listReference, List<tblReferenceData> listItem)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            foreach (var item in listItem)
+            {
+                SelectListItem temp = new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() };
+                // edit mode and make checked
+                if (listReference.FindIndex(t => t.RefID.Equals(item.RefID)) != -1)
+                    temp.Selected = true;
+
+                list.Add(temp);
+            }
+
+            return list;
+        }
+
+
         // get data and fill data into Details 2
         // if OrgId == "" add mode, otherwise edit mode
-        public ActionResult Details_two(string OrgID = "")
+        public ActionResult Details_two(string OrgID = null)
         {
             int id;
 
@@ -83,87 +108,47 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             List<SelectListItem> listSerEth = new List<SelectListItem>();
             List<SelectListItem> listSerBarri = new List<SelectListItem>();
             List<SelectListItem> listAccr = new List<SelectListItem>();
-            List<SelectListItem> listSerBene = new List<SelectListItem>(); 
+            List<SelectListItem> listSerBene = new List<SelectListItem>();
             List<SelectListItem> listOrgSpec = new List<SelectListItem>();
 
             // edit mode
-            List<tblReferenceData> listReference = null;
-            if(!string.IsNullOrEmpty(OrgID))
+            List<tblReferenceData> listReference = new List<tblReferenceData>();
+            if (!string.IsNullOrEmpty(OrgID))
             {
                 id = int.Parse(OrgID);
                 listReference = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault().tblReferenceDatas.ToList();
             }
-                
 
-            using(ServiceDirectoryEntities db = new ServiceDirectoryEntities())
-            {
-                List<tblReferenceData> temp = db.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.organisation_specicalism).ToList();
-                foreach (var item in temp)
-                {
-                    listOrgSpec.Add(new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString()});
 
-                    // edit mode and make checked
-                    if (!string.IsNullOrEmpty(OrgID) && listReference.FindIndex(t => t.RefID.Equals(item.RefID)) != -1)
-                    {
-                        listOrgSpec[listOrgSpec.Count - 1].Selected = true;
-                    }
-                }
+                
+            // get list checkbox from reference of details 2
+            List<tblReferenceData> temp = database.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.organisation_specicalism).ToList();
+            listOrgSpec = MakeSelectedCheckbox(listReference, temp); // make each item checked
 
-                temp = db.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.accreditation).ToList();
-                foreach (var item in temp)
-                {
-                    listSerPers.Add(new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() });
-                    // edit mode and make checked
-                    if (!string.IsNullOrEmpty(OrgID) && listReference.FindIndex(t => t.RefID.Equals(item.RefID)) != -1)
-                    {
-                        listSerPers[listSerPers.Count - 1].Selected = true;
-                    }
-                }
+            // get list checkbox of service personal....
+            temp = database.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.accreditation).ToList();
+            listSerPers = MakeSelectedCheckbox(listReference, temp);
 
-                temp = db.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_disabilities_capabilities).ToList();
-                foreach (var item in temp)
-                {
-                    listSerDis.Add(new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() });
-                    // edit mode and make checked
-                    if (!string.IsNullOrEmpty(OrgID) && listReference.FindIndex(t => t.RefID.Equals(item.RefID)) != -1)
-                    {
-                        listSerDis[listSerDis.Count - 1].Selected = true;
-                    }
-                }
+            // get list checkbox of service disabilities....
+            temp = database.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_disabilities_capabilities).ToList();
+            listSerDis = MakeSelectedCheckbox(listReference, temp);
+
+            // get list checkbox of service ethnicity....
+            temp = database.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_ethnicity_capabilities).ToList();
+            listSerEth = MakeSelectedCheckbox(listReference, temp);
+
+            // get list checkbox of service barriers
+            temp = database.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_barriers_capabilities).ToList();
+            listSerBarri = MakeSelectedCheckbox(listReference, temp);
+
+            // get list checkbox of  service benifit
+            temp = database.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_benefits_capabilities).ToList();
+            listSerBene = MakeSelectedCheckbox(listReference, temp);
+
+            // get list checkbox of Accreditation
+            temp = database.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.accreditation).ToList();
+            listAccr = MakeSelectedCheckbox(listReference, temp);
                 
-                temp = db.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_ethnicity_capabilities).ToList();
-                foreach (var item in temp)
-                {
-                    listSerEth.Add(new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() });
-                    // edit mode and make checked
-                    if (!string.IsNullOrEmpty(OrgID) && listReference.FindIndex(t => t.RefID.Equals(item.RefID)) != -1)
-                    {
-                        listSerEth[listSerEth.Count - 1].Selected = true;
-                    }
-                }
-                
-                temp = db.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_barriers_capabilities).ToList();
-                foreach (var item in temp)
-                {
-                    listSerBarri.Add(new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() });
-                    // edit mode and make checked
-                    if (!string.IsNullOrEmpty(OrgID) && listReference.FindIndex(t => t.RefID.Equals(item.RefID)) != -1)
-                    {
-                        listSerBarri[listSerBarri.Count - 1].Selected = true;
-                    }
-                }
-                
-                temp = db.tblReferenceDatas.Where(org => org.RefCode == (int)GroupReference.service_benefits_capabilities).ToList();
-                foreach (var item in temp)
-                {
-                    listSerBene.Add(new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() });
-                    // edit mode and make checked
-                    if (!string.IsNullOrEmpty(OrgID) && listReference.FindIndex(t => t.RefID.Equals(item.RefID)) != -1)
-                    {
-                        listSerBene[listSerBene.Count - 1].Selected = true;
-                    }
-                }
-            }
 
             ViewBag.listOrgSpec = listOrgSpec;
             ViewBag.listSerPers = listSerPers;
@@ -174,104 +159,220 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             ViewBag.listSerBene = listSerBene;
 
             return PartialView("Elements/Details_two");
+            
         }
 
         // get data and fill data into Details 3
         // If OrgId == "" add mode, OrgID != "" edit mode 
-        public ActionResult Details_three(string OrgID = "")
+        public ActionResult Details_three(string OrgID = null)
         {
-            int id;
-            List<SelectListItem> listSer = new List<SelectListItem>();
-            List<SelectListItem> listProg = new List<SelectListItem>();
-            
-            List<tblOrganisationService> listOrgLinkedSer = null;
-            List<tblProgramme> listOrgLinkedProg = null;
-            if(!string.IsNullOrEmpty(OrgID))
+            using (ServiceDirectoryEntities database = new ServiceDirectoryEntities())
             {
-                id = int.Parse(OrgID);
-                listOrgLinkedSer = database.tblOrganisationServices.Where(t => t.OrgID == id).ToList();
-                tblOrganisation linked = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault();
-                listOrgLinkedProg = linked.tblProgrammes.ToList();
-            }
-            
-            // create checkbox item and make it checked
-            foreach (var item in database.tblServices.ToList())
-            {
-                listSer.Add(new SelectListItem { Text = item.ServiceName, Value = item.ServiceID.ToString() });
+                int id;
+                List<SelectListItem> listSer = new List<SelectListItem>();
+                List<SelectListItem> listProg = new List<SelectListItem>();
 
-                if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedSer.FindIndex(t => t.ServiceID.Equals(item.ServiceID)) != -1)
+                List<tblOrganisationService> listOrgLinkedSer = null;
+                List<tblProgramme> listOrgLinkedProg = null;
+                if (!string.IsNullOrEmpty(OrgID))
                 {
-                    listSer[listSer.Count - 1].Selected = true;
+                    id = int.Parse(OrgID);
+                    listOrgLinkedSer = database.tblOrganisationServices.Where(t => t.OrgID == id).ToList();
+                    tblOrganisation linked = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault();
+                    listOrgLinkedProg = linked.tblProgrammes.ToList();
                 }
-            }
 
-            foreach(var item in database.tblProgrammes.ToList())
-            {
-                listProg.Add(new SelectListItem { Text = item.ProgrammeName, Value = item.ProgrammeID.ToString() });
-
-                if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedProg.FindIndex(t => t.ProgrammeID.Equals(item.ProgrammeID)) != -1)
+                // create checkbox item and make it checked
+                foreach (var item in database.tblServices.ToList())
                 {
-                    listProg[listProg.Count - 1].Selected = true;
+                    listSer.Add(new SelectListItem { Text = item.ServiceName, Value = item.ServiceID.ToString() });
+
+                    if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedSer.FindIndex(t => t.ServiceID.Equals(item.ServiceID)) != -1)
+                    {
+                        listSer[listSer.Count - 1].Selected = true;
+                    }
                 }
+
+                foreach (var item in database.tblProgrammes.ToList())
+                {
+                    listProg.Add(new SelectListItem { Text = item.ProgrammeName, Value = item.ProgrammeID.ToString() });
+
+                    if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedProg.FindIndex(t => t.ProgrammeID.Equals(item.ProgrammeID)) != -1)
+                    {
+                        listProg[listProg.Count - 1].Selected = true;
+                    }
+                }
+
+                ViewBag.listProg = listProg;
+                ViewBag.listSer = listSer;
+
+                return PartialView("Elements/Details_three");
             }
-
-            ViewBag.listProg = listProg;
-            ViewBag.listSer = listSer;
-
-            return PartialView("Elements/Details_three");
         }
 
         // get data and fill data into Details 4
         public ActionResult Details_four(string OrgID)
         {
-            List<tblPremis> listLinked;
-            
-            int id  = int.Parse(OrgID);
-            listLinked = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault().tblPremises.ToList();
-            
-            return PartialView("Elements/Details_four", listLinked);
+            using (ServiceDirectoryEntities database = new ServiceDirectoryEntities())
+            {
+                List<tblPremis> listLinked;
+
+                int id = int.Parse(OrgID);
+                listLinked = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault().tblPremises.ToList();
+
+                return PartialView("Elements/Details_four", listLinked);
+            }
         }
 
 
+        // show Listitem include in-active
         public string GetListOrganisationsFromCheckbox(bool IncludeInActive)
         {
-            MaintainOrganisationController.IncludeInActive = IncludeInActive;
-            List<tblOrganisation> list = null;
+            using (ServiceDirectoryEntities database = new ServiceDirectoryEntities())
+            {
+                MaintainOrganisationController.IncludeInActive = IncludeInActive;
+                List<tblOrganisation> list = null;
 
-            if (IncludeInActive == true)
-                list = database.tblOrganisations.ToList();
-            else
-                list = database.tblOrganisations.Where(t => t.IsActive == true).ToList();
+                if (IncludeInActive == true)
+                    list = database.tblOrganisations.ToList();
+                else
+                    list = database.tblOrganisations.Where(t => t.IsActive == true).ToList();
 
-            string html = MaintainTeamController.RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainOrganisation/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, PageSize));
+                string html = MaintainTeamController.RenderPartialViewToString(this, "~/Areas/NormalUser/Views/MaintainOrganisation/Elements/ListItem.cshtml", list.ToPagedList(PageNumber, PageSize));
 
-            // fix href missing name of ares
-            html = html.Replace("/MaintainOrganisation/Edit_ActionLink", "/NormalUser/MaintainOrganisation/Edit_ActionLink");
-            html = html.Replace("/MaintainOrganisation/GetListOrganisations", "/NormalUser/MaintainOrganisation/GetListOrganisations");
-            return html;
+                // fix href missing name of ares
+                html = html.Replace("/MaintainOrganisation/Edit_ActionLink", "/NormalUser/MaintainOrganisation/Edit_ActionLink");
+                html = html.Replace("/MaintainOrganisation/GetListOrganisations", "/NormalUser/MaintainOrganisation/GetListOrganisations");
+                return html;
+            }
         }
 
+
+
+        // add reference data to organisation, before add - delete old reference data of organisation
+        private void InsertRelationship(ref tblOrganisation model, string[]  list)
+        {
+            
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    int id = int.Parse(item);
+
+                    tblReferenceData temp = database.tblReferenceDatas.Where(t => t.RefID == id).SingleOrDefault();
+                    if (temp != null)
+                        model.tblReferenceDatas.Add(temp);
+                }
+            }
+            
+        }
+
+
+        private void RemoveRelationShip(ref tblOrganisation model)
+        {
+            
+            // remove old reference of organisation (it do for edit mode)
+            if (model != null && model.tblReferenceDatas.Count != 0)
+            {
+                foreach (var item in model.tblReferenceDatas.ToList())
+                {
+                    model.tblReferenceDatas.Remove(item);
+                }
+            }
+            database.SaveChanges();
+            
+        }
 
         // listSerEth get checked list from Service Ethnicity Capabilities
         // listSerDis get checked list from Service Disabilities Capabilities
         // listOrgSpec get checked list .........
+
         [HttpPost]
-        public ActionResult Add_Organisation(tblOrganisation model, string[] listSerEth, string[] listSerDis, string[] listOrgSpec, string[] listSerPers, string[] listSerBarri, string[] listAccr, string[] listSerBene)
+        public ActionResult InsertUpdate_Organisation(tblOrganisation model, string[] listSerEth, string[] listSerDis, string[] listOrgSpec, string[] listSerPers, string[] listSerBarri, string[] listAccr, string[] listSerBene)
         {
             
-            return PartialView();
+            model.IsActive = true;
+            if (model.OrgID == -1) // add mode
+            {
+                // check organisation name
+                int exists = database.tblOrganisations.Where(t => t.OrgName == model.OrgName).ToList().Count;
+
+                if (exists != 0) // org name exist
+                    return Content("Organisation name is existed. Please input another name!");
+
+                // add reference data into organisation
+                InsertRelationship(ref model, listSerEth);
+                InsertRelationship(ref model, listSerDis);
+                InsertRelationship(ref model, listOrgSpec);
+                InsertRelationship(ref model, listSerPers);
+                InsertRelationship(ref model, listSerBarri);
+                InsertRelationship(ref model, listAccr);
+                InsertRelationship(ref model, listSerBene);
+
+                if (model.Preferred == null) model.Preferred = false;
+
+                database.tblOrganisations.Add(model);
+            }
+            else
+            {
+                int exists = database.tblOrganisations.Where(t => t.OrgName == model.OrgName && t.OrgID != model.OrgID).ToList().Count;
+
+                if (exists != 0) // org name exist
+                    return Content("Organisation name is existed. Please input another name!");
+
+                tblOrganisation update = database.tblOrganisations.Where(t => t.OrgID == model.OrgID).SingleOrDefault();
+
+                // add reference data into organisation
+                RemoveRelationShip(ref update);
+
+                InsertRelationship(ref update, listSerEth);
+                InsertRelationship(ref update, listSerDis);
+                InsertRelationship(ref update, listOrgSpec);
+                InsertRelationship(ref update, listSerPers);
+                InsertRelationship(ref update, listSerBarri);
+                InsertRelationship(ref update, listAccr);
+                InsertRelationship(ref update, listSerBene);
+
+                database.Entry(update).CurrentValues.SetValues(model);
+                database.Entry(update).Property(t => t.OrgID).IsModified = false;
+                if (model.Preferred == null)
+                    model.Preferred = false;
+            }
+
+            try
+            {
+                database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return Content("Cannot save organisation!");
+            }
+
+            return Content("Save organisation successfully");
+            
         }
 
-        private void EditOrganisation(tblOrganisation model, string[] listSerEth, string[] listSerDis, string[] listOrgSpec, string[] listSerPers, string[] listSerBarri, string[] listAccr, string[] listSerBene)
+
+        public ActionResult Delete_ActionLink(string OrgID, int page)
         {
-            tblOrganisation org = database.tblOrganisations.Where(t => t.OrgID == model.OrgID).SingleOrDefault();
-
-            if(org != null)
+            int id = int.Parse(OrgID);
+            tblOrganisation delete = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault();
+            string message = "";
+            if (delete != null)
             {
-               
-                
-
+                try 
+                {
+                    database.tblOrganisations.Remove(delete);
+                    database.SaveChanges();
+                }
+                catch
+                {
+                    message = "This organisation is using. Cannot delete it!";
+                }
             }
+
+            ViewBag.Message = message;
+            return GetListOrganisations(page);
         }
     }
 }

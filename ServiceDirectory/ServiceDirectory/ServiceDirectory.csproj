@@ -143,6 +143,7 @@
     <Compile Include="Areas\NormalUser\Controllers\MaintainTeamController.cs" />
     <Compile Include="Areas\NormalUser\NormalUserAreaRegistration.cs" />
     <Compile Include="Areas\SuperUser\SuperUserAreaRegistration.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
