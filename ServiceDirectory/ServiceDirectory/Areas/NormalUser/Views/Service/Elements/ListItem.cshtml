@@ -1,0 +1,104 @@
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblService>
+@using PagedList.Mvc;
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Service Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Service Type
+        </th>
+        <th>
+            Contact
+        </th>
+        <th>
+           Is Active
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @foreach (var item in @Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShortDescription)
+        </td>
+        <td>
+            
+        </td>
+        <td>
+            @if(item.ContactID != null)
+            {
+                @item.tblContact.FirstName @item.tblContact.Surname
+            }
+            
+        </td>
+        <td>
+            @if(item.IsActive.Value == true)
+            {
+                <label> Yes </label>
+            } else
+            {
+                <label> No </label>
+            }         
+            
+        </td>
+        <td>
+            @if(item.IsActive == false)
+            { 
+                @Ajax.ActionLink("Edit", "Edit", "Service", new { ServiceID = @item.ServiceID }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "modal_service", OnComplete = "set_attr_edit_service_action_link()", Confirm = "Do you want to make this Team active?" }, new { @id = "edit_service" })
+            }
+            else
+            {
+                @Ajax.ActionLink("Edit", "Edit", "Service", new { ServiceID = @item.ServiceID }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "modal_service", OnComplete = "set_attr_edit_service_action_link()" }, new { @id = "edit_service" })
+            }
+            |
+            @Ajax.ActionLink("Delete", "Delete", "Service", new { ServiceID = @item.ServiceID, page = @Model.PageNumber },
+                                      new AjaxOptions { UpdateTargetId = "service_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })
+        </td>
+    </tr>
+    }
+
+</table>
+
+<div style="float:right">
+     @Html.PagedListPager(Model, page => Url.Action("GetList", new {page}), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId="service_table", InsertionMode=InsertionMode.Replace, HttpMethod="POST"}))
+</div>
+<!-- Nhận biet delete dc hay khong -->
+<div>
+    <font color="red">@ViewBag.Message;</font>
+</div>
+<script>
+    function set_attr_edit_service_action_link() {
+        $('#edit_service').attr("data-toggle", "modal");
+        $('#edit_service').attr("data-target", "#modal_service");
+
+        $('#modal_service').modal('show');
+    }
+
+    //$(function () {
+    //    $('edit_service').onchage(function () {
+    //        var sub = $("#SubType").attr("value");
+    //        if (sub == "Contract") {
+    //            $('#contractid').remove();
+    //            $('#fundingid').remove();
+    //            $('#ServiceTab').append('<li id="contractid"><a href="#contract" data-toggle="tab">Contract</a></li>');
+    //        }
+    //        else if (sub == "Independently Funded") {
+    //            $('#contractid').remove();
+    //            $('#fundingid').remove();
+    //            $('#ServiceTab').append('<li id="fundingid"><a href="#funding" data-toggle="tab">Funding</a></li>');
+    //        }
+    //    })
+    //});
+</script>

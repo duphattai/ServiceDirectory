@@ -1,0 +1,49 @@
+﻿@model ServiceDirectory.Models.tblProgramme
+<link href="~/Content/css/css.css" rel="stylesheet" />
+
+@using (Ajax.BeginForm("Add_Edit_Programme", "Programme", new AjaxOptions { UpdateTargetId = "programme_message", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+{
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal-dialog modal-lg" style="width:1000px">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Programme Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="nav">
+                        <ul class="nav nav-tabs col-sm-8" id="ProgrammeTab">
+                            <li class="active"><a data-toggle="tab" href="#details">Details</a></li>
+                        </ul>
+                        <div class="col-sm-2">
+                            <input type="button" value="In-active" class="btn btn-default" style="float: right" />
+                        </div>
+                        <div class="col-sm-1">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <div class="tab-content table-bordered">
+                        <div id="details" class="tab-pane fade in active">
+                            @Html.Action("Details", "Programme", new { ProgrammeID = @ViewBag.ProgrammeID })
+                        </div>
+                    </div>
+                </div>
+                <div id="programme_message" style="margin-left:20px">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    function promptCallBackFn() {
+        alert("Prompt returned the following result");
+    }
+</script>

@@ -111,7 +111,7 @@ namespace ServiceDirectory.Controllers
 
             List<SelectListItem> listContactType = new List<SelectListItem>();
 
-            List<tblReferenceData> temp = db.tblReferenceDatas.Where(t => t.RefCode == 8).ToList();
+            List<tblReferenceData> temp = db.tblReferenceDatas.Where(t => t.RefCode == 23).ToList();
             foreach (var item in temp)
             {
                 SelectListItem t = new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() };
@@ -119,7 +119,7 @@ namespace ServiceDirectory.Controllers
             }
 
             List<SelectListItem> listBestContactMethod = new List<SelectListItem>();
-            temp = db.tblReferenceDatas.Where(t => t.RefCode == 9).ToList();
+            temp = db.tblReferenceDatas.Where(t => t.RefCode == 24).ToList();
             foreach (var item in temp)
             {
                 SelectListItem t = new SelectListItem { Text = item.RefValue, Value = item.RefID.ToString() };

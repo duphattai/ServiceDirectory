@@ -4,10 +4,12 @@
     <div class="col-md-3">
         EOI Programmes
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listProg)
         {
-            <input type="checkbox" />@item.RefValue<br />
+            <div class="checkbox">
+                <label><input type="checkbox" />@item.Text<br /></label>
+            </div>
         }
     </div>
 </div>
@@ -16,10 +18,12 @@
     <div class="col-md-3">
         EOI Services
     </div>
-    <div class="form-control container col-md-3">
+    <div class="form-control containeritem col-md-3">
         @foreach (var item in @ViewBag.listSer)
         {
-            <input type="checkbox" />@item.RefValue<br />
+            <div class="checkbox">
+                <label><input type="checkbox" />@item.Text<br /></label>
+            </div>
         }
     </div>     
 </div>

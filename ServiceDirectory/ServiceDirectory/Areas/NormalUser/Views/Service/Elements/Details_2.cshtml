@@ -1,0 +1,78 @@
+﻿
+
+<div class="row" style="margin: 0px">
+    <table class="table" style="margin-top:10px; font-weight:bold">
+        <tr>
+            <td class="col1"> Service Benefits Criterion</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listBenefitsCriterion)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listBenefitsCriterion" value="@item.Value" checked="@item.Selected" />@item.Text</label>                            
+                        </div>                        
+                    }
+                </div>
+            </td>
+            <td class="col1"> Service Disability Criterion</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listDisabilityCriterion)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listDisabilityCriterion" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1"> Service Barriers Criterion</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listBarriersCriterion)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listBarriersCriterion" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Service Personal Circumstance Criterion</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listCircumstanceCriterion)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listCircumstanceCriterion" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1"> Service Ethnicity Criterion</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listEthnicityCriterion)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listEthnicityCriterion" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Other Service Participation Criterion</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listParticipationCriterion)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listParticipationCriterion" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

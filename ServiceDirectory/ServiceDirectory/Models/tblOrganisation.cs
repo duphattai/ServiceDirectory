@@ -11,7 +11,6 @@ namespace ServiceDirectory.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class tblOrganisation
     {
@@ -29,11 +28,7 @@ namespace ServiceDirectory.Models
         public Nullable<int> ContactID { get; set; }
         public Nullable<int> AddressID { get; set; }
         public Nullable<int> BusinessID { get; set; }
-
-        [Required(ErrorMessage="Please input the organisation name")]
         public string OrgName { get; set; }
-
-        [Required(ErrorMessage = "Please input the short description")]
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
         public string PhoneNumber { get; set; }

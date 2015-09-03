@@ -1,0 +1,245 @@
+﻿@model ServiceDirectory.Models.tblService
+
+<!-- Load Script-->
+<script src="~/Content/script/Service.js"></script>
+
+<!-- Tab Details 1-->
+<div class="row" style="margin: 0px">
+    <fieldset>
+        <table class="table" style="margin-top:10px; font-weight:bold">
+            <tr>
+                <td class="col1">
+                    @Html.LabelFor(model => model.ServiceName, "Service Name") <font color="red">*</font>
+                </td>
+                <td class="col2">
+                   @Html.TextBoxFor(model => model.ServiceName, new { @class="btn-block"})
+                   @Html.ValidationMessageFor(model => model.ServiceName)
+                    <input type="hidden" value="@Model.ServiceID" name="ServiceID" />
+                </td>
+                <td class="col1">
+                    @Html.LabelFor(model => model.IsActive, "Is Active")
+                </td>
+                <td class="col2">
+                    <input type="checkbox" name="IsActive" checked />
+                    @Html.ValidationMessageFor(model => model.IsActive)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col1">
+                    @Html.LabelFor(model => model.ShortDescription, "Service Short Description") <font color="red">*</font>
+                </td>
+                <td>
+                    @Html.TextAreaFor(model => model.ShortDescription, new { @class = "btn-block" })
+                    @Html.ValidationMessageFor(model => model.ShortDescription)
+                </td>
+                <td class="col1">
+                    @Html.LabelFor(model => model.FullDescription, "Service Full Description")
+                </td>
+                <td>
+                    @Html.TextAreaFor(model => model.FullDescription, new { @class = "btn-block" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Sub Type <font color="red">*</font>
+                </td>
+                <td>
+                    <select id="SubType" name="SubType" style="width:100%" onclick="openTab()">                        
+                        @foreach (var item in @ViewBag.listSubType)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.DeptCode, "Dept Code") <font color="red">*</font>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.DeptCode, new { @class = "btn-block" })
+                    @Html.ValidationMessageFor(model => model.DeptCode)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Lead Contact <font color="red">*</font>
+                </td>
+                <td>
+                    @if (@Model.ContactID != null)
+                    {
+                        @*<input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname" style="width:170px" />*@
+                        @Html.TextBoxFor(model => model.ContactID, new { style = "width: 170px;", id = "leadcontact", 
+                                                                         disabled = "disable",
+                                                                         value = Model.tblContact.FirstName + Model.tblContact.Surname})
+                    }
+                    else
+                    {
+                        @*<input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="" style="width:170px" />*@
+                        @*@Html.TextBoxFor(model => model.ContactID, new {id="leadContact", onchange ="javascript:LeadContact();" })*@
+                        @Html.TextBoxFor(model => model.ContactID, new { style = "width: 170px;", id = "leadcontact", 
+                                                                         disabled = "disable",
+                                                                         value = ""})                   
+                    } 
+                       
+                    <a href="#lookupContact" data-toggle="modal">  Lookup</a>
+                    <input type="hidden" name="leadContact" />
+                    @Html.ValidationMessageFor(model => model.ContactID)
+                </td>
+                <td>
+                    Service Type <font color="red">*</font>
+                </td>
+                <td>
+                    <select id="ServiceType" name="ServiceType" style="width:100%">
+                        @foreach (var item in @ViewBag.listServiceType)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ClientDescription, "Client Description")
+                </td>
+                <td>
+                    @Html.TextAreaFor(model => model.ClientDescription, new { @class = "btn-block" })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.DescriptionDelivery, "Service Description-Delivery")
+                </td>
+                <td>
+                    @Html.TextAreaFor(model => model.DescriptionDelivery, new { @class = "btn-block" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Service Attendance
+                </td>
+                <td>
+                    <select id="ServiceType" name="ServiceType" style="width:100%">
+                        @foreach (var item in @ViewBag.listServiceType)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.ContractCode, "Service Contract Code")
+                </td>
+                <td>
+                    <input type="text" id="ContractCode" name="ContractCode" class="btn-block" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.StartExpected, "Service Start Expected")
+                </td>
+                <td>
+                    <input type="date" id="StartExpected" name="StartExpected">
+                    <span class="glyphicons glyphicons-calendar"></span>
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.ContractValue, "Service Contract Value")
+                </td>
+                <td>
+                    <input type="text" id="ContractValue" name="ContractValue" class="btn-block" />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.StartDate, "Service Start Date")
+                </td>
+                <td>
+                    <input type="date" id="StartDate" name="StartDate">
+                    <span class="glyphicons glyphicons-calendar"></span>
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.ContractPayment, "Contract Staged Payment")
+                </td>
+                <td>
+                    <input type="checkbox" id="ContractPayment" name="ContractPayment" />
+                    @Html.ValidationMessageFor(model => model.ContractPayment)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.EndDate, "Service End Date")
+                </td>
+                <td>
+                    <input type="date" id="EndDate" name="EndDate">
+                </td>
+                <td>
+                    Referral Process/Method
+                </td>
+                <td>
+                    <select id="ServiceType" name="ServiceType" style="width:100%">
+                        @foreach (var item in @ViewBag.listServiceType)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="Extendable">Service Extendable</label></td>
+                <td>
+                    <input type="checkbox" id="Extendable" onclick="EnableExtendable(this)" />
+                </td>
+                <td><label for="TimeLimited">Service Time Limited</label> </td>
+                <td>
+                    <input type="checkbox" id="TimeLimited" onclick="EnableTimeLimited(this)" />
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="number" id="ExtendableYears" name="ExtendableYears" min="0" max="100" step="1" value="0" disabled style="width:40px"> Years
+                    <input type="number" id="ExtendableMonths" name="ExtendableMonths" min="1" max="12" step="1" value="0" disabled style="width:40px"> Months
+                </td>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="number" id="TimeLimitedYears" name="TimeLimitedYears" min="0" max="100" step="1" value="0" disabled style="width:40px"> Years
+                    <input type="number" id="TimeLimitedMonths" name="TimeLimitedMonths" min="1" max="12" step="1" value="0" disabled style="width:40px"> Months
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<!-- End tab Details 1 -->
+
+<!-- Modal Lookup Contact -->
+<div class="modal fade" id="lookupContact" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="width:300px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Contact</h4>
+            </div>
+            <div class="modal-body">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="funder" name="funder" />Funder</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="lead" name="lead" />Lead</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="delivery" name="delivery" />Delivery</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="auditor" name="auditor" />Auditor</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

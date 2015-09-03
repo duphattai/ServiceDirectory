@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<ServiceDirectory.Models.tblOrganisation>
 
-<div style="border: 1px ridge silver; ">
+@*<div style="border: 1px ridge silver; ">
     <div style="margin-top:10px;">
             <div class="row">
                 <font color="green" size="5"><strong>Organisation List</strong></font>
@@ -16,7 +16,70 @@
             @Html.Action("GetListOrganisations", "MaintainOrganisation", new { page = 1 })
         </div>
     </div>
+</div>*@
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Organisation List</h3>
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="list-inline">
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">0-9</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">A</a></li>
+                        <li><a href="#">B</a></li>
+                        <li><a href="#">C</a></li>
+                        <li><a href="#">D</a></li>
+                        <li><a href="#">E</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">F</a></li>
+                        <li><a href="#">G</a></li>
+                        <li><a href="#">H</a></li>
+                        <li><a href="#">I</a></li>
+                        <li><a href="#">J</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">K</a></li>
+                        <li><a href="#">L</a></li>
+                        <li><a href="#">M</a></li>
+                        <li><a href="#">N</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">O</a></li>
+                        <li><a href="#">P</a></li>
+                        <li><a href="#">Q</a></li>
+                        <li><a href="#">R</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">S</a></li>
+                        <li><a href="#">T</a></li>
+                        <li><a href="#">U</a></li>
+                        <li><a href="#">V</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">W</a></li>
+                        <li><a href="#">X</a></li>
+                        <li><a href="#">Y</a></li>
+                        <li><a href="#">Z</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    @Ajax.ActionLink("Create", "Add_ActionLink", "MaintainOrganisation",
+                             new AjaxOptions { UpdateTargetId = "organisation_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_organisation_link', 'organisation_popup', '')" },
+                                      new { @id = "add_organisation_link", @class = "btn btn-default" })
+                </div>
+                <div class="checkbox col-md-2">
+                    <label><input type="checkbox" onchange="maintain_organisation_include_inactive(this)" />Include In-active</label>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" id="organisation_table">
+            @Html.Action("GetListOrganisations", "MaintainOrganisation", new { page = 1 })
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
 </div>
+
 
 <script>
     function maintain_organisation_include_inactive(checkbox) {

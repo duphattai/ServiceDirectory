@@ -1,0 +1,97 @@
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblService>
+@using PagedList.Mvc;
+
+<link href="~/Content/css/css.css" rel="stylesheet" />
+
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Service List</h3>
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="list-inline">
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">0-9</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">A</a></li>
+                        <li><a href="#">B</a></li>
+                        <li><a href="#">C</a></li>
+                        <li><a href="#">D</a></li>
+                        <li><a href="#">E</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">F</a></li>
+                        <li><a href="#">G</a></li>
+                        <li><a href="#">H</a></li>
+                        <li><a href="#">I</a></li>
+                        <li><a href="#">J</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">K</a></li>
+                        <li><a href="#">L</a></li>
+                        <li><a href="#">M</a></li>
+                        <li><a href="#">N</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">O</a></li>
+                        <li><a href="#">P</a></li>
+                        <li><a href="#">Q</a></li>
+                        <li><a href="#">R</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">S</a></li>
+                        <li><a href="#">T</a></li>
+                        <li><a href="#">U</a></li>
+                        <li><a href="#">V</a></li>
+                        <li><a href="#">|</a></li>
+                        <li><a href="#">W</a></li>
+                        <li><a href="#">X</a></li>
+                        <li><a href="#">Y</a></li>
+                        <li><a href="#">Z</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    @*<button type="button" class="btn btn-default" style="margin-right:10px">Copy</button>*@
+                    @Ajax.ActionLink("Create", "Add", "Service", new AjaxOptions { UpdateTargetId = "modal_service", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_add_service_action_link()" }, new { @id = "add_service", @class = "btn btn-default" })                                
+                </div>
+                <div class="checkbox col-md-2">
+                    <label><input type="checkbox" onchange="service_include_inactive(this)" value="">Include In-active</label>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" id="service_table">
+            @Html.Action("GetList", "Service", new { page = 1})
+        </div>
+        <div class="panel-footer">           
+        </div>
+    </div>
+</div>
+
+<!--Modal Service -->
+<div class="modal fade" id="modal_service" role="dialog">
+  <!-- Modal Service content-->
+</div>   
+
+
+<script>
+    function set_attr_add_service_action_link()
+    {
+        $('#add_service').attr("data-toggle", "modal");
+        $('#add_service').attr("data-target", "#modal_service");
+
+        $('#modal_service').modal('show');
+    }
+
+    function service_include_inactive(checkbox) {
+        var url = "/Service/GetListInActive";
+
+        if (checkbox.checked) {
+            $.post(url, { InActive: true }, function (data) {
+                $("#service_table").html(data);
+            });
+        }
+        else {
+            $.post(url, { InActive: false }, function (data) {
+                $("#service_table").html(data);
+            });
+        }
+    }
+</script>

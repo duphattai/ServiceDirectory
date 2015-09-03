@@ -1,0 +1,153 @@
+﻿@model ServiceDirectory.Models.tblFunding
+
+<!-- Load Script-->
+<script src="~/Content/script/Service.js"></script>
+
+<div class="row" style="margin:0px; ">   
+    <table class="table" style="font-weight: bold">
+        <tr>
+            <td class="col1"><font size="4">General</font></td>
+            <td class="col2"></td>
+            <td class="col1"></td>
+            <td class="col2"></td>
+        </tr>
+        <tr>
+            <td >
+                @Html.LabelFor(model => model.FundingSource, "Funding Source")
+            </td>
+            <td >
+                <select id="FundingSource" style="width: 100%">
+                    <option></option>
+                </select>
+            </td>
+            <td >@Html.LabelFor(model => model.FundingNeeds, "Funding Needs")</td>
+            <td >
+                <input type="text" id="FundingNeeds" class="btn-block" name="FundingNeeds" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.ContactID, "Funding Contact Details") <font color="red">*</font>
+            </td>
+            <td>
+                <input type="text" readonly disabled style="width:170px"/>
+                <a href="#">  Lookup</a>
+                <input type="hidden" name="ContactID" />
+            </td>
+            <td>
+                <label for="CotinuationNeeded">Funding Continuation Needed</label>
+            </td>
+            <td>
+                <input type="checkbox" id="CotinuationNeeded" name="CotinuationNeeded" onclick="EnableContinuation(this)" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.FundingAmount, "Funding Amount") <font color="red">*</font>
+            </td>
+            <td>
+                <input type="text" id="FundingAmount" class="btn-block" name="FundingAmount" />
+            </td>
+            <td>
+                @Html.LabelFor(model => model.ContinuationAmount, "Funding Continuation Amount")
+            </td>
+            <td>
+                <input type="text" id="ContinuationAmount" class="btn-block" name="ContinuationAmount" disabled />
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.FundingStart, "Funding Start")</td>
+            <td>
+                <input type="date" id="FundingStart" name="FundingStart" />
+            </td>
+            <td rowspan="2">
+                @Html.LabelFor(model => model.ContinuationDetails, "Funding Continuation Details")
+            </td>
+            <td rowspan="2">
+                <textarea id="ContinuationDetails" class="btn-block" name="ContinuationDetails" rows="2" cols="20" disabled></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.FundingEnd, "Funding End")</td>
+            <td>
+                <input type="date" id="FundingEnd" name="FundingEnd" />
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <font size="4">Fundraising For Service Project</font>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>  
+        <tr>
+            <td rowspan="2">
+                @Html.LabelFor(model => model.FundraisingText, "Fundraising For Text")
+            </td>
+            <td rowspan="2">
+                <textarea id="FundraisingText" class="btn-block" name="FundraisingText" rows="2" cols="20"></textarea>
+            </td>
+            <td >@Html.LabelFor(model => model.FundraisingNeeds, "Fundraising Needs")</td>
+            <td >
+                <input type="text" id="FundraisingNeeds" class="btn-block" name="FundraisingNeeds" />
+            </td>
+        </tr>
+        <tr>        
+            <td>@Html.LabelFor(model => model.FundraisingRequired, "Fundraising Required By")</td>
+            <td>
+                <input type="date" id="FundraisingRequired" name="FundraisingRequired" />
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td rowspan="2">
+                @Html.LabelFor(model => model.FundraisingWhy, "Fundraising Why")
+            </td>
+            <td rowspan="2">
+                <textarea id="FundraisingWhy" class="btn-block" name="FundraisingWhy" rows="2" cols="20"></textarea>
+            </td>
+            <td>@Html.LabelFor(model => model.FundraisingComplete, "Fundraising Complete")</td>
+            <td>
+                <input type="checkbox" id="FundraisingComplete" name="FundraisingComplete" />
+            </td>
+        </tr>
+        <tr>            
+            <td>@Html.LabelFor(model => model.CompletedDate, "Fundraising Complete Date")</td>
+            <td>
+                <input type="date" id="CompletedDate" name="CompletedDate" />
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2"><font size="4">Fundraising Donor</font></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.DonorAnonymous, "Fundraising Donor Anonymous")</td>
+            <td>
+                <input type="checkbox" id="DonorAnonymous" name="DonorAnonymous" />
+            </td>
+            <td>@Html.LabelFor(model => model.DonationDate, "Fundraising Donation Date")</td>
+            <td>
+                <input type="date" id="DonationDate" name="DonationDate" />
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.DonorAmount, "Fundraising Donor Amount")</td>
+            <td>
+                <input type="text" id="DonorAmount" class="btn-block" name="DonorAmount" />
+            </td>
+            <td>@Html.LabelFor(model => model.DonationIncremental, "Fundraising Donation Incremental")</td>
+            <td>
+                <input type="checkbox" id="DonationIncremental" name="DonationIncremental" />
+            </td>
+        </tr>
+    </table>
+</div>

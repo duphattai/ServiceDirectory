@@ -1,0 +1,63 @@
+﻿@model ServiceDirectory.Models.tblService
+<link href="~/Content/css/css.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+@using (Ajax.BeginForm("Add_Edit_Service", "Service", new AjaxOptions { UpdateTargetId = "service_message", HttpMethod = "POST", InsertionMode = InsertionMode.Replace }))
+{
+       
+<div class="container">
+    <!-- Modal -->      
+        <div class="modal-dialog modal-lg" style="width:1000px;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">                  
+                    <h4 class="modal-title">Service Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="nav">
+                        <ul class="nav nav-tabs col-sm-8" id="ServiceTab">
+                            <li class="active"><a data-toggle="tab" href="#details_1">Details 1</a></li>
+                            <li><a data-toggle="tab" href="#details_2">Details 2</a></li>
+                            <li><a data-toggle="tab" href="#details_3">Details 3</a></li>
+                            <li id="contractid"><a href="#contract" data-toggle="tab" >Contract</a></li>
+                            @*<li id="fundingid"><a href="#funding" data-toggle="tab" >Funding</a></li>*@
+                        </ul>
+                        <div class="col-sm-2">
+                            @*<input type="submit" value="In-active" class="btn btn-default" style="float: right" />*@
+                        </div>                       
+                        <div class="col-sm-1">                        
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <div class="tab-content table-bordered">
+                        <div id="details_1" class="tab-pane fade in active">    
+                            @Html.Action("Details_1", "Service")                          
+                        </div>
+                        <div id="details_2" class="tab-pane fade">
+                            @Html.Action("Details_2", "Service")
+                        </div>
+                        <div id="details_3" class="tab-pane fade">
+                            @Html.Action("Details_3", "Service")
+                        </div>
+                        <div id="contract" class="tab-pane fade">                            
+                            @Html.Action("Contract", "Service")
+                        </div>
+                        <div id="funding" class="tab-pane fade">
+                            @Html.Action("Funding", "Service")
+                        </div>
+                    </div>
+                </div>
+ 
+                <div id="service_message" style="margin-left:20px">
+
+                </div>
+            </div>
+        </div>       
+</div>
+}
+

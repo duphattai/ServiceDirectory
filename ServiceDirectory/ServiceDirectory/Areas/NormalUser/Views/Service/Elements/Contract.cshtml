@@ -1,0 +1,43 @@
+﻿
+<link href="~/Content/css/css.css" rel="stylesheet" />
+
+<div class="row" style="margin: 0px">
+    <table class="table" style="margin-top:10px; font-weight:bold">
+        <tr>
+            <td class="col1"> Contract Outcome</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listContractOutcome)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listContractOutcome" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Contract Obligation</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listContractObligation)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listContractObligation" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1"> Participation</td>
+            <td class="col2">
+                <select name="Participation" style="width:100%">
+                    <option>Mandatory</option>
+                    <option>Voluntary</option>
+                    <option>Both</option>
+                </select>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>

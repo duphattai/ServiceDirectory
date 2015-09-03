@@ -558,9 +558,30 @@ INSERT INTO tblGroupReference(GroupReferenceID, GroupValue) values
 								(4, 'service ethnicity capabilities'),
 								(5, 'service barriers capabilities'),
 								(6, 'accreditation'),
-								(7, 'service benefits capabilities');
+								(7, 'service benefits capabilities'),
 
-								
+								(8, 'Contract Outcome'),
+								(9, 'Contract Obligation'),
+
+								(10, 'Service Sub Type'),
+								(11, 'Service Type'),
+
+								(12, 'Service Benefits Criterion'),
+								(13, 'Service Barriers Criterion'),
+								(14, 'Service Ethnicity Criterion'),
+								(15, 'Service Disability Criterion'),
+								(16, 'Service Personal Circumstance Criterion'),
+								(17, 'Orther Service Participation Criterion'),
+
+								(18, 'Client Support Process'),
+								(19, 'Client Outcome'),
+								(20, 'Target Client'),
+								(21, 'Referral Sources'),
+								(22, 'Support Centres'),
+
+								(23, 'contact type'), --- nhan
+								(24, 'best contact method');
+
 INSERT INTO tblReferenceData (RefCode, RefValue) values
 							( 1, 'Blind/Partially Sighted'),
 							( 1, 'Deaf/Hard of Hearing'),
@@ -596,7 +617,76 @@ INSERT INTO tblReferenceData (RefCode, RefValue) values
 							( 7, 'Disability Living Allowance'),
 							( 7, 'Employment'),
 							( 7, 'Incapacity'),
-							( 7, 'Income Support');
+							( 7, 'Income Support'),
+
+							(8, 'Referrals Taken'),
+							(8, 'Job Starts'),
+							(8, 'Retentions'),
+							(8, 'Accredited Training'),
+							(8, 'Motivation Improved'),
+
+							(9, 'Phone weekly'),
+							(9, 'Email monthly'),
+							
+							(10, 'Contract'),
+							(10, 'Independently Funded'),
+							
+							(11, 'Service'),
+							(11, 'Project'),
+							(11, 'Programme'),
+							
+							(12, 'Disability Living Allowance'),
+							(12, 'Employment and Support Allowance'),
+							(12, 'Incapacity Benefit'),
+							(12, 'Income Support'),
+							(12, 'Job Seekers Allowance'),
+
+							(13, 'Lone Parent'),
+							(13, 'ESOL'),
+							(13, 'Refugee'),
+							(13, 'Basic Skills'),
+
+							(14, 'White British'),
+							(14, 'White Irish'),
+							(14, 'Other White'),
+							(14, 'White & Black Caribbean'),
+							(14, 'White & Black African'),
+
+							(15, 'Chest, Breathing problems'),
+							(15, 'Condition restricting mobility/dexterity'),
+							(15, 'Diabetes'),
+							(15, 'Difficulty in hearing'),
+							(15, 'Difficulty in seeing'),
+
+							(16, 'Carer Responsibilities'),
+							(16, 'Lone Parent'),
+							
+							(17, 'Referral to Mainstream Service First'),
+							(17, 'Only Access Services Once'),
+							(17, 'Only Access Services Once Per Year'),
+							
+							(18, 'Referral'),
+							(18, 'Initial Contact'),
+							(18, 'Pre Employment'),
+							(18, 'In Work Support'),
+							
+							(19, '...'),
+							(19, '...'),
+
+							(20, '...'),
+							(20, '...'),
+
+							(21, '...'),
+							(21, '...'),
+
+							(22, '...'),
+							(22, '...'),
+
+							----- nhan
+							( 23, 'Operational'),
+							( 23, 'Fire Marshall'),
+							( 24, 'Email'),
+							( 24, 'Phone');
 
 
 
@@ -625,7 +715,9 @@ INSERT INTO tblOrganisation(OrgName, ShortDescription, BusinessID, AddressLine1,
 
 INSERT INTO tblContact(FirstName, Surname, IsActive) VALUES 
 					  ('Phat', 'Tai', '1'),
-					  ('Cam', 'Quoc', '1');
+					  ('Cam', 'Quoc', '1'),
+					  ('Tuan', 'Anh', '1'),
+					  ('Minh', 'Nhan', '1');
 
 INSERT INTO tblDirectorate(OrgID, ContactID, AddressID, BusinessID) values
 						  (1, 1, 1, 2);
@@ -638,3 +730,41 @@ INSERT INTO tblTeam (TeamName, DepartmentID, ContactID, AddressID, BusinessID) V
 					('Team two', 1, 1, 1, 2),
 					('Team three', 1, 2, 2, 3),
 					('Team four', 1, 2, 1, 4);
+
+
+---------Tuan Anh
+INSERT INTO tblService(ServiceName, ShortDescription, ContactID, IsActive) VALUES
+					  ('Service name 1', 'Short description service name 1', 1, '1'),
+					  ('Service name 2', 'Short description service name 2', 1, '1'),
+					  ('Service name 3', 'Short description service name 3', 2, '1'),
+					  ('Service name 4', 'Short description service name 4', 2, '1'),
+					  ('Service name 5', 'Short description service name 5', 3, '1'),
+					  ('Service name 6', 'Short description service name 6', 3, '1'),
+					  ('Service name 7', 'Short description service name 7', 4, '1'),
+					  ('Service name 8', 'Short description service name 8', 4, '1'),
+					  ('Service name 9', 'Short description service name 9', 1, '1'),
+					  ('Service name 10', 'Short description service name 10', 1, '1'),
+					  ('Service name 11', 'Short description service name 11', 2, '1'),
+					  ('Service name 12', 'Short description service name 12', 2, '1'),
+					  ('Service name 13', 'Short description service name 13', 3, '1'),
+					  ('Service name 14', 'Short description service name 14', 3, '1'),
+					  ('Service name 15', 'Short description service name 15', 4, '1'),
+					  ('Service name 16', 'Short description service name 16', 4, '1');
+
+INSERT INTO tblProgramme(ProgrammeName, ProgrammeDescription, ContactID, IsActive) VALUES
+					  ('Programme name 1', 'Programme description 1', 1, '1'),
+					  ('Programme name 2', 'Programme description 2', 1, '1'),
+					  ('Programme name 3', 'Programme description 3', 2, '1'),
+					  ('Programme name 4', 'Programme description 4', 2, '1'),
+					  ('Programme name 5', 'Programme description 5', 3, '1'),
+					  ('Programme name 6', 'Programme description 6', 3, '1'),
+					  ('Programme name 7', 'Programme description 7', 4, '1'),
+					  ('Programme name 8', 'Programme description 8', 4, '1'),
+					  ('Programme name 9', 'Programme description 9', 1, '1'),
+					  ('Programme name 10', 'Programme description 10', 1, '1'),
+					  ('Programme name 11', 'Programme description 11', 2, '1'),
+					  ('Programme name 12', 'Programme description 12', 2, '1'),
+					  ('Programme name 13', 'Programme description 13', 3, '1'),
+					  ('Programme name 14', 'Programme description 14', 3, '1'),
+					  ('Programme name 15', 'Programme description 15', 4, '1'),
+					  ('Programme name 16', 'Programme description 16', 4, '1');

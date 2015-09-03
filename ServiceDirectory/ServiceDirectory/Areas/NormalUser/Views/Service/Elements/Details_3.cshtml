@@ -1,0 +1,125 @@
+﻿
+
+<div class="row" style="margin: 0px">
+    <table class="table" style="margin-top:10px; font-weight:bold">
+        <tr>
+            <td class="col1"> Client Support Process</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listSupportProcess)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listSupportProcess" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Client Outcome</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listClientOutcome)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listClientOutcome" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1"> Intervention</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listClientOutcome)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listClientOutcome" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Target Client</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listTargetClient)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listTargetClient" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1"> Client Journey</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listTargetClient)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listTargetClient" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Accreditations</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listTargetClient)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listTargetClient" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1"> Other Service</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listTargetClient)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listTargetClient" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Referral Sources</td>
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listReferralSources)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listReferralSources" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col1"> Support Centres</td> 
+            <td class="col2">
+                <div class="form-control containeritem">
+                    @foreach (var item in @ViewBag.listSupportCentres)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="listSupportCentres" value="@item.Value" checked="@item.Selected" />@item.Text</label>
+                        </div>
+                    }
+                </div>
+            </td>
+            <td class="col1"> Programme</td>
+            <td class="col2">
+                <select id="Programme" class="btn-block" name="ProgrammeID">
+                    @foreach (var item in @ViewBag.listProgramme)
+                    {
+                        <option value="@item.ProgrammeID">@item.ProgrammeName</option>
+                    }
+                    
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>

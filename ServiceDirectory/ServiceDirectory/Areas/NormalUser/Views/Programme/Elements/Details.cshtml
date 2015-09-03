@@ -1,0 +1,39 @@
+﻿@model ServiceDirectory.Models.tblProgramme
+
+<link href="~/Content/css/css.css" rel="stylesheet" />
+<div class="row" style="margin:0px">
+    <table class="table" style="margin-top:10px; font-weight:bold">
+        <tr>
+            <td class="col1">
+                @Html.LabelFor(model => model.ProgrammeName, "Programme Name") <font color="red">*</font>
+            </td>
+            <td class="col2">                
+                @Html.TextBoxFor(model => model.ProgrammeName, new { @class = "btn-block" })
+                <input type="hidden" value="@Model.ProgrammeID" name="ProgrammeID" />
+            </td>
+            <td class="col1">
+                Contact          
+            </td>
+            <td class="col2">
+                @if(Model.ContactID != null)
+                {
+                    <input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname" style="width:170px" />
+                }
+                else
+                {
+                    <input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="" style="width:170px" />
+                }
+                
+                <a href="#">Lookup</a>
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(model => model.ProgrammeDescription, "Description")</td>
+            <td>
+                @Html.TextAreaFor(model => model.ProgrammeDescription, new { @class = "btn-block"})
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,65 @@
+﻿<div class="row" style="padding:10px 20px 15px 20px;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Premise Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Project Code</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cầu giấy</td>
+                <td>16 Maurer Court</td>
+                <td>1235535</td>
+                <td></td>
+                <td><a data-toggle="modal" href="#">Remove</a></td>
+            </tr>
+            <tr>
+                <td>Xuan Thuy</td>
+                <td>Pham hung line 1</td>
+                <td>09223423123</td>
+                <td>SE0202</td>
+                <td><a data-toggle="modal" href="#">Remove</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div >
+        <button type="button" class="btn btn-default btn-sm col-sm-2" data-toggle="modal" data-target="#newPremises" style="float:right">Associate new premise</button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newPremises" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width:300px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Premises List</h4>
+            </div>
+            <div class="modal-body">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="funder" name="funder" />Funder</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="lead" name="lead" />Lead</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="delivery" name="delivery" />Delivery</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="auditor" name="auditor" />Auditor</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>

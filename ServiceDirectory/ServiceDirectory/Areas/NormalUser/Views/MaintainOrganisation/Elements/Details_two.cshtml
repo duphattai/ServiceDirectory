@@ -1,30 +1,25 @@
-﻿<style>
-    .container {
-        border: 2px solid #ccc;
-        width: 275px;
-        height: 120px;
-        overflow: scroll;
-    }
-</style>
-
-
+﻿
 <div class="row"> 
     <div class="col-md-2">
         Organisation Specicalism
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listOrgSpec)
         {
-            <input type="checkbox" name="listOrgSpec" value="@item.Value" checked="@item.Selected" />@item.Text<br />
+            <div class="checkbox">
+                <label><input type="checkbox" name="listOrgSpec" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
+            </div>
         }
     </div>
     <div class="col-md-2">
         Service Personal Circumstances Capabilities
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listSerPers)
         {
-            <input type="checkbox" name="listSerPers" value="@item.Value" checked="@item.Selected" />@item.Text<br />
+            <div class="checkbox">
+                <label><input type="checkbox" name="listSerPers" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
+            </div>
         }
     </div>
 </div>
@@ -33,19 +28,23 @@
     <div class="col-md-2">
         Service Disabilities Capabilities
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listSerDis)
         {
-            <input type="checkbox" name="listSerDis" value="@item.Value" checked="@item.Selected"/>@item.Text<br />
+            <div class="checkbox">
+                <label><input type="checkbox" name="listSerDis" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
+            </div>
         }
     </div>
     <div class="col-md-2">
         Service Ethnicity Capabilities
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listSerEth)
         {
-            <input type="checkbox" name="listSerEth" value="@item.Value" checked="@item.Selected" />@item.Text<br />
+            <div class="checkbox">
+                <label><input type="checkbox" name="listSerEth" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
+            </div>
         }
     </div>
 </div>
@@ -54,19 +53,23 @@
     <div class="col-md-2">
         Service Barriers Capabilities
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listSerBarri)
         {
-            <input type="checkbox" name="listSerBarri" value="@item.Value" checked="@item.Selected" />@item.Text<br />
+            <div class="checkbox">
+                <label><input type="checkbox" name="listSerBarri" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
+            </div>
         }
     </div>
     <div class="col-md-2">
         Accreditation
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listAccr)
         {
-            <input type="checkbox" name="ListAccr" value="@item.Value" checked="@item.Selected" />@item.Text<br />
+            <div class="checkbox">
+                <label><input type="checkbox" name="listAccr" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
+            </div>
         }
     </div>
 </div>
@@ -75,10 +78,12 @@
     <div class="col-md-2">
         Service Benefits Capabilities
     </div>
-    <div class="form-control container col-md-4">
+    <div class="form-control containeritem col-md-4">
         @foreach (var item in @ViewBag.listSerBene)
         {
-            <input type="checkbox" name="listSerBene" value="@item.Value" checked="@item.Selected"/>@item.Text<br />
+            <div class="checkbox">
+                <label><input type="checkbox" name="listSerBene" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
+            </div>
         }
     </div>
 </div>

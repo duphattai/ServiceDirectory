@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<ServiceDirectory.Models.tblProgramme>
+@using PagedList.Mvc
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Programme Name
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Contact
+        </th>
+        <th>
+            Is Active
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgrammeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgrammeDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tblContact.FirstName) @Html.DisplayFor(modelItem => item.tblContact.Surname)
+            </td>
+            <td>
+                @if (item.IsActive.Value == true)
+                {
+                    <label>Yes</label>
+                }
+                else
+                {
+                    <label>No</label>
+                }
+            </td>
+            <td>
+                @if (item.IsActive == false)
+                {
+                    @Ajax.ActionLink("Edit", "Edit", "Programme", new { ProgrammeID = @item.ProgrammeID }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "modal_programme", OnComplete = "set_attr_edit_programme_action_link()", Confirm = "Do you want to make this Programme active?" }, new { @id = "edit_programme" })
+                }
+                else
+                {
+                    @Ajax.ActionLink("Edit", "Edit", "Programme", new { ProgrammeID = @item.ProgrammeID }, new AjaxOptions { InsertionMode = InsertionMode.Replace, HttpMethod = "POST", UpdateTargetId = "modal_programme", OnComplete = "set_attr_edit_programme_action_link()" }, new { @id = "edit_programme" })
+                }
+                            |
+                @Ajax.ActionLink("Delete", "Delete", "Programme", new { ProgrammeID = @item.ProgrammeID, page = @Model.PageNumber },
+                                                      new AjaxOptions { UpdateTargetId = "programme_table", InsertionMode = InsertionMode.Replace, Confirm = "Do you really want to delete it?" })               
+            </td>
+        </tr>
+    }
+</table>
+
+<div style="float:right">
+    @Html.PagedListPager(Model, page => Url.Action("GetList", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { UpdateTargetId = "programme_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }))
+</div>
+<!-- Nhận biet delete dc hay khong -->
+<div>
+    <font color="red">@ViewBag.Message;</font>
+</div>
+<script>
+    function set_attr_edit_programme_action_link() {
+        $('#edit_programme').attr("data-toggle", "modal");
+        $('#edit_programme').attr("data-target", "#modal_programme");
+
+        $('#modal_programme').modal('show');
+    }
+
+</script>
+

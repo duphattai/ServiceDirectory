@@ -1,0 +1,47 @@
+﻿.list-inline > li{
+    padding-right:0px !important;
+}
+
+.list-inline > li > a{
+    text-decoration:none;
+}
+
+.panel-heading > h3{
+    margin-top: 0px;
+}
+
+.pager{
+    margin:0px !important;
+}
+.container {
+    width: auto;
+}
+.containeritem {
+        border: 2px solid #ccc;
+        width: 275px;
+        height: 120px;
+        overflow: scroll;      
+}
+
+.table th, .table td {
+        border-top: none !important;
+        padding: 5px !important;
+        vertical-align: middle !important;
+}
+
+.col1 {
+    width: 24%;
+}
+
+.col2 {
+    width: 26%;
+}
+
+.nav-tabs{
+    border-bottom: none;
+}
+
+.tab-content{
+    max-height: 425px;
+    overflow-y: auto;
+}

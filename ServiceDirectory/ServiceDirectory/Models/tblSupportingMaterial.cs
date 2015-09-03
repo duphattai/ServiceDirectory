@@ -11,18 +11,13 @@ namespace ServiceDirectory.Models
 {
     using System;
     using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
     
     public partial class tblSupportingMaterial
     {
         public int SupportID { get; set; }
-        [Required(ErrorMessage="Please input the URL")]
-        [StringLength(200, ErrorMessage="URL is not more than 200 characters")]
         public string URL { get; set; }
         public Nullable<int> OrgID { get; set; }
         public Nullable<int> UserID { get; set; }
-
-        [StringLength(1000, ErrorMessage = "URL is not more than 200 characters")]
         public string ShortDescription { get; set; }
         public string TypeFile { get; set; }
         public Nullable<System.DateTime> AddedDate { get; set; }
