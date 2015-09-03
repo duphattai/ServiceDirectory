@@ -75,49 +75,49 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         public ActionResult InsertUpdate_SupportMaterial(tblSupportingMaterial model)
         {
             
-                model.IsActive = true;
-                if (model.SupportID == 0) // add mode
+            model.IsActive = true;
+            if (model.SupportID == 0) // add mode
+            {
+                // check URL is exists
+                int exists = db.tblSupportingMaterials.Where(t => t.URL == model.URL).ToList().Count;
+
+                if (exists == 0) // not exists, can insert
                 {
-                    // check URL is exists
-                    int exists = db.tblSupportingMaterials.Where(t => t.URL == model.URL).ToList().Count;
-
-                    if (exists == 0) // not exists, can insert
-                    {
-                        model.AddedDate = DateTime.Now;
-                        model.OrgID = OrgID;
-                        db.tblSupportingMaterials.Add(model);
-                    }
-                    else
-                        return Content("URL is exist. Please input difference URL");
+                    model.AddedDate = DateTime.Now;
+                    model.OrgID = OrgID;
+                    db.tblSupportingMaterials.Add(model);
                 }
-                else //edit mode
+                else
+                    return Content("URL is exist. Please input difference URL");
+            }
+            else //edit mode
+            {
+                // check new URL is exists
+                int exist = db.tblSupportingMaterials.Where(t => t.URL == model.URL && t.SupportID != model.SupportID).ToList().Count;
+
+                if (exist == 0) // not exist, can update
                 {
-                    // check new URL is exists
-                    int exist = db.tblSupportingMaterials.Where(t => t.URL == model.URL && t.SupportID != model.SupportID).ToList().Count;
+                    tblSupportingMaterial update = db.tblSupportingMaterials.Where(t => t.SupportID == model.SupportID).SingleOrDefault();
 
-                    if (exist == 0) // not exist, can update
-                    {
-                        tblSupportingMaterial update = db.tblSupportingMaterials.Where(t => t.SupportID == model.SupportID).SingleOrDefault();
-
-                        db.Entry(update).CurrentValues.SetValues(model);
-                        db.Entry(update).Property(t => t.OrgID).IsModified = false;
-                        db.Entry(update).Property(t => t.AddedDate).IsModified = false;
-                        db.Entry(update).Property(t => t.UserID).IsModified = false;
-                    }
-                    else // new URL is exists
-                        return Content("URL is exist. Please input difference URL");
+                    db.Entry(update).CurrentValues.SetValues(model);
+                    db.Entry(update).Property(t => t.OrgID).IsModified = false;
+                    db.Entry(update).Property(t => t.AddedDate).IsModified = false;
+                    db.Entry(update).Property(t => t.UserID).IsModified = false;
                 }
+                else // new URL is exists
+                    return Content("URL is exist. Please input difference URL");
+            }
 
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch
-                {
-                    return Content("Cannot save supporting material");
-                }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                return Content("Cannot save supporting material");
+            }
 
-                return Content("Save supporting material successfully");
+            return Content("Save supporting material successfully");
             
         }
 
@@ -125,14 +125,16 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         public ActionResult Details(string SupportID = "")
         {
            
-                tblSupportingMaterial model = new tblSupportingMaterial();
-                if (!string.IsNullOrEmpty(SupportID))
-                {
-                    int id = int.Parse(SupportID);
-                    model = db.tblSupportingMaterials.Where(t => t.SupportID == id).SingleOrDefault();
-                }
-                model.AddedDate = DateTime.Today;
-                return PartialView("Elements/Details", model);
+            tblSupportingMaterial model = new tblSupportingMaterial();
+            if (!string.IsNullOrEmpty(SupportID))
+            {
+                int id = int.Parse(SupportID);
+                model = db.tblSupportingMaterials.Where(t => t.SupportID == id).SingleOrDefault();
+            }
+            model.AddedDate = DateTime.Today;
+            model.UserID = ServiceDirectory.Controllers.HomeController.user.UserID;
+            model.tblUser = ServiceDirectory.Controllers.HomeController.user;
+            return PartialView("Elements/Details", model);
             
         }
 
@@ -140,16 +142,16 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         public ActionResult Delete_ActionLink(string SupportID)
         {
             
-                int id = int.Parse(SupportID);
-                // delete item selected
-                tblSupportingMaterial delete = db.tblSupportingMaterials.Where(t => t.SupportID == id).SingleOrDefault();
-                if (delete != null)
-                {
-                    db.tblSupportingMaterials.Remove(delete);
-                    db.SaveChanges();
-                }
+            int id = int.Parse(SupportID);
+            // delete item selected
+            tblSupportingMaterial delete = db.tblSupportingMaterials.Where(t => t.SupportID == id).SingleOrDefault();
+            if (delete != null)
+            {
+                db.tblSupportingMaterials.Remove(delete);
+                db.SaveChanges();
+            }
 
-                return GetListSupportingMaterials(-1);
+            return GetListSupportingMaterials(-1);
             
         }
     }

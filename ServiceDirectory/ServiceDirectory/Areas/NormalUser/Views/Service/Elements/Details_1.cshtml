@@ -68,22 +68,16 @@
                 <td>
                     @if (@Model.ContactID != null)
                     {
-                        @*<input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname" style="width:170px" />*@
-                        @Html.TextBoxFor(model => model.ContactID, new { style = "width: 170px;", id = "leadcontact", 
-                                                                         disabled = "disable",
-                                                                         value = Model.tblContact.FirstName + Model.tblContact.Surname})
+                         <input type="text" disabled="disabled" style="width: 170px;" value="@Model.tblContact.FirstName @Model.tblContact.Surname" id="ContactName" />
                     }
                     else
                     {
-                        @*<input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="" style="width:170px" />*@
-                        @*@Html.TextBoxFor(model => model.ContactID, new {id="leadContact", onchange ="javascript:LeadContact();" })*@
-                        @Html.TextBoxFor(model => model.ContactID, new { style = "width: 170px;", id = "leadcontact", 
-                                                                         disabled = "disable",
-                                                                         value = ""})                   
+                        <input type="text" disabled="disabled" id="ContactName" style="width: 170px;" />
                     } 
                        
-                    <a href="#lookupContact" data-toggle="modal">  Lookup</a>
-                    <input type="hidden" name="leadContact" />
+                    <!--Tài-->
+                    @Ajax.ActionLink("lookup", "Index", "MaintainContact", new { area = "" }, new AjaxOptions { UpdateTargetId = "lookup", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('lead_contact_lookup', 'lookup', '')" }, new { @id = "lead_contact_lookup" })
+                    <input type="hidden" name="ContactID" id="ContactID" />
                     @Html.ValidationMessageFor(model => model.ContactID)
                 </td>
                 <td>
@@ -243,3 +237,14 @@
     </div>
 </div>
 
+<script>
+
+    // define maintain_contact_select() for service lookup
+    function maintain_contact_select() {
+        var selected = $("input[name='contact']:checked").val(); // get id of selected
+        var name = $("#" + selected).val(); // get name of id
+
+        $('#ContactID').val(selected);
+        $('#ContactName').val(name);
+    }
+</script>

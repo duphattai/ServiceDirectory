@@ -14,7 +14,7 @@
                    Organisation Name
                 </td>
                 <td style="width:30%">
-                    <input type="text" name="OrgName" class="btn-block" value="@Model.OrgName"/>
+                    @Html.TextBoxFor(model => model.OrgName, new { @class="btn-block"})
                     <input type="hidden" name="OrgID" value="@Model.OrgID" />
                 </td>
                 <td style="width:20%">
@@ -63,18 +63,17 @@
                 <td>
                     @if(Model.ContactID != null)
                     {
-                        <input type="text" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname"/>
+                        <input type="text" readonly="readonly" disabled="disabled" id="ContactName" value="@Model.tblContact.FirstName @Model.tblContact.Surname"/>
                     }
                     else
                     {
-                        <input type="text" readonly="readonly" disabled="disabled" />
+                        <input type="text" readonly="readonly" disabled="disabled" id="ContactName" />
                     }
                     
                     <!-- Tai 3/9 3h44 -->
-                    @*<a href="#">  Lookup</a>*@
-                    @Ajax.ActionLink("lookup", "Index", "MaintainContact", new {area=""}, new AjaxOptions { UpdateTargetId = "lookup", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('lead_contact_lookup', 'lookup', 'organisation_popup')" }, new { @id = "lead_contact_lookup" })
+                    @Ajax.ActionLink("lookup", "Index", "MaintainContact", new {area=""}, new AjaxOptions { UpdateTargetId = "lookup", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('lead_contact_lookup', 'lookup', '')" }, new { @id = "lead_contact_lookup" })
                     <!--End-->
-                    <input type="hidden" name="ContactID" value="@Model.ContactID" />
+                    <input type="hidden" name="ContactID" id="ContactID" value="@Model.ContactID" />
                 </td>
                 <td>
                     SIC Code
@@ -111,18 +110,18 @@
                     Address Line 2
                 </td>
                 <td>
-                    <input type="text" name="AddressLine2" class="btn-block" value="@Model.AddressLine2" />
+                    @Html.TextBoxFor(model => model.AddressLine2, new { @class = "btn-block" })
                 </td>
             </tr>
 
             <tr>
                 <td>Address Line 3</td>
                 <td>
-                    <input type="text" name="AddressLine1" class="btn-block" value="@Model.AddressLine3" />
+                    @Html.TextBoxFor(model => model.AddressLine3, new { @class = "btn-block" })
                 </td>
                 <td>Phone Number <font color="red">*</font></td>
                 <td>
-                    <input type="text" name="PhoneNumber" class="btn-block" value="@Model.PhoneNumber"/>
+                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "btn-block" })
                 </td>
             </tr>
 
@@ -143,7 +142,7 @@
                 </td>
                 <td>Fax </td>
                 <td>
-                    <input type="text" name="Fax" class="btn-block" value="@Model.Fax"/>
+                    @Html.TextBoxFor(model => model.Fax, new { @class = "btn-block" })
                 </td>
             </tr>
 
@@ -162,7 +161,7 @@
                 </td>
                 <td>Email </td>
                 <td>
-                    <input type="text" name="Email" class="btn-block" value="@Model.Email"/>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "btn-block" })
                 </td>
             </tr>
 
@@ -181,7 +180,7 @@
                 </td>
                 <td>Web Address </td>
                 <td>
-                    <input type="text" name="WebAddress" class="btn-block" value="@Model.WebAddress"/>
+                    @Html.TextBoxFor(model => model.WebAddress, new { @class = "btn-block" })
                 </td>
             </tr>
 
@@ -225,5 +224,18 @@
         else {
             $('#org_id_details_three').hide();
         }
+    }
+</script>
+
+<script>
+
+    // define maintain_contact_select() for organisation lookup
+    function maintain_contact_select()
+    {
+        var selected = $("input[name='contact']:checked").val(); // get id of selected
+        var name = $("#" + selected).val(); // get name of id
+
+        $('#ContactID').val(selected);
+        $('#ContactName').val(name);
     }
 </script>

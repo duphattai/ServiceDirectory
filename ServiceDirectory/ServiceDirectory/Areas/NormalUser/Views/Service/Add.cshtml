@@ -22,7 +22,7 @@
                             <li><a data-toggle="tab" href="#details_2">Details 2</a></li>
                             <li><a data-toggle="tab" href="#details_3">Details 3</a></li>
                             <li id="contractid"><a href="#contract" data-toggle="tab" >Contract</a></li>
-                            @*<li id="fundingid"><a href="#funding" data-toggle="tab" >Funding</a></li>*@
+                            <li id="fundingid"><a href="#funding" data-toggle="tab" >Funding</a></li>
                         </ul>
                         <div class="col-sm-2">
                             @*<input type="submit" value="In-active" class="btn btn-default" style="float: right" />*@
@@ -31,7 +31,7 @@
                             <input type="submit" value="Save" class="btn btn-default" />
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            @Ajax.ActionLink("Close", "GetList", "Service", new { page = -1 }, new AjaxOptions { UpdateTargetId = "service_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-default", id = "service_close" })
                         </div>
                     </div>
                     <div class="tab-content table-bordered">
@@ -61,3 +61,8 @@
 </div>
 }
 
+<script>
+    $(document).ready(function () {
+        $('#service_close').attr('data-dismiss', 'modal');
+    })
+</script>

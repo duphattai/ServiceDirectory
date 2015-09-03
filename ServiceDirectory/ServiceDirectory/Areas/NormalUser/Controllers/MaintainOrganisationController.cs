@@ -79,6 +79,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         }
 
 
+        // listReference is reference data of organisation checked, listItem items of fields will be display
         private List<SelectListItem> MakeSelectedCheckbox(List<tblReferenceData> listReference, List<tblReferenceData> listItem)
         {
             List<SelectListItem> list = new List<SelectListItem>();
@@ -177,9 +178,10 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 if (!string.IsNullOrEmpty(OrgID))
                 {
                     id = int.Parse(OrgID);
+                    // get service linked with organisation 
                     listOrgLinkedSer = database.tblOrganisationServices.Where(t => t.OrgID == id).ToList();
                     tblOrganisation linked = database.tblOrganisations.Where(t => t.OrgID == id).SingleOrDefault();
-                    listOrgLinkedProg = linked.tblProgrammes.ToList();
+                    listOrgLinkedProg = linked.tblProgrammes.ToList(); // get linked programme with organisation
                 }
 
                 // create checkbox item and make it checked
@@ -187,17 +189,18 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 {
                     listSer.Add(new SelectListItem { Text = item.ServiceName, Value = item.ServiceID.ToString() });
 
-                    if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedSer.FindIndex(t => t.ServiceID.Equals(item.ServiceID)) != -1)
+                    if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedSer.FindIndex(t => t.ServiceID == item.ServiceID) != -1)
                     {
                         listSer[listSer.Count - 1].Selected = true;
                     }
                 }
 
+
                 foreach (var item in database.tblProgrammes.ToList())
                 {
                     listProg.Add(new SelectListItem { Text = item.ProgrammeName, Value = item.ProgrammeID.ToString() });
 
-                    if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedProg.FindIndex(t => t.ProgrammeID.Equals(item.ProgrammeID)) != -1)
+                    if (!string.IsNullOrEmpty(OrgID) && listOrgLinkedProg.FindIndex(t => t.ProgrammeID == item.ProgrammeID) != -1)
                     {
                         listProg[listProg.Count - 1].Selected = true;
                     }
@@ -250,7 +253,7 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
 
 
         // add reference data to organisation, before add - delete old reference data of organisation
-        private void InsertRelationship(ref tblOrganisation model, string[]  list)
+        private void InsertRelationshipReferenceData(ref tblOrganisation model, string[]  list)
         {
             
             if (list != null)
@@ -267,20 +270,73 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
             
         }
 
+        private void InsertRelationshipProgramme(ref tblOrganisation model, string[]  list)
+        {
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    int id = int.Parse(item);
 
+                    tblProgramme temp = database.tblProgrammes.Where(t => t.ProgrammeID == id).SingleOrDefault();
+                    if (temp != null)
+                        model.tblProgrammes.Add(temp);
+                }
+            }
+        }
+
+        private void InsertRelationshipService(ref tblOrganisation model, string[] list)
+        {
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    int id = int.Parse(item);
+                    tblOrganisationService temp = new tblOrganisationService { OrgID = model.OrgID, ServiceID = id };
+                    database.tblOrganisationServices.Add(temp);
+                }
+            }
+        }
+
+
+        // remove relationship many - many between organisation - reference data
+        //                     many - many between organisation - programme
+        //                     many - many between organisation - service
         private void RemoveRelationShip(ref tblOrganisation model)
         {
-            
             // remove old reference of organisation (it do for edit mode)
-            if (model != null && model.tblReferenceDatas.Count != 0)
+            if (model != null)
             {
-                foreach (var item in model.tblReferenceDatas.ToList())
+                // delete many to many relationship between organisation - referennce data
+                if (model.tblReferenceDatas.Count != 0)
                 {
-                    model.tblReferenceDatas.Remove(item);
+                    foreach (var item in model.tblReferenceDatas.ToList())
+                    {
+                        model.tblReferenceDatas.Remove(item);
+                    }
+                }
+
+                // delete many to many relationship between organisation - programme
+                if (model.tblProgrammes.Count != 0)
+                {
+                    foreach (var item in model.tblProgrammes.ToList())
+                    {
+                        model.tblProgrammes.Remove(item);
+                    }
+                }
+
+                // delete many to many relationship between organisation - service
+                int id = model.OrgID;
+                List<tblOrganisationService> list = database.tblOrganisationServices.Where(t => t.OrgID == id).ToList();
+                if (list.Count != 0)
+                {
+                    foreach (var item in list)
+                    {
+                        database.tblOrganisationServices.Remove(item);
+                    }
                 }
             }
             database.SaveChanges();
-            
         }
 
         // listSerEth get checked list from Service Ethnicity Capabilities
@@ -288,9 +344,8 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
         // listOrgSpec get checked list .........
 
         [HttpPost]
-        public ActionResult InsertUpdate_Organisation(tblOrganisation model, string[] listSerEth, string[] listSerDis, string[] listOrgSpec, string[] listSerPers, string[] listSerBarri, string[] listAccr, string[] listSerBene)
+        public ActionResult InsertUpdate_Organisation(tblOrganisation model, string[] listSerEth, string[] listSerDis, string[] listOrgSpec, string[] listSerPers, string[] listSerBarri, string[] listAccr, string[] listSerBene, string[] listSer, string[] listProg, string Expression_of_Interest)
         {
-            
             model.IsActive = true;
             if (model.OrgID == -1) // add mode
             {
@@ -301,14 +356,23 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                     return Content("Organisation name is existed. Please input another name!");
 
                 // add reference data into organisation
-                InsertRelationship(ref model, listSerEth);
-                InsertRelationship(ref model, listSerDis);
-                InsertRelationship(ref model, listOrgSpec);
-                InsertRelationship(ref model, listSerPers);
-                InsertRelationship(ref model, listSerBarri);
-                InsertRelationship(ref model, listAccr);
-                InsertRelationship(ref model, listSerBene);
+                InsertRelationshipReferenceData(ref model, listSerEth);
+                InsertRelationshipReferenceData(ref model, listSerDis);
+                InsertRelationshipReferenceData(ref model, listOrgSpec);
+                InsertRelationshipReferenceData(ref model, listSerPers);
+                InsertRelationshipReferenceData(ref model, listSerBarri);
+                InsertRelationshipReferenceData(ref model, listAccr);
+                InsertRelationshipReferenceData(ref model, listSerBene);
 
+
+                // if Expression_of_Interest checked, organisation will insert programme and service 
+                if (!string.IsNullOrEmpty(Expression_of_Interest)) // it equal "on" will checked
+                {
+                    InsertRelationshipProgramme(ref model, listProg);
+                    InsertRelationshipService(ref model, listSer);
+                }
+
+                
                 if (model.Preferred == null) model.Preferred = false;
 
                 database.tblOrganisations.Add(model);
@@ -325,13 +389,19 @@ namespace ServiceDirectory.Areas.NormalUser.Controllers
                 // add reference data into organisation
                 RemoveRelationShip(ref update);
 
-                InsertRelationship(ref update, listSerEth);
-                InsertRelationship(ref update, listSerDis);
-                InsertRelationship(ref update, listOrgSpec);
-                InsertRelationship(ref update, listSerPers);
-                InsertRelationship(ref update, listSerBarri);
-                InsertRelationship(ref update, listAccr);
-                InsertRelationship(ref update, listSerBene);
+                InsertRelationshipReferenceData(ref update, listSerEth);
+                InsertRelationshipReferenceData(ref update, listSerDis);
+                InsertRelationshipReferenceData(ref update, listOrgSpec);
+                InsertRelationshipReferenceData(ref update, listSerPers);
+                InsertRelationshipReferenceData(ref update, listSerBarri);
+                InsertRelationshipReferenceData(ref update, listAccr);
+                InsertRelationshipReferenceData(ref update, listSerBene);
+
+                if (!string.IsNullOrEmpty(Expression_of_Interest)) // it equal "on" will checked
+                {
+                    InsertRelationshipProgramme(ref update, listProg);
+                    InsertRelationshipService(ref update, listSer);
+                }
 
                 database.Entry(update).CurrentValues.SetValues(model);
                 database.Entry(update).Property(t => t.OrgID).IsModified = false;

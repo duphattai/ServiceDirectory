@@ -28,7 +28,7 @@
                             <input type="submit" value="Save" class="btn btn-default" />
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            @Ajax.ActionLink("Close", "GetList", "Programme", new { page = -1 }, new AjaxOptions { UpdateTargetId = "programme_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-default", id = "programme_close" })
                         </div>
                     </div>
                     <div class="tab-content table-bordered">
@@ -45,3 +45,8 @@
     </div>
 }
 
+<script>
+    $(document).ready(function () {
+        $('#programme_close').attr('data-dismiss', 'modal');
+    })
+</script>

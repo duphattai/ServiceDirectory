@@ -4,6 +4,7 @@
 
 .list-inline > li > a{
     text-decoration:none;
+    margin-bottom:5px; margin-top:5px;
 }
 
 .panel-heading > h3{
@@ -42,6 +43,10 @@
 }
 
 .tab-content{
-    max-height: 425px;
+    max-height: 500px;
     overflow-y: auto;
+}
+.radio, .checkbox{
+    margin-top:5px;
+    margin-bottom:0px;
 }

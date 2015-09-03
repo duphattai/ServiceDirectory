@@ -1,26 +1,18 @@
-﻿
+﻿$('#fundingid').hide();
+
 //Tab Detail 1
 function openTab() {
     var sub = document.getElementById("SubType");
+    var op = sub.options[sub.selectedIndex].text;
+    $('#contractid').hide();
+    $('#fundingid').hide();
 
-    if (sub.options[sub.selectedIndex].value == "Contract") {
-        $('#contractid').remove();
-        $('#fundingid').remove();
-        $('#ServiceTab').append('<li id="contractid"><a href="#contract" data-toggle="tab">Contract</a></li>');
+    if (op == "Contract") {
+        $('#contractid').show();
     }
-    else if (sub.options[sub.selectedIndex].value == "Independently Funded") {
-        $('#contractid').remove();
-        $('#fundingid').remove();
-        $('#ServiceTab').append('<li id="fundingid"><a href="#funding" data-toggle="tab">Funding</a></li>');
+    else {
+        $('#fundingid').show();
     }
-
-    //$('#contractid').hide();
-    //$('#fundingid').hide();
-
-    //if (sub.options[sub.selectedIndex].value == "Contract")
-    //    $('#contractid').show();
-    //else
-    //    $('#fundingid').show();
 }
 
 function EnableExtendable(checkbox) {

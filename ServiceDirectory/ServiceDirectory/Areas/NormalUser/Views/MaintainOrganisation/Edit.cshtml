@@ -40,7 +40,7 @@
                             <input type="submit" value="Save" class="btn btn-default" />
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            @Ajax.ActionLink("Back", "GetListOrganisations", "MaintainOrganisation", new { page = -1 }, new AjaxOptions { UpdateTargetId = "organisation_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-default", @id = "maintain_organisation_edit_back" })
                         </div>
                     </div>
 
@@ -74,16 +74,21 @@
                         <!-- Message after call action here -->
                     </div>
                     <div>
-                        @*@Html.ValidationMessageFor(model => model.OrgName)
+                        @Html.ValidationMessageFor(model => model.OrgName)
                         @Html.ValidationMessageFor(model => model.ShortDescription)
                         @Html.ValidationMessageFor(model => model.FullDescription)
                         @Html.ValidationMessageFor(model => model.PhoneNumber)
                         @Html.ValidationMessageFor(model => model.Email)
                         @Html.ValidationMessageFor(model => model.Fax)
-                        @Html.ValidationMessageFor(model => model.WebAddress)*@
+                        @Html.ValidationMessageFor(model => model.WebAddress)
                     </div>
                 }
             </div>
         </div>
     </div>
 
+<script>
+    $(document).ready(function () {
+        $('#maintain_organisation_edit_back').attr('data-dismiss', 'modal');
+    })
+</script>

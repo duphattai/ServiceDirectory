@@ -8,7 +8,7 @@
         @foreach (var item in @ViewBag.listProg)
         {
             <div class="checkbox">
-                <label><input type="checkbox" />@item.Text<br /></label>
+                <label><input type="checkbox" name="listProg" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
             </div>
         }
     </div>
@@ -22,7 +22,7 @@
         @foreach (var item in @ViewBag.listSer)
         {
             <div class="checkbox">
-                <label><input type="checkbox" />@item.Text<br /></label>
+                <label><input type="checkbox" name="listSer" value="@item.Value" checked="@item.Selected" />@item.Text<br /></label>
             </div>
         }
     </div>     

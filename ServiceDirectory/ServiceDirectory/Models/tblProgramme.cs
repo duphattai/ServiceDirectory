@@ -11,6 +11,7 @@ namespace ServiceDirectory.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class tblProgramme
     {
@@ -21,6 +22,7 @@ namespace ServiceDirectory.Models
         }
     
         public int ProgrammeID { get; set; }
+        [Required(ErrorMessage="Please input the programme name")]
         public string ProgrammeName { get; set; }
         public Nullable<int> ContactID { get; set; }
         public string ProgrammeDescription { get; set; }

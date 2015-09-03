@@ -1,9 +1,10 @@
-﻿@*<meta name="viewport" content="width=device-width, initial-scale=1">*@
+﻿
 @Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 @Styles.Render("~/bundles/jqueryui")
 @Scripts.Render("~/bundles/modernizr")
+<script src="~/Scripts/organisation/js.js"></script>
 <link href="~/Content/css/css.css" rel="stylesheet" />
 
 <div class="row label-info">
@@ -31,12 +32,10 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
                             <ul class="dropdown-menu forAnimate" role="menu">
                                 <!-- Tai 4h25 3/9-->
-                                @*<li><a href="#">Programme Maintenance </a></li>*@
                                 <li>
                                     @Ajax.ActionLink("Programme Maintenance", "Index", "Programme", new { area = "NormalUser" }, new AjaxOptions { UpdateTargetId = "content", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
                                 </li>
                                 <!--End-->
-                                @*<li><a href="#">Service Maintenance</a></li>*@
                                 <li>
                                     @Ajax.ActionLink("Service Maintenance", "Index", "Service", new { area = "NormalUser" }, new AjaxOptions { UpdateTargetId = "content", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" })
                                 </li>

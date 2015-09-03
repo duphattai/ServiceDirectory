@@ -29,7 +29,7 @@
                             <input type="submit" value="Save" class="btn btn-default" />
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            @Ajax.ActionLink("Back", "GetListOrganisations", "MaintainOrganisation", new { page = -1 }, new AjaxOptions { UpdateTargetId = "organisation_table", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-default", @id = "maintain_organisation_add_back" })
                         </div>
                     </div>
 
@@ -48,16 +48,19 @@
                     </div>
 
                     <div id="id_organisation_message">
-
+                        
                     </div>
                     <div>
-                        @Html.ValidationMessageFor(model => model.OrgName)
-                        @Html.ValidationMessageFor(model => model.ShortDescription)
-                        @*@Html.ValidationMessageFor(model => model.FullDescription)
-                            @Html.ValidationMessageFor(model => model.PhoneNumber)
-                            @Html.ValidationMessageFor(model => model.Email)
-                            @Html.ValidationMessageFor(model => model.Fax)
-                            @Html.ValidationMessageFor(model => model.WebAddress)*@
+                        <div>@Html.ValidationMessageFor(model => model.AddressLine1)</div>
+                        <div>@Html.ValidationMessageFor(model => model.AddressLine2)</div>
+                        <div>@Html.ValidationMessageFor(model => model.AddressLine3)</div>
+                        <div>@Html.ValidationMessageFor(model => model.ShortDescription)</div>
+                        <div>@Html.ValidationMessageFor(model => model.WebAddress)</div>
+                        <div>@Html.ValidationMessageFor(model => model.OrgName)</div>
+                        <div>@Html.ValidationMessageFor(model => model.PhoneNumber)</div>
+                        <div>@Html.ValidationMessageFor(model => model.FullDescription)</div>
+                        <div>@Html.ValidationMessageFor(model => model.Fax)</div>
+                        <div>@Html.ValidationMessageFor(model => model.Email)</div>
                     </div>
                 </div>
 
@@ -66,3 +69,8 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $('#maintain_organisation_add_back').attr('data-dismiss', 'modal');
+    })
+</script>

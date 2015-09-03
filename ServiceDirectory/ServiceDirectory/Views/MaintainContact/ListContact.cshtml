@@ -42,8 +42,6 @@
 
             <!-- Top Group Button-->
             <div style="margin: 10px 0px 10px 0px">
-
-                <button type="button" class="btn btn-primary btn-sm">Select</button>
                 <button type="button" class="btn btn-primary btn-sm">Clear</button>
                 @Ajax.ActionLink("Create", "Add_ActionLink", "MaintainContact", new AjaxOptions { UpdateTargetId = "myAddModal", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_contact_add_action_link" }, new { @class = "btn btn-primary btn-sm", @id = "contact_add_action_link" })
             </div>
@@ -63,12 +61,15 @@
         <!-- footer content-->
         <div class="modal-footer">
             <div class="col-sm-10" id="info_contact_list_label">
-
+                
             </div>
-            <div class="col-sm-2">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="col-sm-1">
+                <!-- maintain_contact_select() function: look like virtual function, it be define in specific case  -->
+                <button type="button" class="btn btn-primary btn-sm" onclick="maintain_contact_select()" data-dismiss="modal">Select</button>
             </div>
-
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
         </div>
 
     </div>

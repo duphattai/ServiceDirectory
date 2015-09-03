@@ -9,6 +9,7 @@
             </td>
             <td class="col2">                
                 @Html.TextBoxFor(model => model.ProgrammeName, new { @class = "btn-block" })
+                @Html.ValidationMessageFor(model => model.ProgrammeName)
                 <input type="hidden" value="@Model.ProgrammeID" name="ProgrammeID" />
             </td>
             <td class="col1">
@@ -17,14 +18,15 @@
             <td class="col2">
                 @if(Model.ContactID != null)
                 {
-                    <input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname" style="width:170px" />
+                    <input type="text" id="ContactName" readonly="readonly" disabled="disabled" value="@Model.tblContact.FirstName @Model.tblContact.Surname" style="width:170px" />
                 }
                 else
                 {
-                    <input type="text" id="@Model.ContactID" readonly="readonly" disabled="disabled" value="" style="width:170px" />
+                    <input type="text" id="ContactName" readonly="readonly" disabled="disabled" value="" style="width:170px" />
                 }
                 
-                <a href="#">Lookup</a>
+                @Ajax.ActionLink("lookup", "Index", "MaintainContact", new { area = "" }, new AjaxOptions { UpdateTargetId = "lookup", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('lead_contact_lookup', 'lookup', '')" }, new { @id = "lead_contact_lookup" })
+                <input type="hidden" name="ContactID" id="ContactID" />
             </td>
         </tr>
         <tr>
@@ -37,3 +39,15 @@
         </tr>
     </table>
 </div>
+
+<script>
+
+    // define maintain_contact_select() for service lookup
+    function maintain_contact_select() {
+        var selected = $("input[name='contact']:checked").val(); // get id of selected
+        var name = $("#" + selected).val(); // get name of id
+
+        $('#ContactID').val(selected);
+        $('#ContactName').val(name);
+    }
+</script>

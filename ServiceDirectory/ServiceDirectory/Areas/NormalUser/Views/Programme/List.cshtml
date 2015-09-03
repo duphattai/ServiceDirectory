@@ -9,9 +9,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3>Programme List</h3>
-            <div class="row">
-                <div class="col-md-8">
-                    <ul class="list-inline">
+            <div class="row" style="margin:0px">
+                <div class="col-md-9" style="padding:0px">
+                    <ul class="list-inline" style="padding-top:10px">
                         <li><a href="#">All</a></li>
                         <li><a href="#">|</a></li>
                         <li><a href="#">0-9</a></li>
@@ -49,8 +49,8 @@
                         <li><a href="#">Z</a></li>
                     </ul>
                 </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-default" style="margin-right:10px">Copy</button>
+                <div class="col-md-1" style="margin-top:5px">
+                    @*<button type="button" class="btn btn-default" style="margin-right:10px">Copy</button>*@
                     @Ajax.ActionLink("Create", "Add", "Programme", new AjaxOptions { UpdateTargetId = "modal_programme", InsertionMode = InsertionMode.Replace, HttpMethod = "POST", OnComplete = "set_attr_add_programme_action_link()" }, new { @id = "add_programme", @class = "btn btn-default" })
                 </div>
                 <div class="checkbox col-md-2">

@@ -11,6 +11,7 @@ namespace ServiceDirectory.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class tblService
     {
@@ -26,7 +27,9 @@ namespace ServiceDirectory.Models
         public int ServiceID { get; set; }
         public Nullable<int> ProgrammeID { get; set; }
         public Nullable<int> ContactID { get; set; }
+        [Required(ErrorMessage = "Please input the service name")]
         public string ServiceName { get; set; }
+        [Required(ErrorMessage = "Please input the service short description")]
         public string ShortDescription { get; set; }
         public string ClientDescription { get; set; }
         public Nullable<System.DateTime> StartExpected { get; set; }
@@ -35,6 +38,7 @@ namespace ServiceDirectory.Models
         public Nullable<int> ExtendableYears { get; set; }
         public Nullable<int> ExtendableMonths { get; set; }
         public string FullDescription { get; set; }
+        [Required(ErrorMessage = "Please input the dept code")]
         public string DeptCode { get; set; }
         public string DescriptionDelivery { get; set; }
         public string ContractCode { get; set; }

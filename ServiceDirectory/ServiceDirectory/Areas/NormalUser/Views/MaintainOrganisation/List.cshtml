@@ -1,30 +1,12 @@
 ﻿@model IEnumerable<ServiceDirectory.Models.tblOrganisation>
 
-@*<div style="border: 1px ridge silver; ">
-    <div style="margin-top:10px;">
-            <div class="row">
-                <font color="green" size="5"><strong>Organisation List</strong></font>
-            </div>
-            <div class="row">
-                @Ajax.ActionLink("Add", "Add_ActionLink", "MaintainOrganisation",
-                             new AjaxOptions { UpdateTargetId = "organisation_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_organisation_link', 'organisation_popup', '')" },
-                                      new { @id = "add_organisation_link", @class = "btn btn-default col-md-offset-9 col-md-1" })
-
-                <input type="checkbox" style="margin: 8px 8px;" onchange="maintain_organisation_include_inactive(this)" />Include In-active
-            </div>
-        <div id="organisation_table" class="row">
-            @Html.Action("GetListOrganisations", "MaintainOrganisation", new { page = 1 })
-        </div>
-    </div>
-</div>*@
-
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3>Organisation List</h3>
-            <div class="row">
-                <div class="col-md-8">
-                    <ul class="list-inline">
+            <div class="row" style="margin:0px">
+                <div class="col-md-8" style="padding:0px">
+                    <ul class="list-inline" style="margin-bottom:5px; margin-top:5px;">
                         <li><a href="#">All</a></li>
                         <li><a href="#">|</a></li>
                         <li><a href="#">0-9</a></li>
@@ -62,12 +44,12 @@
                         <li><a href="#">Z</a></li>
                     </ul>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1 col-md-offset-1">
                     @Ajax.ActionLink("Create", "Add_ActionLink", "MaintainOrganisation",
                              new AjaxOptions { UpdateTargetId = "organisation_popup", InsertionMode = InsertionMode.Replace, OnComplete = "set_attr_link_popup('add_organisation_link', 'organisation_popup', '')" },
                                       new { @id = "add_organisation_link", @class = "btn btn-default" })
                 </div>
-                <div class="checkbox col-md-2">
+                <div class="col-md-2 checkbox">
                     <label><input type="checkbox" onchange="maintain_organisation_include_inactive(this)" />Include In-active</label>
                 </div>
             </div>
@@ -80,20 +62,3 @@
     </div>
 </div>
 
-
-<script>
-    function maintain_organisation_include_inactive(checkbox) {
-        var url = "/MaintainOrganisation/GetListOrganisationsFromCheckbox";
-
-        if (checkbox.checked) {
-            $.post(url, { IncludeInActive: true }, function (data) {
-                $("#organisation_table").html(data);
-            });
-        }
-        else {
-            $.post(url, { IncludeInActive: false }, function (data) {
-                $("#organisation_table").html(data);
-            });
-        }
-    }
-</script>

@@ -14,6 +14,7 @@ namespace ServiceDirectory.Controllers
         //
         // GET: /Home/
         ServiceDirectoryEntities db = new ServiceDirectoryEntities();
+        public static tblUser user = null;
         public ActionResult Index()
         {
             return View();
@@ -21,18 +22,18 @@ namespace ServiceDirectory.Controllers
 
 
         [HttpPost]
-
         public ActionResult Logon(string lg_username, string lg_password)
         {
             tblUser v = db.tblUsers.Where(t => t.Account == lg_username && t.UserPassword == lg_password).SingleOrDefault();
 
             if (v == null)
             {
-                ViewBag.message = "Tai khoan hoac mat khau khong chinh xac,vui long nhap lai !";
+                ViewBag.message = "Username or password not match, please input again!";
                 return PartialView("Index");
             }
             else
             {
+                user = v;
                 return PartialView("AfterLogon");
             }
         }
